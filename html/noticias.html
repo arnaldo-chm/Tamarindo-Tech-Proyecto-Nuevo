@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias/Anuncios</title>
+    <link rel="stylesheet" href="../css/general.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/noticias.css">
+        <!-- Link preconnect para Google fonts con la opción de Roboto como fuente de fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <!-- Header -->
+    <header class = "header" id="header">
+        <div class="logo">
+            <h1>Tamarindo Tech</h1>
+        </div>
+            <input type="checkbox" id="check">
+        <label for="check" class="btn">☰</label>
+        
+        <nav class="Links_Header" id= "Links_Header">
+            <ul>
+                <li><a href="inicio.html">Inicio</a></li>
+                <li><a href="noticias.html">Anuncios/Noticias</a></li>
+                <li><a href="emprendimientos.html">Emprendimientos</a></li>
+                <li><a href="Transportes.html">Transporte</a></li>
+                <li><a href="actividades.html">Actividades</a></li>
+                <button class="boton_sing_out" id="boton_sing_out"><a href="login.html">Cerrar Sesion</a></button>
+            </ul>
+        </nav>
+    </header>
+<!-- fin de header -->
+    <div class="Contenido"> 
+        <div class="barra-busqueda">
+            <input type="text" placeholder="🔍 Buscar una Noticia"/>            
+        </div>
+        
+        <div class="seccion-noticias-nuevas"> <!-- Display Grid -->
+            
+            <div class="noticia-header">
+                <i class='bxr  bx-clock-9'  ></i>  
+                <h3>Lo más nuevo</h3>
+            </div>
+
+            <div class="ultima-noticia">
+                <div class="contenedor-imagen-ultima-noticia">
+                    <button class="boton-navegacion izquierda">←</button>
+                    <img src="../imagenes/Feria_Agricultor.jpeg" alt="Imagen de la Feria del Agricultor">
+                    <button class="boton-navegacion derecha">→</button>
+                </div>
+                <div class="ultima-noticia-contenido">
+                    <h2>¡Vení a la Feria del Agricultor y apoyá lo nuestro!</h2>
+                    <p>Te invitamos a disfrutar de la auténtica frescura del campo en la Feria del Agricultor, donde encontrarás productos cultivados con esmero por manos costarricenses. Aquí te espera lo mejor en frutas, verduras, lácteos, huevos, pan casero, plantas, artesanías y más, directo del productor a tu mesa.</p>
+                </div>
+            </div>
+
+            <div class="contenedor-noticias-recientes">
+                <div class="contenedor-noticia-reciente">
+                    <img src="../imagenes/Feria_Agricultor.jpeg" alt="Imagen de la Feria del Agricultor">
+                    <p>¡Vení a la Feria del Agricultor y apoyá lo nuestro!</p>
+                </div>
+                <div class="contenedor-noticia-reciente">
+                    <img src="../imagenes/Feria_Agricultor.jpeg" alt="Imagen de la Feria del Agricultor">
+                    <p>¡Vení a la Feria del Agricultor y apoyá lo nuestro!</p>
+                </div>
+                <div class="contenedor-noticia-reciente">
+                    <img src="../imagenes/Feria_Agricultor.jpeg" alt="Imagen de la Feria del Agricultor">
+                    <p>¡Vení a la Feria del Agricultor y apoyá lo nuestro!</p>
+                </div>
+                <div class="contenedor-noticia-reciente">
+                    <img src="../imagenes/Feria_Agricultor.jpeg" alt="Imagen de la Feria del Agricultor">
+                    <p>¡Vení a la Feria del Agricultor y apoyá lo nuestro!</p>
+                </div>
+                <div class="contenedor-noticia-reciente">
+                    <img src="../imagenes/Feria_Agricultor.jpeg" alt="Imagen de la Feria del Agricultor">
+                    <p>¡Vení a la Feria del Agricultor y apoyá lo nuestro!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="seccion-noticias">
+            <h2>Seguridad</h2>
+            <div class="contenedor-noticias">
+
+                <div class="card" id="">
+                    <img src="../imagenes/camaras_de_seguridad.png"  id="noticias" alt="Accidente"/>
+                    <h3>Se han instalado nuevas cámaras de vigilancia</h3>
+                    <p>Con el apoyo de los mismos residentes, se colocaron cámaras de seguridad en entradas clave del 
+                        vecindario. Los dispositivos, conectados a una central comunitaria, ya han ayudado a prevenir 
+                        situaciones sospechosas
+                    </p>
+                    <p>Más Información al Telefono 8888-0000</p>
+                </div>
+
+                <div class="card" id="">
+                    <img src="../imagenes/patrulla.png"  id="noticias" alt="Accidente"/>
+                    <h3>Vecinos Unidos Inician Patrullajes Ciudadanos</h3>
+                    <p>En un esfuerzo conjunto por mejorar la seguridad y la convivencia en el barrio La Esperanza, 
+                        un grupo organizado de vecinos ha dado inicio a patrullajes ciudadanos voluntarios
+                    </p>
+                    <p>Más Información al Telefono 8888-0000</p>
+                </div>
+
+                <div class="card" id="">
+                    <img src="../imagenes/patrulla_vecinal.png" id="noticias" alt="Accidente"/>
+                    <h3>Instalan Botón de Pánico Comunitario en Paradas de Autobús del Barrio</h3>
+                    <p>Con la colaboración entre vecinos y autoridades locales, el barrio ha implementado botones de 
+                        pánico conectados a una central de monitoreo.
+                    </p>
+                    <p>Más Información al Telefono 8888-0000</p>
+                </div>     
+                       
+            </div>
+        </div>
+
+        <div class="seccion-noticias">
+            <h2>Salud y Bienestar</h2>
+            <div class="contenedor-noticias">
+
+                <div class="card" id="">
+                    <img src="../imagenes/huerto.jpeg"  id="noticias" alt="Accidente"/>
+                    <h3>Vecinos transforman terreno baldío en Huerta Comunitaria Saludable</h3>
+                    <p>Con herramientas donadas y mucho entusiasmo, los residentes crearon un espacio verde donde ahora 
+                        cultivan frutas, verduras y plantas medicinales.
+                        Se organizan talleres de alimentación consciente y agricultura urbana para niños y adultos.
+                    </p>
+                    <p>Más Información al Telefono 8888-0000</p>
+                </div>
+
+                <div class="card" id="">
+                    <img src="../imagenes/caminata.png"  id="noticias" alt="Accidente"/>
+                    <h3>Barrio lanza programa de Caminatas Saludables al Amanecer</h3>
+                    <p>Cada semana, vecinos de todas las edades se reúnen para caminar en grupo por rutas seguras, 
+                        acompañados por personal de salud que ofrece chequeos gratuitos de presión arterial y 
+                        charlas breves sobre hábitos saludables.
+                    </p>
+                    <p>Más Información al Telefono 8888-0000</p>
+                </div>
+
+                <div class="card" id="">
+                    <img src="../imagenes/salud_mental.png"  id="noticias" alt="Accidente"/>
+                    <h3>Inauguran Clínica de Bienestar Mental Comunitaria</h3>
+                    <p>Gracias al esfuerzo vecinal y el apoyo de una ONG, se ha abierto un centro 
+                        donde se brindan terapias grupales, sesiones de yoga y asesoramiento psicológico
+                        gratuito, promoviendo la salud emocional en la comunidad.
+                    </p>
+                    <p>Más Información al Telefono 8888-0000</p>
+                </div>     
+                       
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Inicio de Footer -->
+    <footer class="footer">
+        <div class="footer-contenedor">
+            <div class="footer-contenido">
+                <!-- Columna 1: Logo y redes sociales -->
+                <div class="footer-section">
+                    <h3>Nunciatura</h3>
+                    <div class="social-icons">
+                        <!-- Twitter/X -->
+                        <a href="#" aria-label="Twitter">
+                            <img src="../imagenes/X.png" alt="Twitter/X">
+                        </a>
+                        <!-- Instagram -->
+                        <a href="#" aria-label="Instagram">
+                            <img src="../imagenes/logotipo-de-instagram.png" alt="Instagram">
+                        </a>
+                        <!-- YouTube -->
+                        <a href="#" aria-label="YouTube">
+                            <img src="../imagenes/youtube.png" alt="YouTube">
+                        </a>
+                        <!-- LinkedIn -->
+                        <a href="#" aria-label="LinkedIn">
+                           <img src="../imagenes/linkedin.png" alt="LinkedIn">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Columna 2: Contactenos -->
+                <div class="footer-section">
+                    <h3>Contactenos</h3>
+                    <ul>
+                        <li><a href="reportes.html">Crear un Reporte</a></li>
+                        <li><a href="reportes.html">Dar una Sugerencia</a></li>
+                        <li><a href="#">Preguntas Frecuentes</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 3: Información -->
+                <div class="footer-section">
+                    <h3>Información</h3>
+                    <ul>
+                        <li><a href="#">Tamarindo Tech</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 4: Recursos -->
+                <div class="footer-section">
+                    <h3>Recursos</h3>
+                    <ul>
+                        <li><a href="#">Tutoriales</a></li>
+                        <li><a href="#">Ayuda</a></li>
+                        <li><a href="#">Contactar al Administrador</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

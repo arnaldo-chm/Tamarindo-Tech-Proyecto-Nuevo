@@ -1,0 +1,200 @@
+
+.Transporte h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Cards */
+.cards-container {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  max-width: 65%;
+  margin: 0 auto;
+  padding: 20px;
+  justify-content: center;
+}
+
+/* Botón admin */
+.admin-btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 80%;
+  gap: 10%;
+}
+
+
+.admin-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #4e7c2f;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  position: static;
+}
+
+.card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.06);
+}
+
+
+.updated {
+  color: #777;
+  font-size: 0.9em;
+}
+
+.contenedor {
+    display: flex;
+    justify-content: center; 
+    margin: 40px 100px; 
+    gap: 5%;
+    flex-wrap: wrap;
+}
+
+.img img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.texto_bienvenido p{
+    width: 400px;
+    color: #000000;
+    font-size: 1.1em;
+    line-height: 1.5em;
+    margin-bottom: 30px;
+    text-align: justify;
+}
+
+.titulo{
+    color: #547A20 ;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+/* Media Queries para responsive */
+
+/* Pantallas medianas (tablets y laptops pequeñas) */
+@media (max-width: 1113px) {
+  .contenedor {
+    flex-direction: row;
+    margin: 20px 40px;
+    gap: 30px;
+    align-items: center;
+  }
+
+  .texto_bienvenido p {
+    width: 100%;
+    max-width: 500px;
+    font-size: 1.3em;
+    text-align: center;
+  }
+
+  .titulo {
+    font-size: 2.2em;
+    text-align: center;
+  }
+
+  .img img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .Transporte h2 {
+        font-size: 2.2em;
+        text-align: center;
+  }
+}
+
+/* Pantallas pequeñas (teléfonos) */
+@media (max-width: 480px) {
+  .contenedor {
+    margin: 10px 20px;
+    gap: 5px;
+  }
+
+  .texto_bienvenido p {
+    font-size: 0.95em;
+    line-height: 1.4em;
+  }
+
+  .titulo {
+    font-size: 1.6em;
+    margin-bottom: 15px;
+  }
+
+  .cards-container {
+    gap: 1px;
+    padding: 10px 10px;
+  }
+
+  .card h3 {
+    font-size: 0.95em;
+    margin-bottom: 8px;
+  }
+
+  .card p, .updated {
+    font-size: 0.85em;
+    padding: 0 8px 10px;
+  }
+
+  .admin-btn-container {
+    padding: 0px;
+  }
+
+  .admin-btn {
+    padding: 8px 14px;
+    font-size: 0.8em;
+  }
+  .Transporte h2 {
+        font-size: 1.6em;
+  }
+}
+
+/* Pantallas muy pequeñas (teléfonos pequeños) */
+@media (max-width: 320px) {
+  .contenedor {
+    margin: 10px 15px;
+  }
+
+  .titulo {
+    font-size: 1.5em;
+  }
+
+  .texto_bienvenido p {
+    font-size: 1em;
+  }
+
+  .cards-container {
+    gap: 10px;
+  }
+
+  .card {
+    max-width: 280px;
+  }
+
+  .admin-btn {
+    font-size: 0.8em;
+    padding: 4px 10px;
+  }
+}

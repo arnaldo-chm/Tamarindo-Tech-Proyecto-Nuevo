@@ -1,0 +1,399 @@
+
+.contenedor_encabezado{
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center;
+    max-width: 1200px; 
+    margin: 40px auto; 
+    padding: 0 100px; 
+    gap: 40px; 
+    flex-wrap: nowrap; 
+}
+
+.img_encabezado_emprendimientos img{
+
+    height: 550px; 
+    border-radius: 10px;
+    margin-bottom: 0; 
+    flex-shrink: 0; 
+}
+
+.texto_encabezado_emprendimientos{
+    flex: 1; 
+    min-height: 400px; 
+    display: flex;
+    flex-direction: column;
+}
+
+.texto_encabezado_emprendimientos h1{
+    width: auto; 
+    margin-bottom: 15px;
+    font-size: 2em;
+    line-height: 1.2;
+}
+
+.texto_encabezado_emprendimientos .info_general{
+    width: 100%; 
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+.texto_encabezado_emprendimientos p{
+    margin: 15px 0;
+    font-size: 14px; 
+    line-height: 1.4;
+}
+
+.boton_crear_emprendimiento{
+    width: 100%; 
+    max-width: 515px;
+    height: 52px;
+    border-radius: 10px;
+    background-color: #668c31;
+    border: none;
+    transition: all 0.3s ease; 
+    font-size: 1.1em;
+    cursor: pointer;
+    margin: 20px 0; 
+}
+
+.boton_crear_emprendimiento a{
+    text-decoration: none;
+    color: white;
+    display: block; 
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.boton_crear_emprendimiento:hover{
+    background-color: #547A20;
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 15px rgba(84, 122, 32, 0.3);
+}
+
+/* SECCIÓN DE EMPRENDIMIENTOS */
+.Emprendimientos{
+    max-width: 1200px; 
+    margin: 60px auto; 
+    padding: 0 100px; 
+}
+
+.Emprendimientos h2 {
+    font-size: 2.2em; 
+    margin-bottom: 30px; 
+    text-align: left;
+    color: #333;
+}
+
+.contenedor-emprendimientos{
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 25px; 
+    justify-items: start; 
+}
+
+.contenedor-emprendimientos a{
+    text-decoration: none;
+    width: 100%; 
+}
+
+/* CARDS  */
+.card {
+    width: 100%; 
+    max-width: 320px; 
+    border-radius: 12px; 
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+    background-color: white;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.05); 
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+    border-color: rgba(102, 140, 49, 0.2); 
+}
+
+.card img {
+    width: 100%; 
+    height: 200px; 
+    object-fit: cover; 
+    transition: transform 0.3s ease;
+}
+
+.card:hover img {
+    transform: scale(1.05); 
+}
+
+.card h3 {
+    font-size: 1.2em; 
+    margin: 15px 15px 10px 15px; 
+    color: #000000;
+    text-align: left;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.card p {
+    font-size: 0.9em;
+    padding: 0 15px;
+    color: #666;
+    text-align: left;
+    line-height: 1.4;
+    margin-bottom: 10px;
+}
+
+.card .precio_emprendimiento {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #668c31; 
+    padding: 0 15px 15px 15px;
+    margin-bottom: 0;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 1200px) {
+    .contenedor_encabezado {
+        margin: 30px auto;
+        padding: 0 60px;
+        gap: 30px;
+    }
+    
+    .Emprendimientos {
+        padding: 0 60px;
+    }
+    
+    .img_encabezado_emprendimientos img {
+        height: 480px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .contenedor_encabezado {
+        padding: 0 40px;
+        gap: 25px;
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .Emprendimientos {
+        padding: 0 40px;
+        margin: 40px auto;
+    }
+    
+    .img_encabezado_emprendimientos img {
+        width: 100%;
+        max-width: 400px;
+        height: 350px;
+    }
+    
+    .texto_encabezado_emprendimientos {
+        flex: none;
+        width: 100%;
+        max-width: 500px;
+        min-height: auto;
+    }
+    
+    .texto_encabezado_emprendimientos h1 {
+        font-size: 1.8em;
+    }
+    
+    .contenedor-emprendimientos {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        justify-items: center;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .contenedor_encabezado {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 0 30px;
+        margin: 20px auto;
+    }
+    
+    .Emprendimientos {
+        padding: 0 30px;
+        margin: 30px auto;
+    }
+    
+    .img_encabezado_emprendimientos img {
+        width: 100%;
+        max-width: 350px;
+        height: 300px;
+    }
+    
+    .texto_encabezado_emprendimientos {
+        text-align: center;
+        max-width: 100%;
+    }
+    
+    .texto_encabezado_emprendimientos h1 {
+        font-size: 1.6em;
+        margin-bottom: 10px;
+    }
+    
+    .texto_encabezado_emprendimientos p {
+        font-size: 0.95em;
+        margin: 10px 0;
+    }
+    
+    .boton_crear_emprendimiento {
+        max-width: 100%;
+        font-size: 1em;
+        height: 48px;
+    }
+    
+    .Emprendimientos h2 {
+        text-align: center;
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+    
+    .contenedor-emprendimientos {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+    
+    .card {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .contenedor_encabezado {
+        padding: 0 20px;
+        margin: 15px auto;
+        gap: 15px;
+    }
+    
+    .Emprendimientos {
+        padding: 0 20px;
+        margin: 25px auto;
+    }
+    
+    .img_encabezado_emprendimientos img {
+        width: 100%;
+        max-width: 300px;
+        height: 250px;
+    }
+    
+    .texto_encabezado_emprendimientos h1 {
+        font-size: 1.4em;
+    }
+    
+    .texto_encabezado_emprendimientos .info_general {
+        font-size: 0.9em;
+    }
+    
+    .texto_encabezado_emprendimientos p {
+        font-size: 0.85em;
+        margin: 8px 0;
+    }
+    
+    .boton_crear_emprendimiento {
+        height: 45px;
+        font-size: 0.95em;
+        margin: 15px 0;
+    }
+    
+    .Emprendimientos h2 {
+        font-size: 1.6em;
+        margin-bottom: 20px;
+    }
+    
+    .contenedor-emprendimientos {
+        gap: 15px;
+    }
+    
+    .card {
+        max-width: 100%;
+        border-radius: 10px;
+    }
+    
+    .card img {
+        height: 180px;
+    }
+    
+    .card h3 {
+        font-size: 1.1em;
+        margin: 12px 12px 8px 12px;
+    }
+    
+    .card p {
+        font-size: 0.85em;
+        padding: 0 12px;
+        margin-bottom: 8px;
+    }
+    
+    .card .precio_emprendimiento {
+        font-size: 1em;
+        padding: 0 12px 12px 12px;
+    }
+}
+
+@media (max-width: 320px) {
+    .contenedor_encabezado {
+        padding: 0 15px;
+        margin: 10px auto;
+    }
+    
+    .Emprendimientos {
+        padding: 0 15px;
+        margin: 20px auto;
+    }
+    
+    .img_encabezado_emprendimientos img {
+        max-width: 280px;
+        height: 220px;
+    }
+    
+    .texto_encabezado_emprendimientos h1 {
+        font-size: 1.3em;
+    }
+    
+    .texto_encabezado_emprendimientos .info_general {
+        font-size: 0.85em;
+    }
+    
+    .texto_encabezado_emprendimientos p {
+        font-size: 0.8em;
+    }
+    
+    .boton_crear_emprendimiento {
+        height: 42px;
+        font-size: 0.9em;
+    }
+    
+    .Emprendimientos h2 {
+        font-size: 1.4em;
+    }
+    
+    .card img {
+        height: 160px;
+    }
+    
+    .card h3 {
+        font-size: 1em;
+        margin: 10px;
+    }
+    
+    .card p {
+        font-size: 0.8em;
+        padding: 0 10px;
+    }
+    
+    .card .precio_emprendimiento {
+        font-size: 0.95em;
+        padding: 0 10px 10px 10px;
+    }
+}
+

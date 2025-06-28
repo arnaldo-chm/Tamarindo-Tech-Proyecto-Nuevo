@@ -1,0 +1,40 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+    font-family: 'Roboto', sans-serif;
+}
+
+.Contenido{
+    padding-top:80px ; /* un poco más que los 80px del header */
+    margin-bottom: 0;
+}
+
+a{
+    text-decoration: none;
+}
+
+/* Sticky Footer Layout
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+} */
+
+/* .main-content {
+  flex: 1;
+} */
+
+html{
+    scroll-behavior: smooth;
+}
+
+@view-transition{
+  navigation: auto;
+}
+
+::view-transition-group(*){
+  animation-duration: 2s;
+}
+
+
