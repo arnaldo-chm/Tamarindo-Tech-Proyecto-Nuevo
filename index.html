@@ -4,61 +4,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Cuenta</title>
-    <link rel="stylesheet" href="./css/general.css">
-    <link rel="stylesheet" href="./css/login.css">
+    <link rel="stylesheet" href="../css/general.css">
+    <link rel="stylesheet" href="../css/formularios.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
 </head>
 <body>
-    <div class="contenedor_general">
-        <div class="contenedor_columna_izquierda">
-            <div class="contenedor_formulario">
+    <!-- Header -->
+    <header class = "header" id="header">
+        <div class="logo">
+            <h1>Tamarindo Tech</h1>
+        </div>
+    </header>
+    <main class="Contenido">
+         <div class="contenedor-formulario">
+            <div class="formulario">
                 <h1>
-                    Comienza Ahora
+                Comienza Ahora
                 </h1>
-
                 <div class="contenedor_entrada">
-                    <label for="nombre">
-                        Nombre*
-                    </label>
-                    <input type="text" id="nombre" placeholder="Introduce tu nombre" required>
+                        <label for="nombre">
+                            Nombre*
+                        </label>
+                        <input type="text" id="nombre" placeholder="Introduce tu nombre" required>
+                    </div>
+
+                    <div class="contenedor_entrada">
+                        <label for="correo">
+                            Correo electrónico*
+                        </label>
+                        <input type="email" id="correo" placeholder="Introduce tu correo" required> 
+                    </div>
+
+                    <div class="contenedor_entrada">
+                        <label for="contrasena">
+                            Contraseña*
+                        </label>
+                        <input type="password" id="contrasena" placeholder="Introduce tu contraseña" required>
+                    </div>
+
+                    <div class="contenedor_boton">
+                        <input type="submit" value="Registrarse" class="envio">
+                    </div>
+
+                    <div class="contenedor_terminos">
+                        <input type="checkbox" name="checkbox_terminos" id="checkbox_terminos">
+                        <label for="checkbox_terminos"> Acepto los términos y condiciones.</label>
+                    </div>
+
+                    <div class="contenedor_link_iniciosesion">
+                        <p>¿Ya tienes una cuenta? <a href="./html/login.html">Inicia Sesión</a></p> 
+                    </div>
+                    </div>
+            </div>
+            
+
+
+         <div class="contenedor-mensaje">
+            <h3>
+                🏡 ¡Únete a la comunidad!
+            </h3>
+            <br>
+            <p>
+                Crea tu cuenta y sé parte de nuestra comunidad.
+                Accede a noticias, eventos, opciones de transporte y toda la información que necesitas para mantenerte
+                conectado con lo que sucede a tu alrededor.
+                <br><br>
+                💬 Estar informado es estar cerca.
+                <br><br>
+                ¡Regístrate hoy y empieza a disfrutar de todos los beneficios!
+            </p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-contenedor">
+            <div class="footer-contenido">
+                <!-- Columna 1: Logo y redes sociales -->
+                <div class="footer-section">
+                    <h3>Nunciatura</h3>
+                    <div class="social-icons">
+                        <!-- Twitter/X -->
+                        <a href="#" aria-label="Twitter">
+                            <img src="../imagenes/X.png" alt="Twitter/X">
+                        </a>
+                        <!-- Instagram -->
+                        <a href="#" aria-label="Instagram">
+                            <img src="../imagenes/logotipo-de-instagram.png" alt="Instagram">
+                        </a>
+                        <!-- YouTube -->
+                        <a href="#" aria-label="YouTube">
+                            <img src="../imagenes/youtube.png" alt="YouTube">
+                        </a>
+                        <!-- LinkedIn -->
+                        <a href="#" aria-label="LinkedIn">
+                           <img src="../imagenes/linkedin.png" alt="LinkedIn">
+                        </a>
+                    </div>
                 </div>
 
-                <div class="contenedor_entrada">
-                    <label for="correo">
-                        Correo electrónico*
-                    </label>
-                    <input type="email" id="correo" placeholder="Introduce tu correo" required> 
+                <!-- Columna 2: Contactenos -->
+                <div class="footer-section">
+                    <h3>Contactenos</h3>
+                    <ul>
+                        <li><a href="#">Preguntas Frecuentes</a></li>
+                    </ul>
                 </div>
 
-                <div class="contenedor_entrada">
-                    <label for="contrasena">
-                        Contraseña*
-                    </label>
-                    <input type="password" id="contrasena" placeholder="Introduce tu contraseña" required>
+                <!-- Columna 3: Información -->
+                <div class="footer-section">
+                    <h3>Información</h3>
+                    <ul>
+                        <li><a href="#">Tamarindo Tech</a></li>
+                    </ul>
                 </div>
 
-                <div class="contenedor_boton_registro">
-                    
-                    <a href="./html/inicio.html">
-                        <button class="boton_registro">
-                            Registrarse
-                        </button>
-                    </a>
+                <!-- Columna 4: Recursos -->
+                <div class="footer-section">
+                    <h3>Recursos</h3>
+                    <ul>
+                        <li><a href="#">Tutoriales</a></li>
+                        <li><a href="#">Ayuda</a></li>
+                        <li><a href="#">Contactar al Administrador</a></li>
+                    </ul>
                 </div>
-
-                <div class="contenedor_terminos">
-                    <input type="checkbox" name="checkbox_terminos" id="checkbox_terminos">
-                    <label for="checkbox_terminos"> Acepto los términos y condiciones.</label>
-                </div>
-
-                <div class="contenedor_link_iniciosesion">
-                    <p>¿Ya tienes una cuenta? <a href="./html/login.html">Inicia Sesión</a></p> 
-                </div>
-
             </div>
         </div>
-        <div class="contenedor_imagen">
-            <img src="imagenes/imagen_login.png" alt="Imagen de Nunciatura">
-        </div>
-    </div>
+    </footer>
 </body>
 </html>

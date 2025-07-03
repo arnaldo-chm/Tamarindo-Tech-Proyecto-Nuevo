@@ -1,0 +1,134 @@
+.Contenido{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+.contenedor-formulario {
+  margin-top: 50px;
+  max-width: 600px;
+  width: 35%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #f5f5f5;
+  padding: 2%;
+  border-radius: 12px;
+  font-size: 1.2em;
+}
+
+.formulario h1 {
+  font-size: 1.5em;
+  color: #668c31;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.contenedor_entrada{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 5% 0% 0% 0%;
+}
+
+.contenedor_entrada label {
+  font-size: 1.2em;
+  color: #668c31;
+}
+
+.contenedor_entrada input{
+    margin-top: 5px;
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.contenedor_entrada input:focus{
+    color: #547A20;
+}
+
+.contenedor_boton {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 7% 0% 0% 0%;
+    background-color:bisque;
+}
+
+.envio {
+    width: 100%;
+    background-color: #668c31;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 0 auto;
+
+}
+
+.contenedor-mensaje{
+    max-width: 500px;
+    margin-left: 100px;
+}
+
+.contenedor_terminos{
+    font-size: 0.8em;
+    width:100%;
+    margin: 5px;
+}
+
+.contenedor_link_iniciosesion{
+    font-size: 0.8em;
+    margin: 5% 0% 0% 0%;
+}
+.contenedor_link_iniciosesion a{
+    color:  #547A20;
+}
+.contenedor_link_iniciosesion p{
+    text-align: center;
+}
+
+main{
+    background: linear-gradient( #789e42, #9cc264);
+}
+
+body{
+    background: linear-gradient( #9cc264, #9cc264);
+}
+
+.envio:hover {
+  background-color: #fff;
+}
+
+.formulario p {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+}
+
+@media (max-width: 1113px) {
+
+  .Contenido{
+    flex-direction: column;
+    gap: 5px;
+    height: auto;
+  }
+  .contenedor-formulario {
+  width: auto;
+}
+  .contenedor-mensaje{
+    text-align: center;
+    margin: 20px;
+  }
+  footer{
+    margin-top: 50px;
+  }
+}
