@@ -78,6 +78,23 @@
     margin-left: 100px;
 }
 
+.contenedor_terminos{
+    font-size: 0.8em;
+    width: 90%;
+    padding: 5px;
+}
+
+.contenedor_link_iniciosesion{
+    font-size: 0.8em;
+    margin: 5% 0% 0% 0%;
+}
+.contenedor_link_iniciosesion a{
+    color:  #547A20;
+}
+.contenedor_link_iniciosesion p{
+    text-align: center;
+}
+
 main{
     background: linear-gradient( #789e42, #9cc264);
 }

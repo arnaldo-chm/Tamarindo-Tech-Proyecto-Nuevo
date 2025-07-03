@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesion</title>
+    <title>Crear Cuenta</title>
     <link rel="stylesheet" href="../css/general.css">
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/formularios.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
 </head>
 <body>
-    <div class="contenedor_general">
-        <div class="contenedor_columna_izquierda">
-            <div class="contenedor_formulario">
+    <!-- Header -->
+    <header class = "header" id="header">
+        <div class="logo">
+            <h1>Tamarindo Tech</h1>
+        </div>
+    </header>
+    <main class="Contenido">
+        <div class="contenedor-formulario">
+            <div class="formulario">
                 <h1>
-                    Iniciar Sesión
-                </h1>
+                Inicia Sesión
+                </h1>                
 
                 <div class="contenedor_entrada">
                     <label for="correo">
@@ -29,20 +37,82 @@
                     <input type="password" id="contrasena" placeholder="Introduce tu contraseña" required>
                 </div>
 
-                <div class="contenedor_boton_registro">
-                    
-                    <a href="inicio.html">
-                        <button class="boton_registro">
-                            Iniciar Sesión
-                        </button>
-                    </a>
+                <div class="contenedor_boton">
+                    <input type="submit" value="Registrarse" class="envio">
                 </div>
 
             </div>
         </div>
-        <div class="contenedor_imagen">
-            <img src="../imagenes/imagen_login.png" alt="Imagen de Nunciatura">
+            
+
+
+        <div class="contenedor-mensaje">
+            <h3>
+                👋 ¡Bienvenido de nuevo!
+            </h3>
+            <br>
+            <p>
+                Ingresa a tu cuenta y mantente al día con todo lo que ocurre en tu comunidad.
+                Noticias, eventos, transporte y mucho más te están esperando.
+                <br><br>
+                ✨ Tu comunidad, a un clic de distancia.            
+            </p>
         </div>
-    </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-contenedor">
+            <div class="footer-contenido">
+                <!-- Columna 1: Logo y redes sociales -->
+                <div class="footer-section">
+                    <h3>Nunciatura</h3>
+                    <div class="social-icons">
+                        <!-- Twitter/X -->
+                        <a href="#" aria-label="Twitter">
+                            <img src="../imagenes/X.png" alt="Twitter/X">
+                        </a>
+                        <!-- Instagram -->
+                        <a href="#" aria-label="Instagram">
+                            <img src="../imagenes/logotipo-de-instagram.png" alt="Instagram">
+                        </a>
+                        <!-- YouTube -->
+                        <a href="#" aria-label="YouTube">
+                            <img src="../imagenes/youtube.png" alt="YouTube">
+                        </a>
+                        <!-- LinkedIn -->
+                        <a href="#" aria-label="LinkedIn">
+                           <img src="../imagenes/linkedin.png" alt="LinkedIn">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Columna 2: Contactenos -->
+                <div class="footer-section">
+                    <h3>Contactenos</h3>
+                    <ul>
+                        <li><a href="#">Preguntas Frecuentes</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 3: Información -->
+                <div class="footer-section">
+                    <h3>Información</h3>
+                    <ul>
+                        <li><a href="#">Tamarindo Tech</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 4: Recursos -->
+                <div class="footer-section">
+                    <h3>Recursos</h3>
+                    <ul>
+                        <li><a href="#">Tutoriales</a></li>
+                        <li><a href="#">Ayuda</a></li>
+                        <li><a href="#">Contactar al Administrador</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
