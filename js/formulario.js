@@ -15,11 +15,21 @@ const expresiones ={
 
 // Se crea un objeto para mapear la validación de cada campo del formulario al momento de validar el formulario completo.
 // Cada propiedad de este objeto será actualizada en las función de validación respectiva a la propiedad.
-const campos={
-    nombre: false,
-    password: false,
-    correo: false,
-    telefono: false
+let campos = {};
+if(formulario.name==="registrarse"){
+    campos={
+        nombre: false,
+        password: false,
+        correo: false,
+        telefono: false
+    }
+}else if (formulario.name==="iniciarsesion") {
+    campos={
+        correo: false,
+        password: false
+    }
+} else {
+    
 }
 
 const validarFormulario = (e)=>{
@@ -29,7 +39,9 @@ const validarFormulario = (e)=>{
         break;
         case "password":
             validarCampo(expresiones.password,e.target,"password");
-            validarPassword2();
+            if (formulario.name==="registrarse") {
+                validarPassword2();
+            }            
         break;
         case "password2":
             validarPassword2();
@@ -92,14 +104,36 @@ inputs.forEach((input)=>{
 
 formulario.addEventListener("submit",(e) =>{
     e.preventDefault();
-
     const terminos = document.getElementById("terminos");
-    if(campos.nombre && campos.password && campos.correo && campos.telefono && terminos.checked){
+    let validacion = true;
+
+    for (const key in campos) {        
+        if (campos[key] === false) {
+            validacion = false;
+        }
+    }
+
+    if (terminos !== null && !terminos.checked) {
+        validacion = false;
+    }
+
+    if(validacion === true){
         document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
         document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
 
         setTimeout(()=>{
-           location.reload(); 
+
+
+            if (formulario.name==="registrarse") {
+                location.reload();
+            }
+            else if (formulario.name==="iniciarsesion") {
+                window.location.href = "../html/inicio.html";
+            } else {
+                
+            }
+
+           
         },4000)
 
     }else{

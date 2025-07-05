@@ -20,7 +20,7 @@
 
         <div class="contenedor-formulario">
 
-            <form action="#" class="formulario" id="formulario">
+            <form action="#" class="formulario" id="formulario" name="iniciarsesion">
                 <h1>
                     Inicia Sesión
                 </h1>                
@@ -58,8 +58,11 @@
                 </div>
 
                 <!-- GRUPO ENVIAR-->
-                <div class="formulario__grupo formulario__grupo-btn-enviar">    
-                    <a href="./inicio.html"><input type="" class="formulario__btn" value="Iniciar Sesión"></a>                                    
+                <div class="formulario__grupo formulario__grupo-btn-enviar">
+                    <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">
+                        Inició Sesión Correctamente
+                    </p>
+                    <input type="submit" class="formulario__btn" value="Iniciar Sesión">
                 </div>
 
                 <div class="contenedor_link_iniciosesion">
@@ -139,5 +142,6 @@
             </div>
         </div>
     </footer>
+    <script src="../js/formulario.js"></script>
 </body>
 </html>
