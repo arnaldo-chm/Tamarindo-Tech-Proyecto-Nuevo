@@ -52,7 +52,7 @@ body{
 }
 
 .formulario__input{
-    margin-top: 5px;
+    margin: 5px 0px;
     width: 100%;
     padding: 8px;
     font-size: 16px;
@@ -96,6 +96,7 @@ body{
   transition: background-color 0.3s ease;
   display: block;
   margin: 0 auto;
+  text-align: center;
 }
 
 .formulario__btn:hover{

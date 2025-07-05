@@ -16,32 +16,57 @@
             <h1>Tamarindo Tech</h1>
         </div>
     </header>
-    <main class="Contenido">
+    <main class="Contenido">        
+
         <div class="contenedor-formulario">
-            <div class="formulario">
+
+            <form action="#" class="formulario" id="formulario">
                 <h1>
-                Inicia Sesión
+                    Inicia Sesión
                 </h1>                
 
-                <div class="contenedor_entrada">
-                    <label for="correo">
-                        Correo electrónico*
-                    </label>
-                    <input type="email" id="correo" placeholder="Introduce tu correo" required> 
+                <!-- GRUPO CORREO-->
+                <div class="formulario__grupo" id="grupo__correo">
+                    <label class="formulario__label">Correo electronico</label>
+                    <div class="formulario__grupo-input">
+                        <input type="email" class="formulario__input" name="correo" id="correo" placeholder="correo@correo.com">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        Debe agregar un correo con la siguiente estructura usuario@dominio.extension,
+                        usuario acepta letras,guión bajo y números,
+                        dominio acepta solo letras,
+                        extension, acepta solo letras
+                    </p>
                 </div>
 
-                <div class="contenedor_entrada">
-                    <label for="contrasena">
-                        Contraseña*
-                    </label>
-                    <input type="password" id="contrasena" placeholder="Introduce tu contraseña" required>
+                <!-- GRUPO CONTRASEÑA-->
+                <div class="formulario__grupo" id="grupo__password">
+                    <label class="formulario__label">Contraseña*</label>
+                    <div class="formulario__grupo-input">
+                        <input type="password" class="formulario__input" name="password" id="password">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        La contraseña debe ser de 4 a 12 digitos
+                    </p>
+                </div>                
+
+                <!-- GRUPO DE CAMPOS REQUERIDOS-->
+                <div class="formulario__mensaje " id="formulario__mensaje">
+                    <p>Error: Debes completar todos los campos</i></p>
                 </div>
 
-                <div class="contenedor_boton">
-                    <a href="./inicio.html"><input type="submit" value="Iniciar Sesión" class="envio"></a>
+                <!-- GRUPO ENVIAR-->
+                <div class="formulario__grupo formulario__grupo-btn-enviar">    
+                    <a href="./inicio.html"><input type="" class="formulario__btn" value="Iniciar Sesión"></a>                                    
                 </div>
 
-            </div>
+                <div class="contenedor_link_iniciosesion">
+                    <p>¿Aún no tienes una cuenta? <a href="../index.html">Crear Cuenta</a></p> 
+                </div>
+
+            </form>            
         </div>
             
 
