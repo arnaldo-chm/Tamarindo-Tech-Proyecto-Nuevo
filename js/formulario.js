@@ -1,16 +1,34 @@
 //Se crea una constante con todas las entradas del formulario
-const inputs = document.querySelectorAll('#formulario input');
+// No se incluye la validación de archivos.
+const inputs = document.querySelectorAll('#formulario input:not([type="submit"]):not([type="file"]):not([type="checkbox"])'); 
 
 // Se crea un elemento formulario para manipular el evento Submit.
 const formulario = document.getElementById("formulario");
 
 // Se creta un Objeto expresiones que contiene todas las Expresiones
-const expresiones ={
-    //El nombre admite un primer elemento (nombre) con letras mayúsculas, minúsculas 
-    nombre : /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/, 
-    password:/^.{4,12}$/, //Acepta todo Rango de 4 a 12
-    correo :/^[a-zA-Z0-9\_]+@[a-zA-Z]+\.[a-zA-Z]+$/ , //Estructura dato1@dato2.dato3 dato1:acepta letras minusculas y mayusculas, numeros, y acepta guion bajo  dato2 y 3 : Aceptan solo letras mayusculas y minusculas
-    telefono :/^\+?\d{8,15}$/ //Acepta digitos Rango es de 8 a 15. Permite ingresar un + al inicio para código de paisa.
+let expresiones = {};
+if(formulario.name==="registrarse"){
+    expresiones ={
+        //El nombre admite un primer elemento (nombre) con letras mayúsculas, minúsculas 
+        nombre : /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/, 
+        password:/^.{4,12}$/, //Acepta todo Rango de 4 a 12
+        correo :/^[a-zA-Z0-9\_]+@[a-zA-Z]+\.[a-zA-Z]+$/ , //Estructura dato1@dato2.dato3 dato1:acepta letras minusculas y mayusculas, numeros, y acepta guion bajo  dato2 y 3 : Aceptan solo letras mayusculas y minusculas
+        telefono :/^\+?\d{8,15}$/ //Acepta digitos Rango es de 8 a 15. Permite ingresar un + al inicio para código de paisa.
+    }
+}else if (formulario.name==="iniciarsesion") {
+    expresiones ={
+        //El nombre admite un primer elemento (nombre) con letras mayúsculas, minúsculas 
+        correo :/^[a-zA-Z0-9\_]+@[a-zA-Z]+\.[a-zA-Z]+$/ , //Estructura dato1@dato2.dato3 dato1:acepta letras minusculas y mayusculas, numeros, y acepta guion bajo  dato2 y 3 : Aceptan solo letras mayusculas y minusculas
+        password:/^.{4,12}$/, //Acepta todo Rango de 4 a 12       
+    }
+} else if (formulario.name==="registrar_emprendimiento") {
+    expresiones ={
+        //El nombre admite un primer elemento (nombre) con letras mayúsculas, minúsculas 
+        nombre : /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/, 
+        nombre_emprendimiento: /^[a-zA-Z0-9\_\-]{5,15}$/,
+        categoria: /^[a-zA-Z]{5,10}$/,
+        telefono :/^\+?\d{8,15}$/ //Acepta digitos Rango es de 8 a 15. Permite ingresar un + al inicio para código de paisa.
+    }
 }
 
 // Se crea un objeto para mapear la validación de cada campo del formulario al momento de validar el formulario completo.
@@ -28,15 +46,17 @@ if(formulario.name==="registrarse"){
         correo: false,
         password: false
     }
-} else {
-    
+} else if (formulario.name==="registrar_emprendimiento"){
+    campos={
+        nombre: false,
+        nombre_emprendimiento: false,
+        categoria: false,
+        telefono: false
+    }
 }
 
 const validarFormulario = (e)=>{
     switch(e.target.name){ //
-        case "nombre":
-            validarCampo(expresiones.nombre,e.target,"nombre");
-        break;
         case "password":
             validarCampo(expresiones.password,e.target,"password");
             if (formulario.name==="registrarse") {
@@ -45,32 +65,34 @@ const validarFormulario = (e)=>{
         break;
         case "password2":
             validarPassword2();
-        break;
-        case "correo":
-            validarCampo(expresiones.correo,e.target,"correo")
-        break;
-        case "telefono":
-            validarCampo(expresiones.telefono,e.target,"telefono")
-        break;
+        break;        
+        default:
+            validarCampo(expresiones[e.target.name],e.target,e.target.name)
+            break;
     }
 }
 
 const validarCampo= (expresion,input,campo)=>{
-    if(expresion.test(input.value)){
-        document.getElementById(`grupo__${campo}`).classList.remove("formulario__grupo-incorrecto");
-        document.getElementById(`grupo__${campo}`).classList.add("formulario__grupo-correcto");
-        document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.remove("formulario__input-error-activo");
-        document.querySelector(`#grupo__${campo} i`).classList.remove("bxs-x-circle");
-        document.querySelector(`#grupo__${campo} i`).classList.add("bxs-check-circle");
-        campos[campo]=true;
-    }else{        
-        document.getElementById(`grupo__${campo}`).classList.add("formulario__grupo-incorrecto");
-        document.getElementById(`grupo__${campo}`).classList.remove("formulario__grupo-correcto");
-        document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.add("formulario__input-error-activo");
-        document.querySelector(`#grupo__${campo} i`).classList.add("bxs-x-circle");
-        document.querySelector(`#grupo__${campo} i`).classList.remove("bxs-check-circle");
-        campos[campo]=false;
+    try {
+        if(expresion.test(input.value)){
+            document.getElementById(`grupo__${campo}`).classList.remove("formulario__grupo-incorrecto");
+            document.getElementById(`grupo__${campo}`).classList.add("formulario__grupo-correcto");
+            document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.remove("formulario__input-error-activo");
+            document.querySelector(`#grupo__${campo} i`).classList.remove("bxs-x-circle");
+            document.querySelector(`#grupo__${campo} i`).classList.add("bxs-check-circle");
+            campos[campo]=true;
+        }else{        
+            document.getElementById(`grupo__${campo}`).classList.add("formulario__grupo-incorrecto");
+            document.getElementById(`grupo__${campo}`).classList.remove("formulario__grupo-correcto");
+            document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.add("formulario__input-error-activo");
+            document.querySelector(`#grupo__${campo} i`).classList.add("bxs-x-circle");
+            document.querySelector(`#grupo__${campo} i`).classList.remove("bxs-check-circle");
+            campos[campo]=false;
+        }
+    } catch (error) {
+        window.alert(error)
     }
+    
 }
 
 const validarPassword2=()=>{
@@ -123,14 +145,10 @@ formulario.addEventListener("submit",(e) =>{
 
         setTimeout(()=>{
 
-
-            if (formulario.name==="registrarse") {
-                location.reload();
-            }
-            else if (formulario.name==="iniciarsesion") {
+            if (formulario.name==="iniciarsesion") {
                 window.location.href = "../html/inicio.html";
             } else {
-                
+                 location.reload();
             }
 
            
