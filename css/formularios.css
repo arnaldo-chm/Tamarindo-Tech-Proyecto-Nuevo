@@ -58,6 +58,7 @@ body{
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 8px;
+    padding-right: 35px;
 }
 
 .formulario__input:focus{
@@ -66,11 +67,16 @@ body{
 
 .formulario__validacion-estado{
     position: absolute;
-    bottom: 10px;
+    bottom: 15px;
     right: 10px;
     font-size: 20px;
     opacity: 0;
 }
+
+#grupo__reporte .formulario__validacion-estado{
+    bottom: 80px;
+}
+
 
 .formulario__input-error{
     font-size: 12px;
@@ -114,6 +120,10 @@ body{
 }
 .contenedor_link_iniciosesion p{
     text-align: center;
+}
+
+#reporte{
+  resize: none; 
 }
 
 /*CSS LLAMADO POR EL JS*/

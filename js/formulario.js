@@ -1,6 +1,6 @@
 //Se crea una constante con todas las entradas del formulario
 // Se excluye de la validación los inputs tipo file, submit y checkbox.
-const inputs = document.querySelectorAll('#formulario input:not([type="submit"]):not([type="file"]):not([type="checkbox"])'); 
+const inputs = document.querySelectorAll('#formulario input:not([type="submit"]):not([type="file"]):not([type="checkbox"]), #formulario textarea'); 
 
 // Se crea un elemento formulario para manipular el evento Submit.
 const formulario = document.getElementById("formulario");
@@ -27,9 +27,14 @@ if(formulario.name==="registrarse"){
 } else if (formulario.name==="registrar_emprendimiento") {
     expresiones ={        
         nombre : /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/,  // Misma expresion regular usada para el nombre en Registrarse.
-        nombre_emprendimiento: /^[a-zA-Z0-9\_\-]{5,15}$/, // Nombre Emprendimiento acepta un rango de 5 a 15 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas, guión y guión bajo.
+        nombre_emprendimiento: /^[a-zA-Z0-9À-ÿ\s\_\-]{5,20}$/, // Nombre Emprendimiento acepta un rango de 5 a 15 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas, guión, guión bajo, espacios y acentos.
         categoria: /^[a-zA-Z]{5,10}$/, // Categoría de Emprendimiento acepta un rango de 5 a 10 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas.
         telefono :/^\+?\d{8,15}$/ // Misma expresion regular usada para el nombre en Registrarse.
+    }
+} else if (formulario.name==="crear_reporte") {
+    expresiones ={        
+        nombre : /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/,  // Misma expresion regular usada para el nombre en Registrarse.
+        reporte: /^.{10,}$/, // Reporte Acepta 10 o más caracteres de cualquier tipo        
     }
 }
 
@@ -55,6 +60,11 @@ if(formulario.name==="registrarse"){
         nombre_emprendimiento: false,
         categoria: false,
         telefono: false
+    }
+} else if (formulario.name==="crear_reporte"){
+    campos={
+        nombre: false,
+        reporte: false
     }
 }
 
@@ -170,7 +180,10 @@ formulario.addEventListener("submit",(e) =>{
 
             if (formulario.name==="iniciarsesion") {
                 window.location.href = "../html/inicio.html";
-            } else {
+            } else if (formulario.name==="registrarse"){
+                window.location.href = "../html/login.html";
+
+            }else{
                  location.reload();
             }
 
