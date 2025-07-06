@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,59 +9,117 @@
     <link rel="stylesheet" href="../css/formularios.css">
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
+
 <body>
     <!-- Header -->
-    <header class = "header" id="header">
+    <header class="header" id="header">
         <div class="logo">
             <h1>Tamarindo Tech</h1>
         </div>
     </header>
     <main class="Contenido">
-         <div class="contenedor-formulario">
-            <div class="formulario">
+        <div class="contenedor-formulario">
+
+            <form action="#" class="formulario" id="formulario" name="registrarse">
                 <h1>
-                Comienza Ahora
+                    Comienza Ahora
                 </h1>
-                <div class="contenedor_entrada">
-                        <label for="nombre">
-                            Nombre*
-                        </label>
-                        <input type="text" id="nombre" placeholder="Introduce tu nombre" required>
+                <!-- GRUPO NOMBRE-->
+                <div class="formulario__grupo" id="grupo__nombre">
+                    <label class="formulario__label">Nombre completo*</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="nombre" id="nombre" placeholder="Introduce tu nombre">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
+                    <p class="formulario__input-error">
+                        Debe ingresar su nombre (requerido), primer apellido (requerido) y segundo apellido (opcional).
+                        Separados por un espacio. Nombre puede tener de 3 a 10 letras, Apellidos de 2 a 10 letras, todos puede incluir maýusculas y minúsculas.
+                    </p>
+                </div>
 
-                    <div class="contenedor_entrada">
-                        <label for="correo">
-                            Correo electrónico*
-                        </label>
-                        <input type="email" id="correo" placeholder="Introduce tu correo" required> 
+                <!-- GRUPO CORREO-->
+                <div class="formulario__grupo" id="grupo__correo">
+                    <label class="formulario__label">Correo electronico</label>
+                    <div class="formulario__grupo-input">
+                        <input type="email" class="formulario__input" name="correo" id="correo" placeholder="correo@correo.com">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
+                    <p class="formulario__input-error">
+                        Debe agregar un correo con la siguiente estructura usuario@dominio.extension,
+                        usuario acepta letras,guión bajo y números,
+                        dominio acepta solo letras,
+                        extension, acepta solo letras
+                    </p>
+                </div>
 
-                    <div class="contenedor_entrada">
-                        <label for="contrasena">
-                            Contraseña*
-                        </label>
-                        <input type="password" id="contrasena" placeholder="Introduce tu contraseña" required>
+                <!-- GRUPO CONTRASEÑA-->
+                <div class="formulario__grupo" id="grupo__password">
+                    <label class="formulario__label">Contraseña*</label>
+                    <div class="formulario__grupo-input">
+                        <input type="password" class="formulario__input" name="password" id="password">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
+                    <p class="formulario__input-error">
+                        La contraseña debe ser de 4 a 12 caracteres
+                    </p>
+                </div>
 
-                    <div class="contenedor_boton">
-                        <input type="submit" value="Registrarse" class="envio">
+                <!-- GRUPO CONTRASEÑA2-->
+                <div class="formulario__grupo" id="grupo__password2">
+                    <label class="formulario__label">Repetir contraseña*</label>
+                    <div class="formulario__grupo-input">
+                        <input type="password" class="formulario__input" name="password2" id="password2">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
+                    <p class="formulario__input-error">
+                        Las contraseñas no coinciden
+                    </p>
+                </div>
 
-                    <div class="contenedor_terminos">
-                        <input type="checkbox" name="checkbox_terminos" id="checkbox_terminos">
-                        <label for="checkbox_terminos"> Acepto los términos y condiciones.</label>
+                <!-- GRUPO Telefono-->
+                <div class="formulario__grupo " id="grupo__telefono">
+                    <label class="formulario__label">Teléfono</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="telefono" id="telefono">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
+                    <p class="formulario__input-error">
+                        El número debe tener entre 8 y 11 dígitos. Acepta un + para codigo de país
+                    </p>
+                </div>
 
-                    <div class="contenedor_link_iniciosesion">
-                        <p>¿Ya tienes una cuenta? <a href="./html/login.html">Inicia Sesión</a></p> 
-                    </div>
-                    </div>
-            </div>
-            
+                 <!-- GRUPO TERMINOS Y CONDICIONES-->
+                <div class="formulario__grupo formulario__grupo-terminos" id="grupo__terminos">
+                    <label class="formulario__label">
+                        <input type="checkbox" class="formulario__checkbox" name="terminos" id="terminos">
+                        <b class="formulario__span">Acepto los terminos y condiciones</b>
+                    </label>
 
+                </div>
 
-         <div class="contenedor-mensaje">
+                <!-- GRUPO DE CAMPOS REQUERIDOS-->
+                <div class="formulario__mensaje " id="formulario__mensaje">
+                    <p>Error: Debes completar todos los campos</i></p>
+                </div>
+
+                <!-- GRUPO ENVIAR-->
+                <div class="formulario__grupo formulario__grupo-btn-enviar">
+                    <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">
+                        Su cuenta se creó correctamente. Por favor Inicie Sesión.
+                    </p>
+                    <input type="submit" class="formulario__btn" value="Registrarse">
+                </div>
+
+                <div class="contenedor_link_iniciosesion">
+                    <p>¿Ya tienes una cuenta? <a href="./html/login.html">Inicia Sesión</a></p> 
+                </div>
+
+            </form>            
+        </div>
+
+        <div class="contenedor-mensaje">
             <h3>
                 🏡 ¡Únete a la comunidad!
             </h3>
@@ -98,7 +157,7 @@
                         </a>
                         <!-- LinkedIn -->
                         <a href="#" aria-label="LinkedIn">
-                           <img src="../imagenes/linkedin.png" alt="LinkedIn">
+                            <img src="../imagenes/linkedin.png" alt="LinkedIn">
                         </a>
                     </div>
                 </div>
@@ -131,5 +190,7 @@
             </div>
         </div>
     </footer>
+    <script src="./js/formulario.js"></script>
 </body>
+
 </html>

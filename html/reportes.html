@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,9 @@
     <link rel="stylesheet" href="../css/general.css">
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/formularios.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
+
 <body>
 
     <header class="header">
@@ -16,10 +19,10 @@
         <div class="logo">
             <h1>Tamarindo Tech</h1>
         </div>
-            <input type="checkbox" id="check">
+        <input type="checkbox" id="check">
         <label for="check" class="btn">☰</label>
-        
-        <nav class="Links_Header" id= "Links_Header">
+
+        <nav class="Links_Header" id="Links_Header">
             <ul>
                 <li><a href="inicio.html">Inicio</a></li>
                 <li><a href="noticias.html">Anuncios/Noticias</a></li>
@@ -35,34 +38,76 @@
 
         <div class="contenedor-formulario">
 
-            <div class="formulario">
+
+            <form action="#" class="formulario" id="formulario" name="crear_reporte">
 
                 <h1>Comparte tu Reporte</h1>
-
-                <div class="contenedor_entrada">
-                    <label for="texto_reporte">Reporte/Quejas</label>
-                    <input type="text" id="texto_reporte">
+                <!-- GRUPO NOMBRE-->
+                <div class="formulario__grupo" id="grupo__nombre">
+                    <label class="formulario__label">Nombre completo*</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="nombre" id="nombre" placeholder="Introduce tu nombre">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        Debe ingresar su nombre (requerido), primer apellido (requerido) y segundo apellido (opcional).
+                        Separados por un espacio. Nombre puede tener de 3 a 10 letras, Apellidos de 2 a 10 letras, todos puede incluir maýusculas y minúsculas.
+                    </p>
                 </div>
 
-                <div class="contenedor_boton">
-                    <input type="submit" value="Enviar" class="envio">
+                <!-- GRUPO Reporte-->
+                <div class="formulario__grupo" id="grupo__reporte">
+                    <label class="formulario__label">Ingresa los detalles de tu reporte*</label>
+                    <div class="formulario__grupo-input">
+                        <textarea class="formulario__input" id="reporte" name="reporte" rows="8"></textarea>
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        El reporte debe contener al menos 10 caracteres.
+                    </p>
                 </div>
-                
-                <p>Al describir su reporte o queja se le podra darle seguimiento</p>
-            </div>
+
+                <!-- GRUPO Archivo-->
+                <div class="formulario__grupo " id="grupo__archivo">
+                    <label class="formulario__label">Agrega una imagen de tu Reporte</label>
+                    <div class="formulario__grupo-input">
+                        <input type="file"  class="formulario__input" name="archivo" id="archivo" placeholder="">                       
+                    </div>
+                    <p class="formulario__input-error">
+                        El número debe tener entre 8 y 11 dígitos. Acepta un + para codigo de país
+                    </p>
+                </div>
+
+                <!-- GRUPO DE CAMPOS REQUERIDOS-->
+                <div class="formulario__mensaje " id="formulario__mensaje">
+                    <p>Error: Debes completar todos los campos</i></p>
+                </div>
+
+                <!-- GRUPO ENVIAR-->
+                <div class="formulario__grupo formulario__grupo-btn-enviar">
+                    <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">
+                        El Reporte se envió correctamente
+                    </p>
+                    <input type="submit" class="formulario__btn" value="Enviar Reporte">
+                </div>                
+
+            </form>
+
         </div>
 
         <div class="contenedor-mensaje">
             <h3>
                 Tiene alguna duda o consulta?
             </h3>
-            <p>Tu voz es importante para nosotros. Si has visto algo que necesita atención, tienes una queja no dudes en decirnos tu problema  <br><br>
-                Nuestro equipo revisa cada reporte con seriedad y compromiso. ¡Ayúdanos a construir un mejor entorno para todos!</p>
-        </div>  
+            <p>Tu voz es importante para nosotros. Si has visto algo que necesita atención, tienes una queja no dudes en
+                decirnos tu problema <br><br>
+                Nuestro equipo revisa cada reporte con seriedad y compromiso. ¡Ayúdanos a construir un mejor entorno
+                para todos!</p>
+        </div>
     </main>
 
 
-        <footer class="footer">
+    <footer class="footer">
         <div class="footer-contenedor">
             <div class="footer-contenido">
                 <!-- Columna 1: Logo y redes sociales -->
@@ -83,7 +128,7 @@
                         </a>
                         <!-- LinkedIn -->
                         <a href="#" aria-label="LinkedIn">
-                           <img src="../imagenes/linkedin.png" alt="LinkedIn">
+                            <img src="../imagenes/linkedin.png" alt="LinkedIn">
                         </a>
                     </div>
                 </div>
@@ -118,6 +163,8 @@
             </div>
         </div>
     </footer>
+    <script src="../js/formulario.js"></script>
 
 </body>
+
 </html>
