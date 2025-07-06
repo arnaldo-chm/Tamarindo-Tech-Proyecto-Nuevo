@@ -16,7 +16,7 @@ if(formulario.name==="registrarse"){
         nombre : /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/, 
         password:/^.{4,12}$/, //Acepta todo caracter Rango de 4 a 12
         correo :/^[a-zA-Z0-9\_]+@[a-zA-Z]+\.[a-zA-Z]+$/ , //Estructura dato1@dato2.dato3 dato1:acepta letras minusculas y mayusculas, numeros, y acepta guion bajo  dato2 y 3 : Aceptan solo letras mayusculas y minusculas
-        telefono :/^\+?\d{8,15}$/ //Acepta de 8 a 15 digitos. Permite ingresar un + al inicio para código de pais.
+        telefono :/^\+?\d{8,11}$/ //Acepta de 8 a 15 digitos. Permite ingresar un + al inicio para código de pais.
     }
 }else if (formulario.name==="iniciarsesion") {
     // Esta validación es temporal, mientras se implementa la validación de usuario y contraseña contra la base de datos.
@@ -29,7 +29,7 @@ if(formulario.name==="registrarse"){
         nombre : /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/,  // Misma expresion regular usada para el nombre en Registrarse.
         nombre_emprendimiento: /^[a-zA-Z0-9À-ÿ\s\_\-]{5,20}$/, // Nombre Emprendimiento acepta un rango de 5 a 15 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas, guión, guión bajo, espacios y acentos.
         categoria: /^[a-zA-Z]{5,10}$/, // Categoría de Emprendimiento acepta un rango de 5 a 10 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas.
-        telefono :/^\+?\d{8,15}$/ // Misma expresion regular usada para el nombre en Registrarse.
+        telefono :/^\+?\d{8,11}$/ // Misma expresion regular usada para el nombre en Registrarse.
     }
 } else if (formulario.name==="crear_reporte") {
     expresiones ={        
