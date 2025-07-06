@@ -449,7 +449,7 @@ header{
     color: #547A20;
     text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
     line-height: 1.2;
-    text-decoration: underline;
+    /* text-decoration: underline; */
 }
 
 /* Enfoque */

@@ -7,6 +7,8 @@
     margin: 40px 100px; /* mismo left-margin que usamos en Noticias */
     gap: 5%;
     flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 
 .texto_bienvenido p{
@@ -15,7 +17,6 @@
     font-size: 1.1em;
     line-height: 1.5em;
     margin-bottom: 30px;
-    text-align: justify;
 }
 
 .titulo{
@@ -44,6 +45,7 @@
     margin-bottom: 20px;
     text-align: center;
     margin-right: 940px;
+    color: #547A20;
 
 }
 
