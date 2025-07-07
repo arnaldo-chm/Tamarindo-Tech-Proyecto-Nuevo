@@ -38,7 +38,7 @@ header{
 }
 
 .boton_sing_out{
-    background-color: #D64541;
+    background-color: #547A20;
     margin-left: 25px;
     border: none;
     padding:7px;
@@ -54,10 +54,10 @@ header{
 }
 
 .boton_sing_out:hover{
-    background-color: #547A20;
+    background-color: #A93226;
     transition: all 0.5s;
     font-size: 1.2em;
-    box-shadow: 0 0 10px #547A20;
+    box-shadow: 0 0 10px #A93226;
 }
 
 .Links_Header li a:hover{
