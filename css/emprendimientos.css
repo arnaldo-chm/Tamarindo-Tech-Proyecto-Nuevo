@@ -12,7 +12,7 @@
 
 .img_encabezado_emprendimientos img{
 
-    height: 550px; 
+    height: 500px; 
     border-radius: 10px;
     margin-bottom: 0; 
     flex-shrink: 0; 
@@ -23,6 +23,7 @@
     min-height: 400px; 
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .texto_encabezado_emprendimientos h1{
@@ -30,6 +31,7 @@
     margin-bottom: 15px;
     font-size: 2em;
     line-height: 1.2;
+    color: #668c31;
 }
 
 .texto_encabezado_emprendimientos .info_general{
@@ -75,9 +77,10 @@
 }
 
 /* SECCIÓN DE EMPRENDIMIENTOS */
+
 .Emprendimientos{
-    max-width: 1200px; 
-    margin: 60px auto; 
+    max-width: 1500px; 
+    margin: 70px auto; 
     padding: 0 100px; 
 }
 
@@ -85,7 +88,7 @@
     font-size: 2.2em; 
     margin-bottom: 30px; 
     text-align: left;
-    color: #333;
+    color: #668c31;
 }
 
 .contenedor-emprendimientos{
@@ -103,13 +106,14 @@
 /* CARDS  */
 .card {
     width: 100%; 
-    max-width: 320px; 
+    max-width: 350px; 
     border-radius: 12px; 
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
     background-color: white;
     transition: all 0.3s ease;
-    border: 1px solid rgba(0,0,0,0.05); 
+    border: 1px solid rgba(0,0,0,0.05);
+    height: 100%;
 }
 
 .card:hover {
