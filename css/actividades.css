@@ -1,4 +1,3 @@
-/* TÍTULO DE SECCIÓN */
 .modal-contenido {
   font-size: 2em;
   margin: 10px 0;
@@ -6,20 +5,16 @@
   align-items: center;
   justify-content: center;
 }
-
-/* CONTENEDOR PRINCIPAL DE TARJETAS */
   .contenedor-tarjetas {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
   max-width: 1200px;
-  margin: 0 auto; /* ya está centrado */
+  margin: 0 auto; 
   padding: 0 20px;
   box-sizing: border-box;
 }
 
-
-/* TARJETA INDIVIDUAL */
 .tarjeta {
   background-color: #fff;
   border-radius: 10px;
@@ -66,7 +61,6 @@
   background-color: #446324;
 }
 
-/* MODAL */
 .modal {
   display: none;
   position: fixed;
@@ -146,12 +140,11 @@
   cursor: pointer;
 }
 
-/* CONTENEDOR DE TEXTO + IMAGEN */
 .contenedor {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 130px; /* puedes ajustar a 30px o 20px si los quieres aún más juntos */
+  gap: 130px; 
   flex-wrap: wrap;
   margin: 40px auto;
   max-width: 1200px;
