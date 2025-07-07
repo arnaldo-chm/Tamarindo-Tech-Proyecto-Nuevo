@@ -38,15 +38,14 @@ header{
 }
 
 .boton_sing_out{
-    background-color: #668c31;
+    background-color: #D64541;
     margin-left: 25px;
     border: none;
-    padding: 10px;
+    padding:7px;
     border-radius: 10px;
     font-size: 1.1em;
     cursor: pointer;
     transition: all 0.5s;
-    
 }
 
 .boton_sing_out a{
