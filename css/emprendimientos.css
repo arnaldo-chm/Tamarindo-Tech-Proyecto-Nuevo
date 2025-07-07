@@ -79,8 +79,8 @@
 /* SECCIÓN DE EMPRENDIMIENTOS */
 
 .Emprendimientos{
-    max-width: 1200px; 
-    margin: 60px auto; 
+    max-width: 1500px; 
+    margin: 70px auto; 
     padding: 0 100px; 
 }
 
@@ -106,13 +106,14 @@
 /* CARDS  */
 .card {
     width: 100%; 
-    max-width: 320px; 
+    max-width: 350px; 
     border-radius: 12px; 
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
     background-color: white;
     transition: all 0.3s ease;
-    border: 1px solid rgba(0,0,0,0.05); 
+    border: 1px solid rgba(0,0,0,0.05);
+    height: 100%;
 }
 
 .card:hover {
