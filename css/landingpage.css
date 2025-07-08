@@ -338,12 +338,21 @@ header{
 .tarjeta:hover p{
     color: #ffffff;
 }
-
+/* integrantes */
+.integrantes{
+    background: linear-gradient(0deg, #202c16 0%, #547A20 100% );
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 /* Tarjetas y seccion de valores */
 
 .Valores{
-    background: linear-gradient(0deg, #202c16 0%,#547A20 100%);
+    background: linear-gradient(0deg, #547A20 0%,#202c16 100%);
     min-height: 100vh;
     padding: 40px 20px;
     display: flex;
@@ -455,7 +464,7 @@ header{
 /* Enfoque */
 
 .enfoque{
-    background: linear-gradient(0deg, #547A20  0%,#202c16 100%);
+    background: linear-gradient(0deg, #202c16  0%,#547A20 100%);
     min-height: 100vh;
     padding: 40px 20px;
     display: flex;
@@ -586,7 +595,7 @@ header{
 
 /* Proyectos */
 .proyectos{
-   background: linear-gradient(0deg, #202c16 0%,#547A20 100%);
+   background: linear-gradient(0deg, #547A20 0%, #202c16 100%, #1e2415 50%);   
     /* min-height: 100vh; */
     padding: 60px 20px;
     display: flex;
