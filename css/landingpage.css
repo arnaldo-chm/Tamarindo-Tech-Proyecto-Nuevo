@@ -595,7 +595,7 @@ header{
 
 /* Proyectos */
 .proyectos{
-   background: linear-gradient(0deg, #547A20 0%, #202c16 100%, #1e2415 50%);   
+   background: linear-gradient(0deg, #547A20 0%, #202c16 100%);   
     /* min-height: 100vh; */
     padding: 60px 20px;
     display: flex;
