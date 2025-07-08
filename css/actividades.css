@@ -1,16 +1,10 @@
-.modal-contenido {
-  font-size: 2em;
-  margin: 10px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-  .contenedor-tarjetas {
+/* TARJETAS */
+.contenedor-tarjetas {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
   max-width: 1200px;
-  margin: 0 auto; 
+  margin: 0 auto;
   padding: 0 20px;
   box-sizing: border-box;
 }
@@ -61,6 +55,7 @@
   background-color: #446324;
 }
 
+/* MODALES */
 .modal {
   display: none;
   position: fixed;
@@ -80,20 +75,49 @@
 
 .modal-contenido {
   background: #fff;
-  padding: 24px;
-  border-radius: 6px;
+  padding: 24px 28px;
+  border-radius: 10px;
   width: 90%;
-  max-width: 400px;
+  max-width: 480px;
   position: relative;
   text-align: left;
   animation: fadeIn 0.3s ease-in-out;
   font-size: 1em;
-  line-height: 1.5;
+  line-height: 1.6;
+  color: #333;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  font-family: 'Segoe UI', sans-serif;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to   { opacity: 1; transform: scale(1); }
+.modal-contenido h3 {
+  margin-top: 0;
+  font-size: 1.4em;
+  color: #5A7D32;
+  margin-bottom: 12px;
+}
+
+.modal-contenido p {
+  margin-bottom: 16px;
+}
+
+.modal-contenido ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.modal-contenido ul li {
+  margin-bottom: 8px;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+
+.modal-contenido ul li::before {
+  content: "•";
+  color: #5A7D32;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
 }
 
 .cerrar {
@@ -103,6 +127,12 @@
   font-size: 24px;
   color: #333;
   text-decoration: none;
+}
+
+/* ANIMACIÓN MODAL */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 /* CALENDARIO */
@@ -140,18 +170,17 @@
   cursor: pointer;
 }
 
+/* CONTENEDOR GENERAL */
 .contenedor {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 130px; 
+  gap: 130px;
   flex-wrap: wrap;
-  margin: 40px auto;
+  margin: 40px auto 10px;
   max-width: 1200px;
   padding: 0 130px;
   box-sizing: border-box;
-  margin-bottom: 10px; 
-
 }
 
 .texto_bienvenido p {
@@ -169,53 +198,86 @@
   margin-bottom: 20px;
 }
 
-/* RESPONSIVE */
+/* Tablets grandes (hasta 1024px) */
 @media (max-width: 1024px) {
-  .contenedor-cartas {
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 90%;
-  }
-
   .contenedor {
-    margin: 20px 40px;
-    gap: 30px;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 40px;
+    margin: 30px auto;
+    gap: 40px;
   }
 
   .texto_bienvenido p {
+    max-width: 600px;
     width: 100%;
-    max-width: 500px;
-    font-size: 1.3em;
+    font-size: 1.1em;
     text-align: center;
+    margin-bottom: 24px;
   }
 
   .titulo {
-    font-size: 2.2em;
     text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 16px;
+  }
+
+  .contenedor-tarjetas {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 30px;
+  }
+
+  .modal-contenido {
+    font-size: 0.95em;
+    padding: 24px;
+  }
+
+  .calendario-principal {
+    margin: 0 auto;
   }
 }
 
+/* Teléfonos móviles (hasta 600px) */
 @media (max-width: 600px) {
-  .contenedor-cartas {
-    grid-template-columns: repeat(1, 1fr);
-    padding: 20px 15px;
-  }
-
-  .tarjeta {
-    width: 90%;
-  }
-
   .contenedor {
-    margin: 10px 20px;
-    gap: 5px;
+    flex-direction: column;
+    padding: 0 20px;
+    gap: 24px;
+    margin: 20px auto;
   }
 
   .texto_bienvenido p {
-    font-size: 0.95em;
-    line-height: 1.4em;
+    font-size: 1em;
+    line-height: 1.6em;
+    text-align: justify;
+    padding: 0 10px;
+    margin-bottom: 18px;
   }
 
   .titulo {
-    font-size: 1.6em;
-    margin-bottom: 15px;
+    font-size: 1.5em;
+    text-align: center;
+    margin-bottom: 16px;
+    padding: 0 10px;
+  }
+
+  .contenedor-tarjetas {
+    grid-template-columns: 1fr;
+    padding: 0 20px;
+  }
+
+  .tarjeta {
+    width: 100%;
+  }
+
+  .modal-contenido {
+    padding: 20px;
+    font-size: 0.95em;
+  }
+
+  .calendario-principal {
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
   }
 }
