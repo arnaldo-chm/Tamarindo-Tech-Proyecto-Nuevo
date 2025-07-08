@@ -183,9 +183,17 @@ img#noticias{
     .contenedor-noticia-reciente{
         display: none;
     }
+
+    .card{
+        width: 100%;
+    }
   
     .boton-navegacion{
         opacity: 0.5;
+    }
+
+    .seccion-noticias{
+        margin: 0% 5% 0% 5%;
     }
 
     .seccion-noticias h2{
