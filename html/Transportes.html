@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Inicio</title>
+        <title>Transportes</title>
         <link rel="stylesheet" href="../css/Transporte.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/header.css">
@@ -38,8 +38,8 @@
 <!-- fin de header -->
 
 <!-- Hero -->
-    <div class="main-content Contenido">
-    <section class="Bienvenido" id="Bienvenido">
+    <div class="Contenido">
+    <section>
         <div class="contenedor">
             <div class="texto_bienvenido">
                 <h1 class = "titulo">Bienvenidos a Transportes</h1>
@@ -53,55 +53,36 @@
     </section>
         <!-- Lista de transportes -->
         <section class="Transporte">
-            <div class="admin-btn-container">
+            <div>
                 <h2>Transportes</h2>
-                <button class="admin-btn">Agregar Transporte</button>
             </div>
-            <div class="cards-container">
+            <div class="contenedor-cards">
                 <div class="card">
                     <h3>Ruta Tamarindo – Santa Cruz</h3>
-                    <p><strong>Horarios:</strong> 6:00am, 12:00pm, 6:00pm</p>
-                    <p><strong>Tarifa:</strong> ₡1,200</p>
-                    <p><strong>Contacto:</strong> 8888-8888</p>
-                    <p class="updated">Última actualización: 15/06/2025</p>
-                    <button class="admin-btn">Editar</button>
+                    <p class="ver-horario"><a href="#info1" class="info-btn">Ver horarios</a></p>
+                    <p>Tarifa: ₡1,200</p>
+                    <p>Contacto: 8888-8888</p>
                 </div>
                 <div class="card">
                     <h3>Ruta Tamarindo – Liberia</h3>
-                    <p><strong>Horarios:</strong> 7:00am, 1:00pm, 7:00pm</p>
-                    <p><strong>Tarifa:</strong> ₡2,000</p>
-                    <p><strong>Contacto:</strong> 8999-9999</p>
-                    <p class="updated">Última actualización: 14/06/2025</p>
-                    <button class="admin-btn">Editar</button>
+                    <p class="ver-horario"><a href="#info2" class="info-btn">Ver horarios</a></p>
+                    <p>Tarifa: ₡2,000</p>
+                    <p>Contacto: 8999-9999</p>
                 </div>
                 <div class="card">
                     <h3>Ruta Tamarindo – Nosara</h3>
-                    <p><strong>Horarios:</strong> 8:00am, 2:00pm, 8:00pm</p>
-                    <p><strong>Tarifa:</strong> ₡1,500</p>
-                    <p><strong>Contacto:</strong> 8777-7777</p>
-                    <p class="updated">Última actualización: 13/06/2025</p>
-                    <button class="admin-btn">Editar</button>
-                </div>
-                <div class="card">
-                    <h3>Ruta Tamarindo – Playa Grande</h3>
-                    <p><strong>Horarios:</strong> 9:00am, 3:00pm, 9:00pm</p>
-                    <p><strong>Tarifa:</strong> ₡800</p>
-                    <p><strong>Contacto:</strong> 8666-6666</p>
-                    <p class="updated">Última actualización: 12/06/2025</p>
-                    <button class="admin-btn">Editar</button>
-                </div>
-                <div class="card">
-                    <h3>Ruta Tamarindo – Flamingo</h3>
-                    <p><strong>Horarios:</strong> 10:00am, 4:00pm, 10:00pm</p>
-                    <p><strong>Tarifa:</strong> ₡1,000</p>
-                    <p><strong>Contacto:</strong> 8555-5555</p>
-                    <p class="updated">Última actualización: 11/06/2025</p>
-                    <button class="admin-btn">Editar</button>
+                    <p class="ver-horario"><a href="#info3" class="info-btn">Ver horarios</a></p>
+                    <p>Tarifa: ₡1,500</p>
+                    <p>Contacto: 8777-7777</p>
                 </div>
             </div>
         </section>
     </div>
-  <!-- Footer -->
+
+    <!-- Modales de Transportes -->
+    <div id="info1" class="modal"><div class="modal-content"><a href="#cerrar" class="close">&times;</a><img src="..\imagenes\ruta1.png" alt="Actividad 1"></div></div>
+    <div id="info2" class="modal"><div class="modal-content"><a href="#cerrar" class="close">&times;</a><img src="..\imagenes\ruta2.png" alt="Actividad 1"></div></div>
+    <div id="info3" class="modal"><div class="modal-content"><a href="#cerrar" class="close">&times;</a><img src="..\imagenes\ruta3.png" alt="Actividad 1"></div></div>
     <footer class="footer">
         <div class="footer-contenedor">
             <div class="footer-contenido">
