@@ -7,6 +7,8 @@
     margin: 40px 100px; /* mismo left-margin que usamos en Noticias */
     gap: 5%;
     flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 
 .texto_bienvenido p{
@@ -15,7 +17,6 @@
     font-size: 1.1em;
     line-height: 1.5em;
     margin-bottom: 30px;
-    text-align: justify;
 }
 
 .titulo{
@@ -34,30 +35,30 @@
 
 /* fin de bienveida */ 
 
-/* noticias */
-.Noticias {
+/* tarjetas */
+.tarjetas {
     padding: 40px;
 }
 
-.Noticias h2 {
+.tarjetas h2 {
     font-size: 2em;
     margin-bottom: 20px;
     text-align: center;
     margin-right: 940px;
+    color: #547A20;
 
 }
 
-.contenedor-noticias {
+.contenedor-tarjetas {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
 }
 
-.contenedor-noticias a{
+.contenedor-tarjetas a{
     text-decoration: none;
 }
-
 
 .card {
     width: 250px;
@@ -88,7 +89,7 @@
 }
 
 
-.img_noticias{
+.img_tarjetas{
     width: 240px;
     display: flex;
     justify-content: center;
@@ -96,7 +97,7 @@
     margin:20px;
 }
 
-img#noticias{
+img#tarjetas{
     width: 208px;
     height: 168px;
     border-radius: 10px;
@@ -142,18 +143,18 @@ img#noticias{
         height: auto;
     }
     
-    .Noticias {
+    .tarjetas {
         padding: 30px 20px;
     }
     
-    .Noticias h2 {
+    .tarjetas h2 {
         font-size: 1.8em;
         margin-bottom: 30px;
         text-align: center;
         margin-right: 0;
     }
     
-    .contenedor-noticias {
+    .contenedor-tarjetas {
         gap: 15px;
     }
     
@@ -162,12 +163,12 @@ img#noticias{
         max-width: 100%;
     }
     
-    .img_noticias {
+    .img_tarjetas {
         width: 100%;
         margin: 15px;
     }
     
-    img#noticias {
+    img#tarjetas {
         width: 100%;
         max-width: 248px;
         height: 180px;
@@ -190,16 +191,16 @@ img#noticias{
         margin-bottom: 15px;
     }
     
-    .Noticias {
+    .tarjetas {
         padding: 20px 15px;
     }
     
-    .Noticias h2 {
+    .tarjetas h2 {
         font-size: 1.6em;
         margin-bottom: 25px;
     }
     
-    .contenedor-noticias {
+    .contenedor-tarjetas {
         gap: 12px;
     }
     
@@ -209,11 +210,11 @@ img#noticias{
         margin: 0 auto;
     }
     
-    .img_noticias {
+    .img_tarjetas {
         margin: 10px;
     }
     
-    img#noticias {
+    img#tarjetas {
         height: 160px;
     }
     
@@ -241,7 +242,7 @@ img#noticias{
         font-size: 0.9em;
     }
     
-    .Noticias {
+    .tarjetas {
         padding: 15px 10px;
     }
     
@@ -250,8 +251,8 @@ img#noticias{
         max-width: 280px;
     }
     
-    img#noticias {
+    img#tarjetas {
         height: 140px;
     }
 }
-/* fin de noticias */
+/* fin de tarjetas */

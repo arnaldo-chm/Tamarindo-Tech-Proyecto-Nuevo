@@ -122,8 +122,8 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
 }
 
 .card {
-    min-width: 300px;
-    width: 30%;
+    min-width: 200px;
+    width: 20%;
     border: 1px solid #ccc;
     border-radius: 10px;
     overflow: hidden;
@@ -183,9 +183,17 @@ img#noticias{
     .contenedor-noticia-reciente{
         display: none;
     }
+
+    .card{
+        width: 100%;
+    }
   
     .boton-navegacion{
         opacity: 0.5;
+    }
+
+    .seccion-noticias{
+        margin: 0% 5% 0% 5%;
     }
 
     .seccion-noticias h2{

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emprendimientoss</title>
+    <title>Crear Emprendimiento</title>
     <link rel="stylesheet" href="../css/general.css">
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
@@ -12,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
     <!-- Header -->
@@ -36,43 +37,83 @@
 <!-- fin de header -->
 
     <main class="Contenido">
-
         <div class="contenedor-formulario">
-
-            <div class="formulario">
+            <form action="#" class="formulario" id="formulario" name="registrar_emprendimiento">
                 <h1>Publica tu Emprendimiento</h1>
-
-                <div class="contenedor_entrada">
-                    <label for="nombre_emprendedor">Nombre*</label>
-                    <input type="text" id="nombre_emprendedor" placeholder="Ingresa tu Nombre">
-                </div>
-                
-                <div class="contenedor_entrada">
-                    <label for="nombre_emprendedor">Nombre del Emprendimiento*</label>
-                    <input type="text" id="nombre_emprendedor" placeholder="Ingresa el Nombre del Emprendimiento">
-                </div>
-
-                <div class="contenedor_entrada">
-                    <label for="nombre_emprendedor">Categoría/Area del Emprendimiento*</label>
-                    <input type="text" id="nombre_emprendedor" placeholder="Ingresa la Categoría/Area del Emprendimiento">
+                <!-- GRUPO NOMBRE-->
+                <div class="formulario__grupo" id="grupo__nombre">
+                    <label class="formulario__label">Nombre completo*</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="nombre" id="nombre" placeholder="Introduce tu nombre">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        Debe ingresar su nombre (requerido), primer apellido (requerido) y segundo apellido (opcional).
+                        Separados por un espacio. Nombre puede tener de 3 a 10 letras, Apellidos de 2 a 10 letras, todos puede incluir maýusculas, minúsculas y acentos.
+                    </p>
                 </div>
 
-                <div class="contenedor_entrada">
-                    <label for="nombre_emprendedor">Número de Teléfono*</label>
-                    <input type="text" id="nombre_emprendedor" placeholder="Ingresa el Número de Teléfono del Emprendimiento">
+                <!-- GRUPO NOMBRE EMPRENDIMIENTO-->
+                <div class="formulario__grupo" id="grupo__nombre_emprendimiento">
+                    <label class="formulario__label">Nombre Emprendimiento*</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="nombre_emprendimiento" id="nombre_emprendimiento" placeholder="Introduce el nombre de tu emprendimiento">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        El nombre del emprendimiento debe tener mínimo 5 caracteres y máximo 20 y solo admite
+                        números, letras, guión, guión bajo, espacios y acentos.
+                    </p>
                 </div>
 
-                
-                <div class="contenedor_entrada">
-                    <label for="nombre_emprendedor">Número de Teléfono*</label>
-                    <input type="text" id="nombre_emprendedor" placeholder="Ingresa el Número de Teléfono del Emprendimiento">
+                <!-- GRUPO CATEGORIA-->
+                <div class="formulario__grupo" id="grupo__categoria">
+                    <label class="formulario__label">Categoría/Area del Emprendimiento*</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="categoria" id="categoria" placeholder="Introduce la Categoría/Area del Emprendimiento">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        La Categoría del emprendimiento sólo admite mínimo 5 y máximo 10 letras mayúsculas o mínusculas.
+                    </p>
+                </div>
+
+                <!-- GRUPO Telefono-->
+                <div class="formulario__grupo " id="grupo__telefono">
+                    <label class="formulario__label">Teléfono*</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="telefono" id="telefono" placeholder="">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        El número debe tener entre 8 y 11 dígitos. Acepta un + para codigo de país
+                    </p>
+                </div>
+
+                <!-- GRUPO Archivo-->
+                <div class="formulario__grupo " id="grupo__archivo">
+                    <label class="formulario__label">Agrega una imagen de tu Emprendimiento</label>
+                    <div class="formulario__grupo-input">
+                        <input type="file"  class="formulario__input" name="archivo" id="archivo" placeholder="">
+                    </div>                   
                 </div>
                 
-                <div class="contenedor_boton">
-                    <input type="submit" value="Crear Emprendimiento" class="envio">
+
+                <!-- GRUPO DE CAMPOS REQUERIDOS-->
+                <div class="formulario__mensaje " id="formulario__mensaje">
+                    <p>Error: Debes completar todos los campos</i></p>
                 </div>
-                
-            </div>
+
+                <!-- GRUPO ENVIAR-->
+                <div class="formulario__grupo formulario__grupo-btn-enviar">
+                    <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">
+                        Su Emprendimiento se registró correctamente
+                    </p>
+                    <input type="submit" class="formulario__btn" value="Registrar Emprendimiento">
+                </div>
+
+            </form>
+
         </div>
 
         <div class="contenedor-mensaje">
@@ -143,6 +184,7 @@
                 </div>
             </div>
         </div>
-    </footer>    
+    </footer>   
+    <script src="../js/formulario.js"></script> 
 </body>
 </html>
