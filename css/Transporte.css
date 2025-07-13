@@ -1,4 +1,8 @@
 
+.Transporte {
+  margin-bottom: 40px;
+}
+
 .Transporte h2 {
     color: #547A20;
     font-size: 2em;
@@ -7,6 +11,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 30px;
 }
 
 /* Cards */

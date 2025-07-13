@@ -1,4 +1,8 @@
 /* TARJETAS */
+
+.main-content{
+  margin-bottom: 40px;
+}
 .contenedor-tarjetas {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
