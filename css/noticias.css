@@ -194,6 +194,7 @@ img#noticias{
 
     .seccion-noticias{
         margin: 0% 5% 0% 5%;
+        border-bottom: none;
     }
 
     .seccion-noticias h2{
