@@ -37,8 +37,43 @@
 
 /* tarjetas */
 .tarjetas {
-    padding: 40px;
+    padding: 0px 0px 40px 0px ;
 }
+.boton-ver-mas{
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: calc(39% - 305px);
+}
+
+@media (max-width: 1113px) {
+    .boton-ver-mas {
+        justify-content: center;
+        padding-left: 0;
+    }
+}
+
+.boton-ver-mas button{
+    width: 200px;
+    height: 40px;
+    border-radius: 10px;
+    background-color:#000000 ;
+    color: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+.boton-ver-mas button a {
+    color: #fff;
+    text-decoration: none;
+}
+.boton-ver-mas button:hover {
+    background-color: #547A20;
+    color: #547A20;
+    transition: 0.5s;
+    }
 
 .tarjetas h2 {
     font-size: 2em;
