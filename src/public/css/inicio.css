@@ -150,6 +150,11 @@ img#tarjetas{
     color: #333;
 }
 
+.fecha {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
 /* Media queries para responsive */
 @media (max-width: 1113px) {
     .contenedor {
