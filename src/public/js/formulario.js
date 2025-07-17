@@ -179,9 +179,9 @@ formulario.addEventListener("submit",(e) =>{
         setTimeout(()=>{
 
             if (formulario.name==="iniciarsesion") {
-                window.location.href = "../html/inicio.html";
+                window.location.href = "/";
             } else if (formulario.name==="registrarse"){
-                window.location.href = "../html/login.html";
+                window.location.href = "login";
 
             }else{
                  location.reload();

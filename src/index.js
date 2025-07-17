@@ -19,7 +19,7 @@ app.get('/',(req,res)=>{
     res.render("inicio.html");//Renderiza la vista con el motor de plantillas
 });
 
-app.get('/LogOn',(req,res)=>{
+app.get('/Logon',(req,res)=>{
     res.render("index.html");
 });
 
