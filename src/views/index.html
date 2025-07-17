@@ -1,30 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Cuenta</title>
-    <link rel="stylesheet" href="../css/general.css">
-    <link rel="stylesheet" href="../css/formularios.css">
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="./css/general.css">
+    <link rel="stylesheet" href="./css/formularios.css">
+    <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/footer.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
+
 <body>
     <!-- Header -->
-    <header class = "header" id="header">
+    <header class="header" id="header">
         <div class="logo">
             <h1>Tamarindo Tech</h1>
         </div>
     </header>
-    <main class="Contenido">        
-
+    <div class="Contenido">
         <div class="contenedor-formulario">
 
-            <form action="#" class="formulario" id="formulario" name="iniciarsesion">
+            <form action="#" class="formulario" id="formulario" name="registrarse">
                 <h1>
-                    Inicia Sesión
-                </h1>                
+                    Comienza Ahora
+                </h1>
+                <!-- GRUPO NOMBRE-->
+                <div class="formulario__grupo" id="grupo__nombre">
+                    <label class="formulario__label">Nombre completo*</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="nombre" id="nombre" placeholder="Introduce tu nombre">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        Debe ingresar su nombre (requerido), primer apellido (requerido) y segundo apellido (opcional).
+                        Separados por un espacio. Nombre puede tener de 3 a 10 letras, Apellidos de 2 a 10 letras, todos puede incluir maýusculas, minúsculas y acentos.
+                    </p>
+                </div>
 
                 <!-- GRUPO CORREO-->
                 <div class="formulario__grupo" id="grupo__correo">
@@ -49,9 +62,42 @@
                         <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
                     <p class="formulario__input-error">
-                        La contraseña debe ser de 4 a 12 digitos
+                        La contraseña debe ser de 4 a 12 caracteres
                     </p>
-                </div>                
+                </div>
+
+                <!-- GRUPO CONTRASEÑA2-->
+                <div class="formulario__grupo" id="grupo__password2">
+                    <label class="formulario__label">Repetir contraseña*</label>
+                    <div class="formulario__grupo-input">
+                        <input type="password" class="formulario__input" name="password2" id="password2">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        Las contraseñas no coinciden
+                    </p>
+                </div>
+
+                <!-- GRUPO Telefono-->
+                <div class="formulario__grupo " id="grupo__telefono">
+                    <label class="formulario__label">Teléfono</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="telefono" id="telefono">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        El número debe tener entre 8 y 11 dígitos. Acepta un + para codigo de país
+                    </p>
+                </div>
+
+                 <!-- GRUPO TERMINOS Y CONDICIONES-->
+                <div class="formulario__grupo formulario__grupo-terminos" id="grupo__terminos">
+                    <label class="formulario__label">
+                        <input type="checkbox" class="formulario__checkbox" name="terminos" id="terminos">
+                        <b class="formulario__span">Acepto los terminos y condiciones</b>
+                    </label>
+
+                </div>
 
                 <!-- GRUPO DE CAMPOS REQUERIDOS-->
                 <div class="formulario__mensaje " id="formulario__mensaje">
@@ -61,33 +107,34 @@
                 <!-- GRUPO ENVIAR-->
                 <div class="formulario__grupo formulario__grupo-btn-enviar">
                     <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">
-                        Inició Sesión Correctamente
+                        Su cuenta se creó correctamente. Por favor Inicie Sesión.
                     </p>
-                    <input type="submit" class="formulario__btn" value="Iniciar Sesión">
+                    <input type="submit" class="formulario__btn" value="Registrarse">
                 </div>
 
                 <div class="contenedor_link_iniciosesion">
-                    <p>¿Aún no tienes una cuenta? <a href="../index.html">Crear Cuenta</a></p> 
+                    <p>¿Ya tienes una cuenta? <a href="login">Inicia Sesión</a></p> 
                 </div>
 
             </form>            
         </div>
-            
-
 
         <div class="contenedor-mensaje">
             <h3>
-                👋 ¡Bienvenido de nuevo!
+                🏡 ¡Únete a la comunidad!
             </h3>
             <br>
             <p>
-                Ingresa a tu cuenta y mantente al día con todo lo que ocurre en tu comunidad.
-                Noticias, eventos, transporte y mucho más te están esperando.
+                Crea tu cuenta y sé parte de nuestra comunidad.
+                Accede a noticias, eventos, opciones de transporte y toda la información que necesitas para mantenerte
+                conectado con lo que sucede a tu alrededor.
                 <br><br>
-                ✨ Tu comunidad, a un clic de distancia.            
+                💬 Estar informado es estar cerca.
+                <br><br>
+                ¡Regístrate hoy y empieza a disfrutar de todos los beneficios!
             </p>
         </div>
-    </main>
+    </div>
 
     <footer class="footer">
         <div class="footer-contenedor">
@@ -98,19 +145,19 @@
                     <div class="social-icons">
                         <!-- Twitter/X -->
                         <a href="#" aria-label="Twitter">
-                            <img src="../imagenes/X.png" alt="Twitter/X">
+                            <img src="./img/X.png" alt="Twitter/X">
                         </a>
                         <!-- Instagram -->
                         <a href="#" aria-label="Instagram">
-                            <img src="../imagenes/logotipo-de-instagram.png" alt="Instagram">
+                            <img src="./img/logotipo-de-instagram.png" alt="Instagram">
                         </a>
                         <!-- YouTube -->
                         <a href="#" aria-label="YouTube">
-                            <img src="../imagenes/youtube.png" alt="YouTube">
+                            <img src="./img/youtube.png" alt="YouTube">
                         </a>
                         <!-- LinkedIn -->
                         <a href="#" aria-label="LinkedIn">
-                           <img src="../imagenes/linkedin.png" alt="LinkedIn">
+                            <img src="./img/linkedin.png" alt="LinkedIn">
                         </a>
                     </div>
                 </div>
@@ -128,7 +175,7 @@
                     <div class="footer-section">
                         <h3>Información</h3>
                         <ul>
-                            <li><a href="../landingpage.html">Tamarindo Tech</a></li>
+                            <li><a href="landingpage.html">Tamarindo Tech</a></li>
                         </ul>
                     </div>
 
@@ -136,8 +183,8 @@
                     <div class="footer-section">
                         <h3>Recursos</h3>
                         <ul>
-                            <li><a href="Tutoriales.html">Tutoriales</a></li>
-                            <li><a href="ayuda.html">Ayuda</a></li>
+                            <li><a href="./html/Tutoriales.html">Tutoriales</a></li>
+                            <li><a href="./html/ayuda.html">Ayuda</a></li>
                             <!-- <li><a href="./html/reportes.html">Crear un Reporte</a></li> -->
                             <!-- <li><a href="./html/reportes.html">Dar una Sugerencia</a></li> -->
                         </ul>
@@ -145,6 +192,7 @@
             </div>
         </div>
     </footer>
-    <script src="../js/formulario.js"></script>
+    <script src="./js/formulario.js"></script>
 </body>
+
 </html>

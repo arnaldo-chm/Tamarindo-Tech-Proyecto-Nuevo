@@ -1,0 +1,28 @@
+{
+  "name": "tamarindo-tech-proyecto-nuevo",
+  "version": "1.0.0",
+  "description": "Repositorio para Proyecto Del Curso de Proyecto de Ingeniería de Software 1 - Nuevos cambios",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arnaldo-chm/Tamarindo-Tech-Proyecto-Nuevo.git"
+  },
+  "keywords": [],
+  "author": "Tamarindo Tech",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arnaldo-chm/Tamarindo-Tech-Proyecto-Nuevo/issues"
+  },
+  "homepage": "https://github.com/arnaldo-chm/Tamarindo-Tech-Proyecto-Nuevo#readme",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
