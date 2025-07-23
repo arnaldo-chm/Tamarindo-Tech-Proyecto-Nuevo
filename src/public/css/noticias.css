@@ -105,16 +105,16 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
 }
 
 .seccion-noticias{
-    margin: 0% 15% 0% 15%;
+    margin: 2% 15% 2% 15%;
     border-bottom: 2px solid #d3e8c0;
     padding: 15px;
 }
 
 .contenedor-noticias {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 25px; 
+    justify-items: start; 
 }
 .seccion-noticias h2{
     color: #547A20;
@@ -122,15 +122,20 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
 }
 
 .card {
-    min-width: 200px;
-    width: 20%;
+    max-width: 350px; 
+    width: 100%;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     text-align: center;
     background-color: white;
     transition: 0.5s ease;
+    height: 100%;
+
+    /* Agregamos flexbox para controlar la posición del numero telefónico */
+    display: flex;
+    flex-direction: column;
 }
 
 .card:hover {
@@ -144,16 +149,10 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
     height: 200px; 
     object-fit: cover; 
     transition: transform 0.3s ease;
-    margin:15px;
-    box-shadow: 0 20px 8px rgba(0,0,0,0.1);
-}
-.card:hover img {
-    transform: scale(1.05); 
 }
 
-img#noticias{
-    width: 70%;
-    border-radius: 10px;
+.card:hover img {
+    transform: scale(1.05); 
 }
 
 .card h3 {
@@ -166,6 +165,15 @@ img#noticias{
     font-size: 0.9em;
     padding: 0 10px 20px;
     color: #333;
+}
+
+.card .contacto-noticia {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #668c31; 
+    padding: 0 15px 15px 15px;
+    margin-bottom: 0;
+    margin-top: auto; /* Esto empuja el precio hacia abajo */
 }
 
 @media (max-width: 1113px) {
