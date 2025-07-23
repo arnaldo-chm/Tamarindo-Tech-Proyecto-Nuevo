@@ -305,27 +305,21 @@ svg {
 }
 
 /* Sidebar Toggle Button */
-.alternar-barra-lateral {
-    position: fixed;
-    top: 90px;
-    right: 20px;
-    z-index: 6;
-    background-color: #668c31;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
-    display: none;
-    transition: all 0.3s ease;
-    transform: scale(1);
-}
 
+.alternar-barra-lateral {
+    color: #668c31;
+    font-size: 1.5em;
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+    display: none;
+}
 .alternar-barra-lateral:hover {
     transition: all 0.3s ease;
     cursor: pointer;
     transform: scale(1.05);
+    font-size: 2em;
+    color: #668c31;
 }
 
 /* Overlay para cerrar sidebar */
