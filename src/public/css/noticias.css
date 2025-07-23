@@ -2,7 +2,7 @@ body {
     background-color: #f4f4f4;
 }
 .barra-busqueda{
-    margin: 2% 15% 2% 15%;
+    margin: 2% 10% 2% 10%;
     position: relative;
 }
 
@@ -16,7 +16,7 @@ body {
 
 .seccion-noticias-nuevas{
     display: grid;
-    margin: 2% 15% 2% 15%;
+    margin: 2% 10% 2% 10%;
     grid-template-columns: 4fr 2fr;
     grid-template-rows: 1fr 9fr;
     grid-template-rows: 30px auto; /*Se deja filo el height de la primera fila*/
@@ -39,6 +39,7 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
 .ultima-noticia{
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 .contenedor-imagen-ultima-noticia{
     position: relative;
@@ -74,6 +75,7 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
 }
 .ultima-noticia-contenido{
     padding: 20px;
+    height: 100%;
     background-color: white;
     border-radius: 0px 0px 10px 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -82,7 +84,7 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    row-gap: 5px;
+    row-gap: 1px;
 }
 .contenedor-noticia-reciente{
     display: flex;
@@ -94,7 +96,7 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
     transition: 0.5s ease;
 }
 .contenedor-noticia-reciente img{
-    width: 35%;
+    width: 45%;
     border-radius: 10px;
 }
 .contenedor-noticia-reciente p{
@@ -105,7 +107,7 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
 }
 
 .seccion-noticias{
-    margin: 2% 15% 2% 15%;
+    margin: 2% 10% 2% 10%;
     border-bottom: 2px solid #d3e8c0;
     padding: 15px;
 }
