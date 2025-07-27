@@ -101,7 +101,7 @@ app.post('/registrarse',(req,res)=>{
     //  res.json(resultado);
 })
 
-app.post('/authenticate',(req,res)=>{
+app.post('/iniciarsesion',(req,res)=>{
 //paso 1: extarer la info de los usuarios
     let data = {
         correo:req.body.correo,
@@ -110,26 +110,36 @@ app.post('/authenticate',(req,res)=>{
 
     const existeUser = async()=>{
         //paso 2: buscar el usuario en la base de datos
-        const usuario = await user.findOne({correo:data.correo});
+        const usuario = await User.findOne({correo:data.correo});
         //usuario {info usuario} si lo encuentra
         //usuario null si no lo encuentra
 
         if(usuario !=null){
             if (data.password == usuario.password){
                 console.log("Usuario autenticado");
-                res.redirect('/'); //Redirigir a la página de inicio
+                const resultado = { 
+                resultado: true,
+                mensaje: `usuario autenticado con exito`}
+                res.json(resultado);
                 
             } else {
                 console.log("Contraseña incorrecta");
-                res.redirect('/login');
+                const resultado = { 
+                resultado: false,
+                mensaje: `contraseña incorrecta`}
+                res.json(resultado);
             }
         }else{
             console.log("No existe el usuario");
-            res.redirect('/login');
+            const resultado = { 
+            resultado: false,
+            mensaje: `usuario no existe`}
+            res.json(resultado);
         }
     }
 
 existeUser();
+console.log("llamada desde post iniciarsesion")
 
 })
 

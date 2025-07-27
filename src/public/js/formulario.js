@@ -179,6 +179,48 @@ async function registrarse(){
         setTimeout(()=>{
                 window.location.href = "login";
         },4000)
+
+       }else{
+            alert(datosRespuesta.mensaje);
+       }
+    //    console.log('Respuesta del backend:', datosRespuesta);
+    //    // Actualizar la interfaz con los datos recibidos
+    //    document.getElementById('resultado').textContent = datosRespuesta.mensaje;
+
+     } catch (error) {
+       console.error('Error al llamar al backend:', error);
+       document.getElementById('resultado').textContent = 'Error al obtener datos';
+    }
+}
+
+async function iniciarsesion(){
+    let datos = {
+        correo:document.getElementById("correo").value,
+        password:document.getElementById("password").value
+    }
+
+    try {
+       const respuesta = await fetch('http://localhost:3000/iniciarsesion', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(datos)
+       });
+
+       if (!respuesta.ok) {
+         throw new Error(`Error en la solicitud: ${respuesta.status}`);
+       }
+
+       const datosRespuesta = await respuesta.json();
+       if (datosRespuesta.resultado){
+            // Se muestra el mensaje de aprobación en función de la validación.
+        document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
+        document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
+
+        setTimeout(()=>{
+                window.location.href = "/";
+        },4000)
         
        }else{
             alert(datosRespuesta.mensaje);
@@ -223,7 +265,7 @@ formulario.addEventListener("submit",(e) =>{
         setTimeout(()=>{
 
             if (formulario.name==="iniciarsesion") {
-                window.location.href = "/";
+                iniciarsesion();
             } else if (formulario.name==="registrarse"){
                 // window.location.href = "login";
                 
