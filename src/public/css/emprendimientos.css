@@ -108,7 +108,7 @@
     width: 100%; 
     max-width: 350px; 
     border-radius: 12px; 
-    overflow: hidden;
+    /* overflow: hidden; */
     box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
     background-color: white;
     transition: all 0.3s ease;
@@ -118,6 +118,8 @@
     /* Agregamos flexbox para controlar la posición del precio */
     display: flex;
     flex-direction: column;
+
+    position: relative;
 }
 
 .card:hover {
@@ -133,9 +135,9 @@
     transition: transform 0.3s ease;
 }
 
-.card:hover img {
+/* .card:hover img {
     transform: scale(1.05); 
-}
+} */
 
 .card h3 {
     font-size: 1.2em; 
@@ -160,11 +162,26 @@
 .card .precio_emprendimiento {
     font-size: 1.1em;
     font-weight: 600;
-    color: #668c31; 
-    padding: 0 15px 15px 15px;
+    color:white; 
+    padding: 5px 5px 5px 5px;
+    margin-bottom: 0;
+    margin-top: auto; /* Esto empuja el precio hacia abajo */
+    position: absolute;
+    top: 15px;
+    right: -15px;
+    background-color: #668c31; 
+    border-radius: 2px;
+}
+
+.numero_emprendimiento {
+    font-size: 1.1em;
+    font-weight: 600;
+    color:#668c31; 
+    padding: 5px 5px 5px 5px;
     margin-bottom: 0;
     margin-top: auto; /* Esto empuja el precio hacia abajo */
 }
+
 /* RESPONSIVE DESIGN */
 @media (max-width: 1200px) {
     .contenedor_encabezado {

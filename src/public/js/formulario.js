@@ -149,7 +149,7 @@ inputs.forEach((input)=>{
 })
 
 
-async function registrarse(){
+async function registrarUsuario(){
     let datos = {
         nombre:document.getElementById("nombre").value,
         correo:document.getElementById("correo").value,
@@ -225,9 +225,6 @@ async function iniciarsesion(){
        }else{
             alert(datosRespuesta.mensaje);
        }
-    //    console.log('Respuesta del backend:', datosRespuesta);
-    //    // Actualizar la interfaz con los datos recibidos
-    //    document.getElementById('resultado').textContent = datosRespuesta.mensaje;
 
      } catch (error) {
        console.error('Error al llamar al backend:', error);
@@ -235,10 +232,52 @@ async function iniciarsesion(){
     }
 }
 
+async function registrarEmprendimiento() {
+    let datos = {
+        nombre:document.getElementById("nombre").value,
+        nombre_emprendimiento:document.getElementById("nombre_emprendimiento").value,
+        categoria:document.getElementById("categoria").value,
+        telefono:document.getElementById("telefono").value,
+        archivo:document.getElementById("archivo").value
+    }
+    console.log(document.getElementById("archivo"));
+    console.log(datos.archivo);
+
+    // try {
+    //    const respuesta = await fetch('http://localhost:3000/registrarse', {
+    //      method: 'POST',
+    //      headers: {
+    //        'Content-Type': 'application/json'
+    //      },
+    //      body: JSON.stringify(datos)
+    //    });
+
+    //    if (!respuesta.ok) {
+    //      throw new Error(`Error en la solicitud: ${respuesta.status}`);
+    //    }
+
+    //    const datosRespuesta = await respuesta.json();
+    //    if (datosRespuesta.resultado){
+    //         // Se muestra el mensaje de aprobación en función de la validación.
+    //     document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
+    //     document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
+
+    //     setTimeout(()=>{
+    //             window.location.href = "login";
+    //     },4000)
+
+    //    }else{
+    //         alert(datosRespuesta.mensaje);
+    //    }
+    //  } catch (error) {
+    //    console.error('Error al llamar al backend:', error);
+    //    document.getElementById('resultado').textContent = 'Error al obtener datos';
+    // }
+}
+
 
 // Se crea un EventListener para el evento submit del Formulario.
 formulario.addEventListener("submit",(e) =>{
-
     // Se elimina el comportamiento por defecto para que no recargue la página y el usuario no pierda la información ingresada.
     e.preventDefault();
     const terminos = document.getElementById("terminos");
@@ -259,23 +298,14 @@ formulario.addEventListener("submit",(e) =>{
     // Se valida que cada campo está completo y validado.
     if(validacion === true){
 
-        
-
-        // Se navega a una nueva página o se recarga la página según corresponda.
-        setTimeout(()=>{
-
-            if (formulario.name==="iniciarsesion") {
-                iniciarsesion();
-            } else if (formulario.name==="registrarse"){
-                // window.location.href = "login";
-                
-                registrarse();
-            }else{
-                 location.reload();
-            }
-
-           
-        },4000)
+        if (formulario.name==="iniciarsesion") {
+            iniciarsesion();
+        } else if (formulario.name==="registrarse"){
+            registrarUsuario();
+        }else if (formulario.name=="registrar_emprendimiento"){
+            console.log("Llamando a Registrar Emprendimiento")
+            registrarEmprendimiento();
+        }
 
     }else{
 

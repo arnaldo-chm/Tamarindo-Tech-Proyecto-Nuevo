@@ -10,14 +10,14 @@ mongoose.connect(DB_URI,{})
 
 //Schema
 const emprendimientoSchema = new mongoose.Schema({
-    nombre:{type:String, required:true},
-    correo:{type:String, required:true, unique:true},
-    password:{type:String, required:true},
+    nombreUsuario:{type:String, required:true},
+    nombreEmprendimiento:{type:String, required:true},
+    categoria:{type:String, required:true, unique:true},    
     telefono:{type:String, required:true},
-    tipoUsuario:{type:Number, default:0}, // Usuario 0 es comun, 1 es emprendedor, 2 es admin
+    nombreImagen:{type:String, required:true}, // Usuario 0 es comun, 1 es emprendedor, 2 es admin
 },{versionKey:false}) 
 
 
 let emprendimiento = new mongoose.model('Emprendimiento',emprendimientoSchema);
 
-module.exports = emprendimiento;   
+module.exports = emprendimiento;
