@@ -148,6 +148,94 @@ inputs.forEach((input)=>{
     input.addEventListener("blur",validarFormulario)
 })
 
+
+async function registrarse(){
+    let datos = {
+        nombre:document.getElementById("nombre").value,
+        correo:document.getElementById("correo").value,
+        password:document.getElementById("password").value,
+        telefono:document.getElementById("telefono").value
+    }
+
+    try {
+       const respuesta = await fetch('http://localhost:3000/registrarse', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(datos)
+       });
+
+       if (!respuesta.ok) {
+         throw new Error(`Error en la solicitud: ${respuesta.status}`);
+       }
+
+       const datosRespuesta = await respuesta.json();
+       if (datosRespuesta.resultado){
+            // Se muestra el mensaje de aprobación en función de la validación.
+        document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
+        document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
+
+        setTimeout(()=>{
+                window.location.href = "login";
+        },4000)
+
+       }else{
+            alert(datosRespuesta.mensaje);
+       }
+    //    console.log('Respuesta del backend:', datosRespuesta);
+    //    // Actualizar la interfaz con los datos recibidos
+    //    document.getElementById('resultado').textContent = datosRespuesta.mensaje;
+
+     } catch (error) {
+       console.error('Error al llamar al backend:', error);
+       document.getElementById('resultado').textContent = 'Error al obtener datos';
+    }
+}
+
+async function iniciarsesion(){
+    let datos = {
+        correo:document.getElementById("correo").value,
+        password:document.getElementById("password").value
+    }
+
+    try {
+       const respuesta = await fetch('http://localhost:3000/iniciarsesion', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(datos)
+       });
+
+       if (!respuesta.ok) {
+         throw new Error(`Error en la solicitud: ${respuesta.status}`);
+       }
+
+       const datosRespuesta = await respuesta.json();
+       if (datosRespuesta.resultado){
+            // Se muestra el mensaje de aprobación en función de la validación.
+        document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
+        document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
+
+        setTimeout(()=>{
+                window.location.href = "/";
+        },4000)
+        
+       }else{
+            alert(datosRespuesta.mensaje);
+       }
+    //    console.log('Respuesta del backend:', datosRespuesta);
+    //    // Actualizar la interfaz con los datos recibidos
+    //    document.getElementById('resultado').textContent = datosRespuesta.mensaje;
+
+     } catch (error) {
+       console.error('Error al llamar al backend:', error);
+       document.getElementById('resultado').textContent = 'Error al obtener datos';
+    }
+}
+
+
 // Se crea un EventListener para el evento submit del Formulario.
 formulario.addEventListener("submit",(e) =>{
 
@@ -171,18 +259,17 @@ formulario.addEventListener("submit",(e) =>{
     // Se valida que cada campo está completo y validado.
     if(validacion === true){
 
-        // Se muestra el mensaje de aprobación en función de la validación.
-        document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
-        document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
+        
 
         // Se navega a una nueva página o se recarga la página según corresponda.
         setTimeout(()=>{
 
             if (formulario.name==="iniciarsesion") {
-                window.location.href = "/";
+                iniciarsesion();
             } else if (formulario.name==="registrarse"){
-                window.location.href = "login";
-
+                // window.location.href = "login";
+                
+                registrarse();
             }else{
                  location.reload();
             }
