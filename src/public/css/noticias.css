@@ -178,6 +178,91 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
     margin-top: auto; /* Esto empuja el precio hacia abajo */
 }
 
+/* slider-noticias */
+
+#contenedor-slider-noticias {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.envoltorio-slider-noticias {
+    width: 100%;
+    position: relative;
+}
+
+#slider-noticias {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.diapositiva-noticias {
+    flex: 0 0 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    padding: 20px 0;
+}
+
+ /* Controles del slider */
+.controles-slider-noticias {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+}
+
+.flecha-slider {
+    background-color: #9cc264;
+    color: white;
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 50%;
+    opacity: 0.8;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+}
+
+.flecha-slider:hover {
+    scale: 1.1;
+    opacity: 1;
+    background-color: #547A20;
+}
+
+/* Indicadores de puntos */
+.contenedor-puntos {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.punto-slider {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(84, 122, 32, 0.3);
+    margin: 0 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.punto-slider.activo {
+    background-color: #547A20;
+    transform: scale(1.2);
+}
+
+
+
+
 @media (max-width: 1113px) {
 
     .seccion-noticias-nuevas {
@@ -210,6 +295,32 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
     .seccion-noticias h2{
         text-align: center;
     }
+}
 
+@media (max-width: 1200px) {
+    .diapositiva-noticias {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
 
+@media (max-width: 900px) {
+    .diapositiva-noticias {
+        grid-template-columns: repeat(2, 1fr);
+    }
+            
+    .seccion-noticias {
+        margin: 0% 5% 0% 5%;
+    }
+}
+
+@media (max-width: 600px) {
+    .diapositiva-noticias {
+        grid-template-columns: 1fr;
+    }
+            
+    .flecha-slider {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
 }

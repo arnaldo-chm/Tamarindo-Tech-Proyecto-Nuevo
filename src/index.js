@@ -189,7 +189,7 @@ app.get('/api/emprendimientos',(req,res)=>{
         } catch (error) {
             const resultado = { 
                 resultado: false,
-                mensaje: `Error al obtener emprendimientos ${err}`
+                mensaje: `Error al obtener emprendimientos ${error}`
             }
             res.json(resultado);
         }
