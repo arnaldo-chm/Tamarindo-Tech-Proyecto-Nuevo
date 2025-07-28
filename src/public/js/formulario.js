@@ -162,7 +162,7 @@ async function registrarUsuario(){
     }
 
     try {
-       const respuesta = await fetch('http://localhost:3000/registrarse', {
+       const respuesta = await fetch('http://localhost:3000/api/registrarse', {
          method: 'POST',
          headers: {
            'Content-Type': 'application/json'
@@ -204,7 +204,7 @@ async function iniciarsesion(){
     }
 
     try {
-       const respuesta = await fetch('http://localhost:3000/iniciarsesion', {
+       const respuesta = await fetch('http://localhost:3000/api/iniciarsesion', {
          method: 'POST',
          headers: {
            'Content-Type': 'application/json'
@@ -250,7 +250,7 @@ async function registrarEmprendimiento() {
     console.log(datos)
 
     try {
-       const respuesta = await fetch('http://localhost:3000/registrarEmprendimiento', {
+       const respuesta = await fetch('http://localhost:3000/api/registrarEmprendimiento', {
          method: 'POST',
          headers: {
            'Content-Type': 'application/json'

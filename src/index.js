@@ -69,7 +69,7 @@ app.get('/Admin_panel', (req, res) => {
 //Login
 const User = require('../models/users.js');
 
-app.post('/registrarse',(req,res)=>{
+app.post('/api/registrarse',(req,res)=>{
     
      let data = new User({
         nombre:req.body.nombre,
@@ -98,7 +98,7 @@ app.post('/registrarse',(req,res)=>{
 
 })
 
-app.post('/iniciarsesion',(req,res)=>{
+app.post('/api/iniciarsesion',(req,res)=>{
 //paso 1: extarer la info de los usuarios
     let data = {
         correo:req.body.correo,
@@ -142,7 +142,7 @@ console.log("llamada desde post iniciarsesion")
 //Publicar Emprendimiento
 const Emprendimiento = require('../models/emprendimientos.js');
 
-app.post('/registrarEmprendimiento',(req,res)=>{
+app.post('/api/registrarEmprendimiento',(req,res)=>{
     
     let data = new Emprendimiento({
         correoUsuario:req.body.correoUsuario,
@@ -172,6 +172,8 @@ app.post('/registrarEmprendimiento',(req,res)=>{
     });
 
 })
+
+
 
 //Encender el server
 app.listen(3000,()=>{
