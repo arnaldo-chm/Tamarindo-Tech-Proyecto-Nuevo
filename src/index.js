@@ -69,7 +69,7 @@ app.get('/Admin_panel', (req, res) => {
 //Login
 const User = require('../models/users.js');
 
-app.post('/registrarse',(req,res)=>{
+app.post('/api/registrarse',(req,res)=>{
     
      let data = new User({
         nombre:req.body.nombre,
@@ -98,7 +98,7 @@ app.post('/registrarse',(req,res)=>{
 
 })
 
-app.post('/iniciarsesion',(req,res)=>{
+app.post('/api/iniciarsesion',(req,res)=>{
 //paso 1: extarer la info de los usuarios
     let data = {
         correo:req.body.correo,
@@ -139,10 +139,10 @@ console.log("llamada desde post iniciarsesion")
 
 })
 
-//Publicar Emprendimiento
+//Emprendimientos
 const Emprendimiento = require('../models/emprendimientos.js');
 
-app.post('/registrarEmprendimiento',(req,res)=>{
+app.post('/api/registrarEmprendimiento',(req,res)=>{
     
     let data = new Emprendimiento({
         correoUsuario:req.body.correoUsuario,
@@ -150,6 +150,7 @@ app.post('/registrarEmprendimiento',(req,res)=>{
         descripcionEmprendimiento:req.body.descripcionEmprendimiento,
         categoria:req.body.categoria,
         telefono:req.body.telefono,
+        precio:req.body.precio,
         nombreImagen:path.basename(req.body.archivo),
         estadoEmprendimiento: 0 // 0: En Revision, 1: Aprobado, 2: Rechazado/Eliminado
     })
@@ -171,6 +172,32 @@ app.post('/registrarEmprendimiento',(req,res)=>{
         res.json(resultado);
     });
 
+})
+
+app.get('/api/emprendimientos',(req,res)=>{
+
+    const obtenerEmprendimientos = async()=>{
+
+        try {
+            const emprendimientos = await Emprendimiento.find();
+
+            const resultado = { 
+                resultado: true,
+                mensaje: emprendimientos}
+            res.json(resultado);
+
+        } catch (error) {
+            const resultado = { 
+                resultado: false,
+                mensaje: `Error al obtener emprendimientos ${err}`
+            }
+            res.json(resultado);
+        }
+
+    }
+
+
+    obtenerEmprendimientos();
 })
 
 //Encender el server
