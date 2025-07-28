@@ -121,6 +121,9 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
 .seccion-noticias h2{
     color: #547A20;
     margin: 0% 0% 20px 0%;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    transform: translateY(0);
+    opacity: 1;
 }
 
 .card {
@@ -261,10 +264,7 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
 }
 
 
-
-
 @media (max-width: 1113px) {
-
     .seccion-noticias-nuevas {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto;
@@ -295,32 +295,89 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
     .seccion-noticias h2{
         text-align: center;
     }
-}
-
-@media (max-width: 1200px) {
+    
+    /* Slider - 3 columnas para tablets */
     .diapositiva-noticias {
         grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+    
+    .card {
+        max-width: 350px;
+        margin: 0 auto;
     }
 }
 
+/* Tablets pequeños - 2 columnas */
 @media (max-width: 900px) {
     .diapositiva-noticias {
         grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 15px;
     }
-            
+    
     .seccion-noticias {
         margin: 0% 5% 0% 5%;
     }
+    
+    .card {
+        max-width: 400px;
+        margin: 0 auto;
+    }
 }
 
+/* Mobile - 1 columna */
 @media (max-width: 600px) {
     .diapositiva-noticias {
         grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 15px 0;
+        justify-items: center;
     }
-            
+    
+    .seccion-noticias {
+        margin: 0% 5% 0% 5%;
+    }
+    
+    .card {
+        max-width: 320px;
+        width: 100%;
+    }
+    
+    .card img {
+        height: 180px;
+    }
+    
     .flecha-slider {
         width: 40px;
         height: 40px;
         font-size: 18px;
+    }
+    
+    .punto-slider {
+        width: 10px;
+        height: 10px;
+        margin: 0 6px;
+    }
+}
+
+/* Mobile muy pequeño */
+@media (max-width: 480px) {
+    .seccion-noticias {
+        margin: 0% 3% 0% 3%;
+    }
+    
+    .card {
+        max-width: 280px;
+    }
+    
+    .card img {
+        height: 160px;
+    }
+    
+    .flecha-slider {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
     }
 }
