@@ -139,7 +139,7 @@ console.log("llamada desde post iniciarsesion")
 
 })
 
-//Publicar Emprendimiento
+//Emprendimientos
 const Emprendimiento = require('../models/emprendimientos.js');
 
 app.post('/api/registrarEmprendimiento',(req,res)=>{
@@ -150,6 +150,7 @@ app.post('/api/registrarEmprendimiento',(req,res)=>{
         descripcionEmprendimiento:req.body.descripcionEmprendimiento,
         categoria:req.body.categoria,
         telefono:req.body.telefono,
+        precio:req.body.precio,
         nombreImagen:path.basename(req.body.archivo),
         estadoEmprendimiento: 0 // 0: En Revision, 1: Aprobado, 2: Rechazado/Eliminado
     })
@@ -173,7 +174,31 @@ app.post('/api/registrarEmprendimiento',(req,res)=>{
 
 })
 
+app.get('/api/emprendimientos',(req,res)=>{
 
+    const obtenerEmprendimientos = async()=>{
+
+        try {
+            const emprendimientos = await Emprendimiento.find();
+
+            const resultado = { 
+                resultado: true,
+                mensaje: emprendimientos}
+            res.json(resultado);
+
+        } catch (error) {
+            const resultado = { 
+                resultado: false,
+                mensaje: `Error al obtener emprendimientos ${err}`
+            }
+            res.json(resultado);
+        }
+
+    }
+
+
+    obtenerEmprendimientos();
+})
 
 //Encender el server
 app.listen(3000,()=>{

@@ -31,7 +31,8 @@ if(formulario.name==="registrarse"){
         nombre_emprendimiento: /^[a-zA-Z0-9À-ÿ\s\_\-]{5,20}$/, // Nombre Emprendimiento acepta un rango de 5 a 15 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas, guión, guión bajo, espacios y acentos.
         descripcion_emprendimiento: /^.{10,}$/, // Descripcion Emprendimiento Acepta 10 o más caracteres de cualquier tipo
         categoria: /^[a-zA-Z]{5,10}$/, // Categoría de Emprendimiento acepta un rango de 5 a 10 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas.
-        telefono :/^\+?\d{8,11}$/ // Misma expresion regular usada para el nombre en Registrarse.
+        telefono :/^\+?\d{8,11}$/, // Misma expresion regular usada para el nombre en Registrarse.
+        precio: /^\d{1,5}$/ //El precio acepta entre 1 y 5 digitos
     }
 } else if (formulario.name==="crear_reporte") {
     expresiones ={        
@@ -63,7 +64,8 @@ if(formulario.name==="registrarse"){
         nombre_emprendimiento: false,
         descripcion_emprendimiento: false,
         categoria: false,
-        telefono: false
+        telefono: false,
+        precio: false
     }
 } else if (formulario.name==="crear_reporte"){
     campos={
@@ -244,6 +246,7 @@ async function registrarEmprendimiento() {
         descripcionEmprendimiento:document.getElementById("descripcion_emprendimiento").value,
         categoria:document.getElementById("categoria").value,
         telefono:document.getElementById("telefono").value,
+        precio:document.getElementById("precio").value,
         archivo:document.getElementById("archivo").value
     }
 
