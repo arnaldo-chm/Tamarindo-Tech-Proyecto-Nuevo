@@ -26,8 +26,10 @@ if(formulario.name==="registrarse"){
     }
 } else if (formulario.name==="registrar_emprendimiento") {
     expresiones ={        
-        nombre : /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/,  // Misma expresion regular usada para el nombre en Registrarse.
+        // nombre : /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/,  // Misma expresion regular usada para el nombre en Registrarse.
+        correo :/^[a-zA-Z0-9\_]+@[a-zA-Z]+\.[a-zA-Z]+$/ , // Misma expresion regular usada para el correo en Registrarse.
         nombre_emprendimiento: /^[a-zA-Z0-9À-ÿ\s\_\-]{5,20}$/, // Nombre Emprendimiento acepta un rango de 5 a 15 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas, guión, guión bajo, espacios y acentos.
+        descripcion_emprendimiento: /^.{10,}$/, // Descripcion Emprendimiento Acepta 10 o más caracteres de cualquier tipo
         categoria: /^[a-zA-Z]{5,10}$/, // Categoría de Emprendimiento acepta un rango de 5 a 10 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas.
         telefono :/^\+?\d{8,11}$/ // Misma expresion regular usada para el nombre en Registrarse.
     }
@@ -56,8 +58,10 @@ if(formulario.name==="registrarse"){
     }
 } else if (formulario.name==="registrar_emprendimiento"){
     campos={
-        nombre: false,
+        // nombre: false,
+        correo: false,
         nombre_emprendimiento: false,
+        descripcion_emprendimiento: false,
         categoria: false,
         telefono: false
     }
@@ -149,7 +153,7 @@ inputs.forEach((input)=>{
 })
 
 
-async function registrarse(){
+async function registrarUsuario(){
     let datos = {
         nombre:document.getElementById("nombre").value,
         correo:document.getElementById("correo").value,
@@ -225,10 +229,52 @@ async function iniciarsesion(){
        }else{
             alert(datosRespuesta.mensaje);
        }
-    //    console.log('Respuesta del backend:', datosRespuesta);
-    //    // Actualizar la interfaz con los datos recibidos
-    //    document.getElementById('resultado').textContent = datosRespuesta.mensaje;
 
+     } catch (error) {
+       console.error('Error al llamar al backend:', error);
+       document.getElementById('resultado').textContent = 'Error al obtener datos';
+    }
+}
+
+async function registrarEmprendimiento() {
+    let datos = {
+        // nombre:document.getElementById("nombre").value,
+        correoUsuario:document.getElementById("correo").value,
+        nombreEmprendimiento:document.getElementById("nombre_emprendimiento").value,
+        descripcionEmprendimiento:document.getElementById("descripcion_emprendimiento").value,
+        categoria:document.getElementById("categoria").value,
+        telefono:document.getElementById("telefono").value,
+        archivo:document.getElementById("archivo").value
+    }
+
+    console.log(datos)
+
+    try {
+       const respuesta = await fetch('http://localhost:3000/registrarEmprendimiento', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(datos)
+       });
+
+       if (!respuesta.ok) {
+         throw new Error(`Error en la solicitud: ${respuesta.status}`);
+       }
+
+       const datosRespuesta = await respuesta.json();
+       if (datosRespuesta.resultado){
+            // Se muestra el mensaje de aprobación en función de la validación.
+        document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
+        document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
+
+        setTimeout(()=>{
+                window.location.href = "crear_emprendimiento";
+        },4000)
+
+       }else{
+            alert(datosRespuesta.mensaje);
+       }
      } catch (error) {
        console.error('Error al llamar al backend:', error);
        document.getElementById('resultado').textContent = 'Error al obtener datos';
@@ -238,7 +284,6 @@ async function iniciarsesion(){
 
 // Se crea un EventListener para el evento submit del Formulario.
 formulario.addEventListener("submit",(e) =>{
-
     // Se elimina el comportamiento por defecto para que no recargue la página y el usuario no pierda la información ingresada.
     e.preventDefault();
     const terminos = document.getElementById("terminos");
@@ -259,23 +304,14 @@ formulario.addEventListener("submit",(e) =>{
     // Se valida que cada campo está completo y validado.
     if(validacion === true){
 
-        
-
-        // Se navega a una nueva página o se recarga la página según corresponda.
-        setTimeout(()=>{
-
-            if (formulario.name==="iniciarsesion") {
-                iniciarsesion();
-            } else if (formulario.name==="registrarse"){
-                // window.location.href = "login";
-                
-                registrarse();
-            }else{
-                 location.reload();
-            }
-
-           
-        },4000)
+        if (formulario.name==="iniciarsesion") {
+            iniciarsesion();
+        } else if (formulario.name==="registrarse"){
+            registrarUsuario();
+        }else if (formulario.name=="registrar_emprendimiento"){
+            console.log("Llamando a Registrar Emprendimiento")
+            registrarEmprendimiento();
+        }
 
     }else{
 

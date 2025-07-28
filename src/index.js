@@ -1,6 +1,6 @@
+// Variables Globales
 const express = require('express');
 const path = require('path');
-
 const app = express();
 
 //Configuración de vsitas
@@ -96,9 +96,6 @@ app.post('/registrarse',(req,res)=>{
         res.json(resultado);
     });
 
-    // console.log(req.body)
-    // console.log("llamada desde post logon")
-    //  res.json(resultado);
 })
 
 app.post('/iniciarsesion',(req,res)=>{
@@ -121,7 +118,6 @@ app.post('/iniciarsesion',(req,res)=>{
                 resultado: true,
                 mensaje: `usuario autenticado con exito`}
                 res.json(resultado);
-                
             } else {
                 console.log("Contraseña incorrecta");
                 const resultado = { 
@@ -140,6 +136,40 @@ app.post('/iniciarsesion',(req,res)=>{
 
 existeUser();
 console.log("llamada desde post iniciarsesion")
+
+})
+
+//Publicar Emprendimiento
+const Emprendimiento = require('../models/emprendimientos.js');
+
+app.post('/registrarEmprendimiento',(req,res)=>{
+    
+    let data = new Emprendimiento({
+        correoUsuario:req.body.correoUsuario,
+        nombreEmprendimiento:req.body.nombreEmprendimiento,
+        descripcionEmprendimiento:req.body.descripcionEmprendimiento,
+        categoria:req.body.categoria,
+        telefono:req.body.telefono,
+        nombreImagen:path.basename(req.body.archivo),
+        estadoEmprendimiento: 0 // 0: En Revision, 1: Aprobado, 2: Rechazado/Eliminado
+    })
+    
+    data.save()
+    .then(()=>{
+        console.log("Emprendimiento registrado");
+        const resultado = { 
+            resultado: true,
+            mensaje: `Emprendimiento registrado con exito`}
+        res.json(resultado);
+    })
+
+    .catch(err => {
+        console.log("Error al guardar Emprendimiento:", err);
+        const resultado = { 
+            resultado: false,
+            mensaje: `Error al guardar Emprendimiento ${err}`}
+        res.json(resultado);
+    });
 
 })
 

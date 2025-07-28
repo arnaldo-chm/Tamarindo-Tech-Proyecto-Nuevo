@@ -1,19 +1,12 @@
-/* main{
-    background: linear-gradient( #0a0a09, #474343);
-} */
-
-/* body{
-    background: linear-gradient( #0a0a09, #474343);
-} */
 .Contenido{
-    background: linear-gradient( #0a0a09, #474343);
+    background: linear-gradient( #547A20, #9CC264);
     min-height: 100vh;
     padding: 20px 20px;
 }
 .contenedor-mensaje{
     max-width: 500px;
     margin-left: 100px;
-    background: linear-gradient( #0a0a09, #474343);
+    /* background: linear-gradient( #668c31,); */
     color: #fffbfb;
     padding: 20px;
     border-radius: 10px;
@@ -93,6 +86,9 @@
     bottom: 80px;
 }
 
+#grupo__descripcion_emprendimiento .formulario__validacion-estado{
+    bottom: 40px;
+}
 
 .formulario__input-error{
     font-size: 12px;
@@ -138,7 +134,7 @@
     text-align: center;
 }
 
-#reporte{
+#reporte, #descripcion_emprendimiento{
   resize: none; 
 }
 
