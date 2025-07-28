@@ -41,7 +41,7 @@
             <form class="formulario" id="formulario" name="registrar_emprendimiento">
                 <h1>Publica tu Emprendimiento</h1>
                 <!-- GRUPO NOMBRE-->
-                <div class="formulario__grupo" id="grupo__nombre">
+                <!-- <div class="formulario__grupo" id="grupo__nombre">
                     <label class="formulario__label">Nombre completo*</label>
                     <div class="formulario__grupo-input">
                         <input type="text" class="formulario__input" name="nombre" id="nombre" placeholder="Introduce tu nombre">
@@ -50,6 +50,21 @@
                     <p class="formulario__input-error">
                         Debe ingresar su nombre (requerido), primer apellido (requerido) y segundo apellido (opcional).
                         Separados por un espacio. Nombre puede tener de 3 a 10 letras, Apellidos de 2 a 10 letras, todos puede incluir maýusculas, minúsculas y acentos.
+                    </p>
+                </div> -->
+
+                <!-- GRUPO CORREO-->
+                <div class="formulario__grupo" id="grupo__correo">
+                    <label class="formulario__label">Correo electronico</label>
+                    <div class="formulario__grupo-input">
+                        <input type="email" class="formulario__input" name="correo" id="correo" placeholder="correo@correo.com">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        Debe agregar un correo con la siguiente estructura usuario@dominio.extension,
+                        usuario acepta letras,guión bajo y números,
+                        dominio acepta solo letras,
+                        extension, acepta solo letras
                     </p>
                 </div>
 
@@ -63,6 +78,18 @@
                     <p class="formulario__input-error">
                         El nombre del emprendimiento debe tener mínimo 5 caracteres y máximo 20 y solo admite
                         números, letras, guión, guión bajo, espacios y acentos.
+                    </p>
+                </div>
+
+                <!-- GRUPO Descripcion-->
+                <div class="formulario__grupo" id="grupo__descripcion_emprendimiento">
+                    <label class="formulario__label">Ingresa los detalles de tu Emprendimiento*</label>
+                    <div class="formulario__grupo-input">
+                        <textarea class="formulario__input" id="descripcion_emprendimiento" name="descripcion_emprendimiento" rows="3"></textarea>
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        La descripción debe tener al menos 10 caracteres.
                     </p>
                 </div>
 

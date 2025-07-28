@@ -26,8 +26,10 @@ if(formulario.name==="registrarse"){
     }
 } else if (formulario.name==="registrar_emprendimiento") {
     expresiones ={        
-        nombre : /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/,  // Misma expresion regular usada para el nombre en Registrarse.
+        // nombre : /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/,  // Misma expresion regular usada para el nombre en Registrarse.
+        correo :/^[a-zA-Z0-9\_]+@[a-zA-Z]+\.[a-zA-Z]+$/ , // Misma expresion regular usada para el correo en Registrarse.
         nombre_emprendimiento: /^[a-zA-Z0-9À-ÿ\s\_\-]{5,20}$/, // Nombre Emprendimiento acepta un rango de 5 a 15 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas, guión, guión bajo, espacios y acentos.
+        descripcion_emprendimiento: /^.{10,}$/, // Descripcion Emprendimiento Acepta 10 o más caracteres de cualquier tipo
         categoria: /^[a-zA-Z]{5,10}$/, // Categoría de Emprendimiento acepta un rango de 5 a 10 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas.
         telefono :/^\+?\d{8,11}$/ // Misma expresion regular usada para el nombre en Registrarse.
     }
@@ -56,8 +58,10 @@ if(formulario.name==="registrarse"){
     }
 } else if (formulario.name==="registrar_emprendimiento"){
     campos={
-        nombre: false,
+        // nombre: false,
+        correo: false,
         nombre_emprendimiento: false,
+        descripcion_emprendimiento: false,
         categoria: false,
         telefono: false
     }
@@ -234,45 +238,47 @@ async function iniciarsesion(){
 
 async function registrarEmprendimiento() {
     let datos = {
-        nombre:document.getElementById("nombre").value,
-        nombre_emprendimiento:document.getElementById("nombre_emprendimiento").value,
+        // nombre:document.getElementById("nombre").value,
+        correoUsuario:document.getElementById("correo").value,
+        nombreEmprendimiento:document.getElementById("nombre_emprendimiento").value,
+        descripcionEmprendimiento:document.getElementById("descripcion_emprendimiento").value,
         categoria:document.getElementById("categoria").value,
         telefono:document.getElementById("telefono").value,
         archivo:document.getElementById("archivo").value
     }
-    console.log(document.getElementById("archivo"));
-    console.log(datos.archivo);
 
-    // try {
-    //    const respuesta = await fetch('http://localhost:3000/registrarse', {
-    //      method: 'POST',
-    //      headers: {
-    //        'Content-Type': 'application/json'
-    //      },
-    //      body: JSON.stringify(datos)
-    //    });
+    console.log(datos)
 
-    //    if (!respuesta.ok) {
-    //      throw new Error(`Error en la solicitud: ${respuesta.status}`);
-    //    }
+    try {
+       const respuesta = await fetch('http://localhost:3000/registrarEmprendimiento', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(datos)
+       });
 
-    //    const datosRespuesta = await respuesta.json();
-    //    if (datosRespuesta.resultado){
-    //         // Se muestra el mensaje de aprobación en función de la validación.
-    //     document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
-    //     document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
+       if (!respuesta.ok) {
+         throw new Error(`Error en la solicitud: ${respuesta.status}`);
+       }
 
-    //     setTimeout(()=>{
-    //             window.location.href = "login";
-    //     },4000)
+       const datosRespuesta = await respuesta.json();
+       if (datosRespuesta.resultado){
+            // Se muestra el mensaje de aprobación en función de la validación.
+        document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
+        document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
 
-    //    }else{
-    //         alert(datosRespuesta.mensaje);
-    //    }
-    //  } catch (error) {
-    //    console.error('Error al llamar al backend:', error);
-    //    document.getElementById('resultado').textContent = 'Error al obtener datos';
-    // }
+        setTimeout(()=>{
+                window.location.href = "crear_emprendimiento";
+        },4000)
+
+       }else{
+            alert(datosRespuesta.mensaje);
+       }
+     } catch (error) {
+       console.error('Error al llamar al backend:', error);
+       document.getElementById('resultado').textContent = 'Error al obtener datos';
+    }
 }
 
 
