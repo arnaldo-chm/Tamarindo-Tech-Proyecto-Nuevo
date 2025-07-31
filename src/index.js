@@ -66,6 +66,10 @@ app.get('/Admin_panel', (req, res) => {
     res.render('Admin_panel.html');
 });
 
+app.get('/Contenido-admin', (req, res) => {
+    res.render('contenido-admin.html');
+});
+
 //Login
 const User = require('../models/users.js');
 
