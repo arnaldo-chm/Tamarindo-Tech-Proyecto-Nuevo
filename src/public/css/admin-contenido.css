@@ -228,7 +228,41 @@
     background-color: #5a7d2a;
 }
 
-/* ----------------------------
+/* Estilos para la barra lateral */
+.menu-barra-lateral a {
+    display: block;
+    padding: 10px 15px;
+    color: #555;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.menu-barra-lateral a:hover {
+    background-color: #f5f5f5;
+}
+
+.menu-barra-lateral a.activo {
+    background-color: #e8f5e8;
+    color: #668c31;
+    border-left-color: #668c31;
+}
+
+/* Estilos específicos para horarios en transportes */
+.info-tarjeta img {
+    max-width: 100%;
+    margin-top: 5px;
+    border: 1px solid #eee;
+}
+
+/* Estilos para formularios de transporte */
+#transporte .form-group p {
+    text-align: center;
+    margin: 5px 0;
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* ---------------------------
    Estilos responsive
    ---------------------------- */
 @media (max-width: 768px) {

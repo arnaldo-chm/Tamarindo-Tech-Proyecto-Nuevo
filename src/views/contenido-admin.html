@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/admin-contenido.css">
     <link rel="stylesheet" href="../css/admin-tabs.css">
+    <link rel="stylesheet" href="../css/modales-admin-contenido.css">
     <!-- Google Fonts - Roboto -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,22 +56,17 @@
             </ul>
             
             <div class="seccion-barra-lateral">
-                <div class="titulo-seccion">Contenido</div>
-                <ul class="menu-barra-lateral">
-                    <li><a href="#" class="activo"><span class="icono-menu"></span>Noticias/Anuncios</a></li>
-                    <li><a href="#"><span class="icono-menu"></span>Emprendimientos</a></li>
-                    <li><a href="#"><span class="icono-menu"></span>Transporte</a></li>
-                    <li><a href="#"><span class="icono-menu"></span>Actividades</a></li>  
-                </ul>
-            </div>
+    <div class="titulo-seccion">Contenido</div>
+    <ul class="menu-barra-lateral">
+        <li><a href="#" class="activo" data-tab="noticias"><span class="icono-menu"></span>Noticias/Anuncios</a></li>
+        <li><a href="#" data-tab="emprendimientos"><span class="icono-menu"></span>Emprendimientos</a></li>
+        <li><a href="#" data-tab="transporte"><span class="icono-menu"></span>Transporte</a></li>
+        <li><a href="#" data-tab="actividades"><span class="icono-menu"></span>Actividades</a></li>  
+    </ul>
+</div>
         </aside>
 
         <main class="principal-admin">
-            <div class="encabezado-principal">
-                <h1 class="titulo-principal">Gestión de Contenido</h1>
-                <button class="btn-agregar-contenido">+ Agregar Noticia</button>
-            </div>
-
             <!-- Sistema de pestañas -->
             <div class="admin-tabs">
                 <nav class="tab-nav">
@@ -82,6 +78,10 @@
 
                 <!-- Contenido de pestañas -->
                 <div id="noticias" class="tab-content active">
+                     <div class="encabezado-principal">
+                <h1 class="titulo-principal">Gestión de Contenido</h1>
+                <button class="btn-agregar-contenido">+ Agregar Noticia</button>
+            </div>
                     <div class="filtros-contenido">
                         <select class="filtro-select">
                             <option value="">Todas las categorías</option>
@@ -211,13 +211,44 @@
                     </div>
                 </div>
 
-                <!-- Otras pestañas (Transporte y Actividades) -->
                 <div id="transporte" class="tab-content">
-                    <!-- Contenido similar al de Noticias -->
-                </div>
+                    <div class="encabezado-principal">
+    <h1 class="titulo-principal">Gestión de Transportes</h1>
+    <button class="btn-agregar-contenido">+ Agregar Transporte</button>
+</div>
+                <div class="filtros-contenido">
+        <select class="filtro-select">
+            <option value="">Todos los tipos</option>
+            <option value="Bus">Bus</option>
+            <option value="Taxi">Taxi</option>
+            <option value="Colectivo">Colectivo</option>
+        </select>
+        <input type="text" class="busqueda-input" placeholder="Buscar transportes...">
+    </div>
+    
+    <div class="cuadricula-contenido">
+        <!-- Las tarjetas de transporte se generarán dinámicamente -->
+    </div>
+</div>
 
                 <div id="actividades" class="tab-content">
-                    <!-- Contenido similar al de Noticias -->
+                    <div class="encabezado-principal">
+    <h1 class="titulo-principal">Gestión de Actividades</h1>
+    <button class="btn-agregar-contenido">+ Agregar Actividad</button>
+</div>
+                    <div class="filtros-contenido">
+        <select class="filtro-select">
+            <option value="">Todas las categorías</option>
+            <option value="Cultural">Cultural</option>
+            <option value="Deportiva">Deportiva</option>
+            <option value="Educativa">Educativa</option>
+        </select>
+        <input type="text" class="busqueda-input" placeholder="Buscar actividades...">
+    </div>
+    
+    <div class="cuadricula-contenido">
+        <!-- Las tarjetas de actividades se generarán dinámicamente -->
+    </div>
                 </div>
             </div>
         </main>

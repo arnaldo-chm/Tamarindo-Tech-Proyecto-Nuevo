@@ -1,61 +1,52 @@
-/**
- * admin-tabs.js - Controlador del sistema de pestañas
- * 
- * Funcionalidades:
- * - Cambio entre pestañas
- * - Almacenamiento del estado activo
- * - Soporte para URLs con hash
- */
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Controlador para sistemas de pestañas
-    const tabSystems = document.querySelectorAll('.admin-tabs, .config-container');
-    
-    tabSystems.forEach(system => {
-        const tabs = system.querySelectorAll('.tab-btn, .config-tab');
-        const tabContents = system.querySelectorAll('.tab-content, .config-section');
-        
-        // Función para activar una pestaña
-        const activateTab = (tab) => {
-            // Desactivar todas las pestañas
-            tabs.forEach(t => t.classList.remove('active'));
-            tabContents.forEach(c => c.classList.remove('active'));
-            
-            // Activar la pestaña seleccionada
-            tab.classList.add('active');
-            const tabId = tab.getAttribute('data-tab');
-            const content = system.querySelector(`#${tabId}`);
-            if (content) content.classList.add('active');
-            
-            // Actualizar URL si es el sistema principal
-            if (system.classList.contains('admin-tabs')) {
-                history.pushState(null, '', `#${tabId}`);
-            }
-        };
-        
-        // Event listeners para las pestañas
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => activateTab(tab));
+    // Elementos del DOM
+    const tabNavButtons = document.querySelectorAll('.tab-nav .tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const sidebarLinks = document.querySelectorAll('.menu-barra-lateral a');
+    const btnAgregar = document.querySelector('.btn-agregar-contenido');
+
+    // Función para cambiar de pestaña
+    function activateTab(tabId) {
+        // Actualizar tabs principales
+        tabNavButtons.forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.tab === tabId);
         });
         
-        // Activar pestaña desde URL hash
-        if (system.classList.contains('admin-tabs')) {
-            const hash = window.location.hash.substring(1);
-            if (hash) {
-                const tabToActivate = system.querySelector(`.tab-btn[data-tab="${hash}"]`);
-                if (tabToActivate) activateTab(tabToActivate);
-            }
+        // Actualizar contenido
+        tabContents.forEach(content => {
+            content.classList.toggle('active', content.id === tabId);
+        });
+        
+        // Actualizar barra lateral
+        sidebarLinks.forEach(link => {
+            link.classList.toggle('activo', link.dataset.tab === tabId);
+        });
+        
+        // Mostrar/ocultar botón "Agregar Noticia"
+        if (btnAgregar) {
+            btnAgregar.style.display = tabId === 'noticias' ? 'block' : 'none';
         }
-    });
-    
-    // Botón "Nuevo" en pestañas
-    const btnAgregar = document.querySelector('.btn-agregar');
-    if (btnAgregar) {
-        btnAgregar.addEventListener('click', function(e) {
-            e.preventDefault();
-            // Aquí iría la lógica para abrir un modal de creación
-            console.log('Abrir formulario para nuevo elemento');
-            // Ejemplo: mostrarModal('nuevo-elemento');
-        });
     }
+
+    // Event listeners para tabs principales
+    tabNavButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            activateTab(btn.dataset.tab);
+        });
+    });
+
+    // Event listeners para barra lateral
+    sidebarLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            activateTab(link.dataset.tab);
+        });
+    });
+
+    // Activar pestaña inicial desde URL hash o por defecto
+    const hash = window.location.hash.substring(1);
+    const defaultTab = 'noticias';
+    const initialTab = hash && document.querySelector(`.tab-btn[data-tab="${hash}"]`) ? hash : defaultTab;
+    activateTab(initialTab);
 });
+
