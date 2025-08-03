@@ -813,91 +813,94 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function mostrarFormularioNoticia() {
-        const formulario = document.createElement('div');
-        formulario.className = 'modal-nuevo';
-        formulario.innerHTML = `
-            <div class="modal-contenido">
-                <h3>Crear Nueva Noticia</h3>
-                <form id="form-nueva-noticia">
-                    <div class="form-group">
-                        <label for="nuevo-titulo">Título:</label>
-                        <input type="text" id="nuevo-titulo" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="nuevo-autor">Autor:</label>
-                        <input type="text" id="nuevo-autor" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="nuevo-categoria">Categoría:</label>
-                        <select id="nuevo-categoria" required>
-                            <option value="Noticias">Noticias</option>
-                            <option value="Anuncios">Anuncios</option>
-                            <option value="Eventos">Eventos</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="nuevo-descripcion">Descripción:</label>
-                        <textarea id="nuevo-descripcion" rows="4" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="nuevo-imagen">Imagen:</label>
-                        <input type="file" id="nuevo-imagen" accept="image/*" required>
-                        <div class="vista-previa-imagen" id="vista-previa-imagen"></div>
-                    </div>
-                    <div class="form-acciones">
-                        <button type="button" class="btn-cancelar">Cancelar</button>
-                        <button type="submit" class="btn-guardar">Publicar Noticia</button>
-                    </div>
-                </form>
-            </div>
-        `;
 
-        document.body.appendChild(formulario);
-        formulario.style.display = 'flex';
+        window.location.href = 'Admin_panel/formulario_noticias';
 
-        const inputImagen = formulario.querySelector('#nuevo-imagen');
-        const vistaPrevia = formulario.querySelector('#vista-previa-imagen');
+        // const formulario = document.createElement('div');
+        // formulario.className = 'modal-nuevo';
+        // formulario.innerHTML = `
+        //     <div class="modal-contenido">
+        //         <h3>Crear Nueva Noticia</h3>
+        //         <form id="form-nueva-noticia">
+        //             <div class="form-group">
+        //                 <label for="nuevo-titulo">Título:</label>
+        //                 <input type="text" id="nuevo-titulo" required>
+        //             </div>
+        //             <div class="form-group">
+        //                 <label for="nuevo-autor">Autor:</label>
+        //                 <input type="text" id="nuevo-autor" required>
+        //             </div>
+        //             <div class="form-group">
+        //                 <label for="nuevo-categoria">Categoría:</label>
+        //                 <select id="nuevo-categoria" required>
+        //                     <option value="Noticias">Noticias</option>
+        //                     <option value="Anuncios">Anuncios</option>
+        //                     <option value="Eventos">Eventos</option>
+        //                 </select>
+        //             </div>
+        //             <div class="form-group">
+        //                 <label for="nuevo-descripcion">Descripción:</label>
+        //                 <textarea id="nuevo-descripcion" rows="4" required></textarea>
+        //             </div>
+        //             <div class="form-group">
+        //                 <label for="nuevo-imagen">Imagen:</label>
+        //                 <input type="file" id="nuevo-imagen" accept="image/*" required>
+        //                 <div class="vista-previa-imagen" id="vista-previa-imagen"></div>
+        //             </div>
+        //             <div class="form-acciones">
+        //                 <button type="button" class="btn-cancelar">Cancelar</button>
+        //                 <button type="submit" class="btn-guardar">Publicar Noticia</button>
+        //             </div>
+        //         </form>
+        //     </div>
+        // `;
 
-        inputImagen.addEventListener('change', function() {
-            const archivo = this.files[0];
-            if (archivo) {
-                const lector = new FileReader();
-                lector.onload = function(e) {
-                    vistaPrevia.innerHTML = `<img src="${e.target.result}" alt="Vista previa" style="max-width: 100%; max-height: 150px;">`;
-                }
-                lector.readAsDataURL(archivo);
-            }
-        });
+        // document.body.appendChild(formulario);
+        // formulario.style.display = 'flex';
 
-        formulario.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
+        // const inputImagen = formulario.querySelector('#nuevo-imagen');
+        // const vistaPrevia = formulario.querySelector('#vista-previa-imagen');
+
+        // inputImagen.addEventListener('change', function() {
+        //     const archivo = this.files[0];
+        //     if (archivo) {
+        //         const lector = new FileReader();
+        //         lector.onload = function(e) {
+        //             vistaPrevia.innerHTML = `<img src="${e.target.result}" alt="Vista previa" style="max-width: 100%; max-height: 150px;">`;
+        //         }
+        //         lector.readAsDataURL(archivo);
+        //     }
+        // });
+
+        // formulario.querySelector('form').addEventListener('submit', function(e) {
+        //     e.preventDefault();
             
-            let imagenSrc = '/img/NoticiaEjm.png';
-            if (inputImagen.files && inputImagen.files[0]) {
-                imagenSrc = URL.createObjectURL(inputImagen.files[0]);
-            }
+        //     let imagenSrc = '/img/NoticiaEjm.png';
+        //     if (inputImagen.files && inputImagen.files[0]) {
+        //         imagenSrc = URL.createObjectURL(inputImagen.files[0]);
+        //     }
 
-            const nuevaNoticia = {
-                id: Date.now(),
-                titulo: formulario.querySelector('#nuevo-titulo').value,
-                autor: formulario.querySelector('#nuevo-autor').value,
-                fecha: new Date().toLocaleDateString('es-ES'),
-                estado: 'publicado',
-                categoria: formulario.querySelector('#nuevo-categoria').value,
-                descripcion: formulario.querySelector('#nuevo-descripcion').value,
-                imagen: imagenSrc
-            };
+        //     const nuevaNoticia = {
+        //         id: Date.now(),
+        //         titulo: formulario.querySelector('#nuevo-titulo').value,
+        //         autor: formulario.querySelector('#nuevo-autor').value,
+        //         fecha: new Date().toLocaleDateString('es-ES'),
+        //         estado: 'publicado',
+        //         categoria: formulario.querySelector('#nuevo-categoria').value,
+        //         descripcion: formulario.querySelector('#nuevo-descripcion').value,
+        //         imagen: imagenSrc
+        //     };
 
-            const card = crearTarjetaNoticia(nuevaNoticia);
-            document.querySelector('#noticias .cuadricula-contenido').prepend(card);
+        //     const card = crearTarjetaNoticia(nuevaNoticia);
+        //     document.querySelector('#noticias .cuadricula-contenido').prepend(card);
             
-            document.body.removeChild(formulario);
-            mostrarNotificacion('Noticia creada correctamente', 'exito');
-        });
+        //     document.body.removeChild(formulario);
+        //     mostrarNotificacion('Noticia creada correctamente', 'exito');
+        // });
 
-        formulario.querySelector('.btn-cancelar').addEventListener('click', function() {
-            document.body.removeChild(formulario);
-        });
+        // formulario.querySelector('.btn-cancelar').addEventListener('click', function() {
+        //     document.body.removeChild(formulario);
+        // });
     }
 
     function mostrarFormularioTransporte() {

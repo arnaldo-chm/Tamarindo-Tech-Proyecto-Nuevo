@@ -62,13 +62,18 @@ app.get('/Landing_page', (req, res) => {
     res.render('landingpage.html');
 });
 
-app.get('/Admin_panel', (req, res) => {
-    res.render('Admin_panel.html');
-});
+// app.get('/Admin_panel', (req, res) => {
+//     res.render('Admin_panel.html');
+// });
 
-app.get('/Contenido-admin', (req, res) => {
+app.get('/Admin_panel', (req, res) => {
     res.render('contenido-admin.html');
 });
+
+app.get('/Admin_panel/crear_noticia', (req, res) => {
+    res.render('formulario_noticias.html');
+});
+
 
 //Login
 const User = require('../models/users.js');
@@ -202,6 +207,45 @@ app.get('/api/emprendimientos',(req,res)=>{
 
 
     obtenerEmprendimientos();
+})
+
+
+// NOTICIAS
+
+const Noticia = require('../models/noticias.js');
+
+app.post('/api/registrarNoticia',(req,res)=>{
+
+    console.log(req.body);
+    
+    let data = new Noticia({
+        titulo:req.body.titulo,
+        autor:req.body.autor,
+        descripcionNoticia:req.body.descripcionNoticia,
+        categoria:req.body.categoria,
+        telefono:req.body.telefono,
+        nombreImagen:path.basename(req.body.archivo),
+    })
+
+    console.log(data);
+    
+    data.save()
+    .then(()=>{
+        console.log("Noticia registrada");
+        const resultado = { 
+            resultado: true,
+            mensaje: `Noticia registrada con exito`}
+        res.json(resultado);
+    })
+
+    .catch(err => {
+        console.log("Error al guardar Noticia:", err);
+        const resultado = { 
+            resultado: false,
+            mensaje: `Error al guardar Noticia ${err}`}
+        res.json(resultado);
+    });
+
 })
 
 //Encender el server

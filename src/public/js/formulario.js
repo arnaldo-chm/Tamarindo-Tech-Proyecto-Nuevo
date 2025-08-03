@@ -1,6 +1,7 @@
 //Se crea una constante con todas las entradas del formulario
 // Se excluye de la validación los inputs tipo file, submit y checkbox.
 const inputs = document.querySelectorAll('#formulario input:not([type="submit"]):not([type="file"]):not([type="checkbox"]), #formulario textarea'); 
+const inputDropdown = document.querySelector('#dropdown');
 
 // Se crea un elemento formulario para manipular el evento Submit.
 const formulario = document.getElementById("formulario");
@@ -39,6 +40,13 @@ if(formulario.name==="registrarse"){
         nombre : /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/,  // Misma expresion regular usada para el nombre en Registrarse.
         reporte: /^.{10,}$/, // Reporte Acepta 10 o más caracteres de cualquier tipo        
     }
+} else if (formulario.name==="registrar_noticia") {
+    expresiones ={        
+        titulo : /^[a-zA-Z0-9À-ÿ\s]{5,50}$/, // Titulo Noticia acepta un rango de 5 a 50 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas, números, espacios y acentos.
+        autor : /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/,  // Misma expresion regular usada para el nombre en Registrarse.
+        descripcion_noticia: /^.{10,}$/, // Descripcion Emprendimiento Acepta 10 o más caracteres de cualquier tipo   
+        telefono :/^\+?\d{8,11}$/, // Misma expresion regular usada para el nombre en Registrarse.  
+    }
 }
 
 // Se crea un objeto para mapear la validación de cada campo del formulario al momento de validar el formulario completo.
@@ -72,6 +80,14 @@ if(formulario.name==="registrarse"){
         nombre: false,
         reporte: false
     }
+} else if (formulario.name==="registrar_noticia"){
+    campos={
+        titulo : false,
+        autor : false,
+        descripcion_noticia: false,
+        dropdown: false,
+        telefono: false
+    }
 }
 
 // Función validarFormulario
@@ -87,6 +103,9 @@ const validarFormulario = (e)=>{
         break;
         case "password2":
             validarPassword2();
+        break;    
+        case "dropdown":
+            validarDropdown();
         break;        
         default:
             validarCampo(expresiones[e.target.name],e.target,e.target.name)
@@ -135,16 +154,36 @@ const validarPassword2=()=>{
         document.querySelector(`#grupo__password2 .formulario__input-error`).classList.add("formulario__input-error-activo");
         document.querySelector(`#grupo__password2 i`).classList.add("bxs-x-circle");
         document.querySelector(`#grupo__password2 i`).classList.remove("bxs-check-circle");
-        campos[password]=false;
+        campos["password"]=false;
     }else{
         document.getElementById(`grupo__password2`).classList.remove("formulario__grupo-incorrecto");
         document.getElementById(`grupo__password2`).classList.add("formulario__grupo-correcto");
         document.querySelector(`#grupo__password2 .formulario__input-error`).classList.remove("formulario__input-error-activo");
         document.querySelector(`#grupo__password2 i`).classList.remove("bxs-x-circle");
         document.querySelector(`#grupo__password2 i`).classList.add("bxs-check-circle");
-        campos[password]=true;
+        campos["password"]=true;
     }
 
+}
+
+const validarDropdown=()=>{
+    let inputDropdown = document.getElementById("dropdown");
+
+    if (inputDropdown.value=="default") {
+        document.getElementById(`grupo__dropdown`).classList.add("formulario__grupo-incorrecto");
+        document.getElementById(`grupo__dropdown`).classList.remove("formulario__grupo-correcto");
+        document.querySelector(`#grupo__dropdown .formulario__input-error`).classList.add("formulario__input-error-activo");
+        document.querySelector(`#grupo__dropdown i`).classList.add("bxs-x-circle");
+        document.querySelector(`#grupo__dropdown i`).classList.remove("bxs-check-circle");
+        campos["dropdown"]=false;
+    } else {
+        document.getElementById(`grupo__dropdown`).classList.remove("formulario__grupo-incorrecto");
+        document.getElementById(`grupo__dropdown`).classList.add("formulario__grupo-correcto");
+        document.querySelector(`#grupo__dropdown .formulario__input-error`).classList.remove("formulario__input-error-activo");
+        document.querySelector(`#grupo__dropdown i`).classList.remove("bxs-x-circle");
+        document.querySelector(`#grupo__dropdown i`).classList.add("bxs-check-circle");
+        campos["dropdown"]=true;                
+    }
 }
 
 // Para cada input seleccionado para validar, se crean los EventListeners para llamar a la función validarFormulario 
@@ -153,6 +192,10 @@ inputs.forEach((input)=>{
     input.addEventListener("keyup",validarFormulario)
     input.addEventListener("blur",validarFormulario)
 })
+
+if (inputDropdown != null) {
+    inputDropdown.addEventListener("change",validarFormulario);
+}
 
 
 async function registrarUsuario(){
@@ -250,8 +293,6 @@ async function registrarEmprendimiento() {
         archivo:document.getElementById("archivo").value
     }
 
-    console.log(datos)
-
     try {
        const respuesta = await fetch('http://localhost:3000/api/registrarEmprendimiento', {
          method: 'POST',
@@ -284,14 +325,60 @@ async function registrarEmprendimiento() {
     }
 }
 
+async function registrarNoticia() {
+
+    console.log("Funcion registrarNoticia");
+    let datos = {
+        titulo : document.getElementById("titulo").value,
+        autor : document.getElementById("autor").value,
+        descripcionNoticia: document.getElementById("descripcion_noticia").value,
+        categoria: document.getElementById("dropdown").value,
+        archivo:document.getElementById("archivo").value,
+        telefono:document.getElementById("telefono").value,
+    }
+
+    try {
+       const respuesta = await fetch('http://localhost:3000/api/registrarNoticia', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(datos)
+       });
+
+       if (!respuesta.ok) {
+         throw new Error(`Error en la solicitud: ${respuesta.status}`);
+       }
+
+       const datosRespuesta = await respuesta.json();
+       if (datosRespuesta.resultado){
+            // Se muestra el mensaje de aprobación en función de la validación.
+        document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
+        document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
+
+        setTimeout(()=>{
+                window.location.href = "/Admin_panel";
+        },4000)
+
+       }else{
+            alert(datosRespuesta.mensaje);
+       }
+     } catch (error) {
+       console.error('Error al llamar al backend:', error);
+       document.getElementById('resultado').textContent = 'Error al obtener datos';
+    }
+}
+
 
 // Se crea un EventListener para el evento submit del Formulario.
 formulario.addEventListener("submit",(e) =>{
+
     // Se elimina el comportamiento por defecto para que no recargue la página y el usuario no pierda la información ingresada.
     e.preventDefault();
     const terminos = document.getElementById("terminos");
     let validacion = true;
 
+    console.log(campos);
     // Se valida que cada campo está completo y validado.
     for (const key in campos) {        
         if (campos[key] === false) {
@@ -315,6 +402,11 @@ formulario.addEventListener("submit",(e) =>{
             console.log("Llamando a Registrar Emprendimiento")
             registrarEmprendimiento();
         }
+        else if (formulario.name=="registrar_noticia"){
+            console.log("Llamando a Registrar Noticia")
+            registrarNoticia();
+        }
+        
 
     }else{
 
