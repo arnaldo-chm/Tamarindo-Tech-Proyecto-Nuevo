@@ -30,8 +30,7 @@ if(formulario.name==="registrarse"){
         // nombre : /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/,  // Misma expresion regular usada para el nombre en Registrarse.
         correo :/^[a-zA-Z0-9\_]+@[a-zA-Z]+\.[a-zA-Z]+$/ , // Misma expresion regular usada para el correo en Registrarse.
         nombre_emprendimiento: /^[a-zA-Z0-9À-ÿ\s\_\-]{5,20}$/, // Nombre Emprendimiento acepta un rango de 5 a 15 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas, guión, guión bajo, espacios y acentos.
-        descripcion_emprendimiento: /^.{10,}$/, // Descripcion Emprendimiento Acepta 10 o más caracteres de cualquier tipo
-        categoria: /^[a-zA-Z]{5,10}$/, // Categoría de Emprendimiento acepta un rango de 5 a 10 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas.
+        descripcion_emprendimiento: /^.{10,}$/, // Descripcion Emprendimiento Acepta 10 o más caracteres de cualquier tipo        
         telefono :/^\+?\d{8,11}$/, // Misma expresion regular usada para el nombre en Registrarse.
         precio: /^\d{1,5}$/ //El precio acepta entre 1 y 5 digitos
     }
@@ -46,6 +45,13 @@ if(formulario.name==="registrarse"){
         autor : /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/,  // Misma expresion regular usada para el nombre en Registrarse.
         descripcion_noticia: /^.{10,}$/, // Descripcion Emprendimiento Acepta 10 o más caracteres de cualquier tipo   
         telefono :/^\+?\d{8,11}$/, // Misma expresion regular usada para el nombre en Registrarse.  
+    }
+}
+else if (formulario.name==="registrar_transporte") {
+    expresiones ={        
+        ruta : /^[a-zA-Z0-9À-ÿ\s\_\-]{5,50}$/, // Ruta Transporte acepta un rango de 5 a 50 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas, números, espacios, acentos y guiones.        
+        telefono :/^\+?\d{8,11}$/, // Misma expresion regular usada para el nombre en Registrarse. 
+        tarifa: /^\d{1,5}$/ //El precio acepta entre 1 y 5 digitos 
     }
 }
 
@@ -71,7 +77,6 @@ if(formulario.name==="registrarse"){
         correo: false,
         nombre_emprendimiento: false,
         descripcion_emprendimiento: false,
-        categoria: false,
         telefono: false,
         precio: false
     }
@@ -87,6 +92,13 @@ if(formulario.name==="registrarse"){
         descripcion_noticia: false,
         dropdown: false,
         telefono: false
+    }
+}
+else if (formulario.name==="registrar_transporte"){
+    campos={
+        ruta : false,
+        telefono : false,
+        tarifa: false,
     }
 }
 
@@ -287,7 +299,7 @@ async function registrarEmprendimiento() {
         correoUsuario:document.getElementById("correo").value,
         nombreEmprendimiento:document.getElementById("nombre_emprendimiento").value,
         descripcionEmprendimiento:document.getElementById("descripcion_emprendimiento").value,
-        categoria:document.getElementById("categoria").value,
+        categoria:document.getElementById("dropdown").value,
         telefono:document.getElementById("telefono").value,
         precio:document.getElementById("precio").value,
         archivo:document.getElementById("archivo").value
@@ -369,6 +381,50 @@ async function registrarNoticia() {
     }
 }
 
+async function registrarTransporte() {
+
+    console.log("Funcion registrarTransporte");
+    let datos = {
+        ruta : document.getElementById("ruta").value,
+        tarifa : document.getElementById("tarifa").value,
+        archivo:document.getElementById("archivo").value,
+        telefono:document.getElementById("telefono").value,
+    }
+
+    console.log(datos);
+
+    try {
+       const respuesta = await fetch('http://localhost:3000/api/registrarTransporte', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(datos)
+       });
+
+       if (!respuesta.ok) {
+         throw new Error(`Error en la solicitud: ${respuesta.status}`);
+       }
+
+       const datosRespuesta = await respuesta.json();
+       if (datosRespuesta.resultado){
+            // Se muestra el mensaje de aprobación en función de la validación.
+        document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
+        document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
+
+        setTimeout(()=>{
+                window.location.href = "/Admin_panel";
+        },4000)
+
+       }else{
+            alert(datosRespuesta.mensaje);
+       }
+     } catch (error) {
+       console.error('Error al llamar al backend:', error);
+       document.getElementById('resultado').textContent = 'Error al obtener datos';
+    }
+}
+
 
 // Se crea un EventListener para el evento submit del Formulario.
 formulario.addEventListener("submit",(e) =>{
@@ -405,6 +461,10 @@ formulario.addEventListener("submit",(e) =>{
         else if (formulario.name=="registrar_noticia"){
             console.log("Llamando a Registrar Noticia")
             registrarNoticia();
+        }
+        else if (formulario.name=="registrar_transporte"){
+            console.log("Llamando a Registrar Transporte")
+            registrarTransporte();
         }
         
 

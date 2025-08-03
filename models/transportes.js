@@ -9,17 +9,14 @@ mongoose.connect(DB_URI,{})
 //Modelo de usuario
 
 //Schema
-const noticiaSchema = new mongoose.Schema({
-    titulo:{type:String, required:true, unique:true},
-    autor:{type:String, required:true},
-    descripcionNoticia:{type:String, required:true},
-    categoria:{type:String, required:true},    
+const transporteSchema = new mongoose.Schema({
+    ruta:{type:String, required:true, unique:true},
+    tarifa:{type:Number, required:true},
     telefono:{type:String, required:true},
-    fecha: {type:String, required:true},
     nombreImagen:{type:String, required:true}
 },{versionKey:false}) 
 
 
-let noticia = new mongoose.model('Noticia', noticiaSchema);
+let transporte = new mongoose.model('Transporte', transporteSchema);
 
-module.exports = noticia;
+module.exports = transporte;
