@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Contenido | Tamarindo Tech</title>
+    <link rel="stylesheet" href="../css/Admin_panel.css">
+    <link rel="stylesheet" href="../css/general.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/admin-contenido.css">
+    <link rel="stylesheet" href="../css/admin-tabs.css">
+    <link rel="stylesheet" href="../css/modales-admin-contenido.css">
+    <!-- Google Fonts - Roboto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="logo">
+            <h1>Tamarindo Tech</h1>
+        </div>
+        <label for="verificacion-barra-lateral" class="alternar-barra-lateral">☰</label>
+    </header>
+    <!-- fin de header -->
+
+
+    <input type="checkbox" id="verificacion-barra-lateral">
+
+    <div class="Contenido">
+        <aside class="barra-lateral-admin">
+        
+            <div class="seccion-barra-lateral">
+                <div class="titulo-seccion">Contenido</div>
+                <ul class="menu-barra-lateral">
+                    <li><a href="#" class="activo" data-tab="noticias"><span
+                                class="icono-menu"></span>Noticias/Anuncios</a></li>
+                    <li><a href="#" data-tab="emprendimientos"><span class="icono-menu"></span>Emprendimientos</a></li>
+                    <li><a href="#" data-tab="transporte"><span class="icono-menu"></span>Transporte</a></li>
+                    <li><a href="#" data-tab="actividades"><span class="icono-menu"></span>Actividades</a></li>
+                    <li><a href="#" data-tab="quejas"><span class="icono-menu"></span>Quejas/Consultas</a></li>
+                    <li><a href="#" data-tab="miembros"><span class="icono-menu"></span>Miembros</a></li>
+
+                </ul>
+            </div>
+        </aside>
+
+        <main class="principal-admin">
+            <!-- Sistema de pestañas -->
+            <div class="admin-tabs">
+                <nav class="tab-nav">
+                    <button class="tab-btn active" data-tab="noticias">Noticias/Anuncios</button>
+                    <button class="tab-btn" data-tab="emprendimientos">Emprendimientos</button>
+                    <button class="tab-btn" data-tab="transporte">Transporte</button>
+                    <button class="tab-btn" data-tab="actividades">Actividades</button>
+                    <button class="tab-btn" data-tab="quejas">Quejas/Consultas</button>
+                    <button class="tab-btn" data-tab="miembros">Miembros</button>
+                </nav>
+
+                <!-- Contenido de pestañas -->
+                <div id="noticias" class="tab-content active">
+                    <div class="encabezado-principal">
+                        <h1 class="titulo-principal">Gestión de Contenido</h1>
+                        <button class="btn-agregar-contenido">+ Agregar Noticia</button>
+                    </div>
+                    <div class="filtros-contenido">
+                        <select class="filtro-select">
+                            <option value="">Todas las categorías</option>
+                            <option value="Noticias">Noticias</option>
+                            <option value="Anuncios">Anuncios</option>
+                            <option value="Eventos">Eventos</option>
+                        </select>
+                        <input type="text" class="busqueda-input" placeholder="Buscar noticias...">
+                    </div>
+
+                    <div class="cuadricula-contenido">
+
+
+                        <!-- Noticia 2 -->
+                        <div class="tarjeta-simple">
+                            <div class="encabezado-tarjeta">
+                                <h4>Mantenimiento programado del sistema</h4>
+                                <span class="fecha">10/11/2023</span>
+                            </div>
+                            <div class="imagen-tarjeta">
+                                <img src="/img/NoticiaEjm.png" alt="Mantenimiento sistema">
+                            </div>
+                            <div class="info-tarjeta">
+                                <p><strong>Autor:</strong> Equipo de TI</p>
+                                <p><strong>Categoría:</strong> Anuncios</p>
+                            </div>
+                            <div class="acciones-tarjeta">
+                                <button class="btn-editar">Editar</button>
+                                <button class="btn-eliminar">Eliminar</button>
+                            </div>
+                        </div>
+
+                        <% noticias.forEach(noticia=>{ %>
+                            
+                            <div class="tarjeta-simple">
+                                <div class="encabezado-tarjeta">
+                                    <h4><%= noticia.titulo %></h4>
+                                    <span class="fecha"><%= noticia.fecha %></span>
+                                </div>
+                                <div class="imagen-tarjeta">
+                                    <img src="/img/<%= noticia.nombreImagen %>" alt="">
+                                </div>
+                                <div class="info-tarjeta">
+                                    <p><strong>Autor:</strong><%= noticia.autor %></p>
+                                    <p><strong>Categoría:</strong><%= noticia.categoria %></p>
+                                </div>
+                                <div class="acciones-tarjeta">
+                                    <button class="btn-editar">Editar</button>
+                                    <button class="btn-eliminar">Eliminar</button>
+                                </div>
+                            </div>
+                        <% }) %>
+
+                    </div>
+                </div>
+
+                <div id="emprendimientos" class="tab-content">
+                    <div class="filtros-contenido">
+                        <select class="filtro-select">
+                            <option value="">Todos los estados</option>
+                            <option value="pendiente">Pendientes</option>
+                            <option value="aprobado">Aprobados</option>
+                            <option value="rechazado">Rechazados</option>
+                        </select>
+                        <input type="text" class="busqueda-input" placeholder="Buscar emprendimientos...">
+                    </div>
+
+                    <div class="cuadricula-contenido">
+                        <!-- Emprendimiento 1 - Pendiente -->
+                        <div class="tarjeta-emprendimiento" data-estado="pendiente">
+                            <div class="encabezado-tarjeta">
+                                <h4>Artesanías Locales</h4>
+                                <span class="estado pendiente">Pendiente</span>
+                            </div>
+                            <div class="imagen-tarjeta">
+                                <img src="/img/NoticiaEjm.png" alt="Artesanías Locales">
+                            </div>
+                            <div class="info-tarjeta">
+                                <p><strong>Emprendedor:</strong> Ana Rodríguez</p>
+                                <p><strong>Categoría:</strong> Artesanías</p>
+                                <p><strong>Solicitado:</strong> 05/11/2023</p>
+                            </div>
+                            <div class="acciones-tarjeta">
+                                <button class="btn-aprobar">Aprobar</button>
+                                <button class="btn-rechazar">Rechazar</button>
+                                <button class="btn-detalles">Detalles</button>
+                            </div>
+                        </div>
+
+                        <% emprendimientos.forEach(emprendimiento=>{ %>
+ 
+                            <div class="tarjeta-emprendimiento" data-estado="<%= emprendimiento.estadoEmprendimiento %>">
+                                <div class="encabezado-tarjeta">
+                                    <h4><%= emprendimiento.nombreEmprendimiento %></h4>
+                                    <span class="estado <%= emprendimiento.estadoEmprendimiento %>"><%= emprendimiento.estadoEmprendimiento %></span>
+                                </div>
+                                <div class="imagen-tarjeta">
+                                    <img src="/img/<%= emprendimiento.nombreImagen %>" alt="">
+                                </div>
+                                <div class="info-tarjeta">
+                                    <p><strong>Correo:</strong><%= emprendimiento.correoUsuario %></p>
+                                    <p><strong>Categoría:</strong><%= emprendimiento.categoria %></p>
+                                    <!-- <p><strong>Solicitado:</strong> 05/11/2023</p> -->
+                                </div>
+                                <div class="acciones-tarjeta">
+                                    <button class="btn-aprobar">Aprobar</button>
+                                    <button class="btn-rechazar">Rechazar</button>
+                                    <button class="btn-detalles">Detalles</button>
+                                </div>
+                            </div>
+                        <% }) %>
+
+                    </div>
+                </div>
+
+                <div id="transporte" class="tab-content">
+                    <div class="encabezado-principal">
+                        <h1 class="titulo-principal">Gestión de Transportes</h1>
+                        <button class="btn-agregar-contenido">+ Agregar Transporte</button>
+                    </div>
+                    <div class="filtros-contenido">
+                        <select class="filtro-select">
+                            <option value="">Todos los tipos</option>
+                            <option value="Bus">Bus</option>
+                            <option value="Taxi">Taxi</option>
+                            <option value="Colectivo">Colectivo</option>
+                        </select>
+                        <input type="text" class="busqueda-input" placeholder="Buscar transportes...">
+                    </div>
+
+                    <div class="cuadricula-contenido">
+
+                        <div class="tarjeta-simple">
+                            <div class="encabezado-tarjeta">
+                            <h4>Ruta Nunciatura - San Pedro</h4>                           
+                            </div>
+                            <div class="imagen-tarjeta">
+                                <img src="/img/ruta1.png" alt="">
+                            </div>
+                            <div class="info-tarjeta">                               
+                                <p><strong>Tarifa:</strong> $2.50</p>
+                                <p><strong>Contacto:</strong> 2222-2222</p>
+                            </div>
+                            <div class="acciones-tarjeta">
+                                <button class="btn-editar" data-id="${transporte.id}">Editar</button>
+                                <button class="btn-eliminar" data-id="${transporte.id}">Eliminar</button>
+                            </div>
+                        </div>
+                        
+                        <% transportes.forEach(transporte=>{ %>
+                            
+                            <div class="tarjeta-simple">
+                                <div class="encabezado-tarjeta">
+                                <h4><%= transporte.ruta %></h4>                           
+                                </div>
+                                <div class="imagen-tarjeta">
+                                    <img src="/img/<%= transporte.nombreImagen %>" alt="">
+                                </div>
+                                <div class="info-tarjeta">                               
+                                    <p><strong>Tarifa:</strong>$<%= transporte.tarifa %></p>
+                                    <p><strong>Contacto:</strong><%= transporte.telefono %></p>
+                                </div>
+                                <div class="acciones-tarjeta">
+                                    <button class="btn-editar" data-id="${transporte.id}">Editar</button>
+                                    <button class="btn-eliminar" data-id="${transporte.id}">Eliminar</button>
+                                </div>
+                            </div>
+
+                        <% }) %>
+                    </div>
+                </div>
+
+                <div id="actividades" class="tab-content">
+                    <div class="encabezado-principal">
+                        <h1 class="titulo-principal">Gestión de Actividades</h1>
+                        <button class="btn-agregar-contenido">+ Agregar Actividad</button>
+                    </div>
+                    <div class="filtros-contenido">
+                        <select class="filtro-select">
+                            <option value="">Todas las categorías</option>
+                            <option value="Cultural">Cultural</option>
+                            <option value="Deportiva">Deportiva</option>
+                            <option value="Educativa">Educativa</option>
+                        </select>
+                        <input type="text" class="busqueda-input" placeholder="Buscar actividades...">
+                    </div>
+
+                    <div class="cuadricula-contenido">
+                        <div class="tarjeta-simple">
+                            <div class="encabezado-tarjeta">
+                                <h4>Taller de Pintura</h4>
+                                <span class="fecha">20/11/2023</span>
+                            </div>
+                            <div class="imagen-tarjeta">
+                                <img src="/img/Actividades_TrabajoEnBarro.png" alt="">
+                            </div>
+                            <div class="info-tarjeta">
+                                <p><strong>Descripcion Actividad:</strong> Taller de pintura al óleo para principiantes</p>
+                                <p><strong>Recomendaciones Actividad:</strong> Llevar Brochas y Pintura </p>
+                                <p><strong>Duracion:</strong> 1.5 h</p>   
+                                <p><strong>Hora:</strong> 10:30</p>                              
+                            </div>
+                            <div class="acciones-tarjeta">
+                                <button class="btn-editar">Editar</button>
+                                <button class="btn-eliminar">Eliminar</button>
+                            </div>
+                        </div>
+                        
+                        <% actividades.forEach(actividad=>{ %>
+                            
+
+                        <div class="tarjeta-simple">
+                            <div class="encabezado-tarjeta">
+                                <h4><%= actividad.titulo %></h4>
+                                <span class="fecha"><%= actividad.fecha %></span>
+                            </div>
+                            <div class="imagen-tarjeta">
+                                <img src="/img/<%= actividad.nombreImagen %>" alt="">
+                            </div>
+                            <div class="info-tarjeta">
+                                <p><strong>Descripcion Actividad:</strong><%= actividad.descripcion_actividad %></p>
+                                <p><strong>Recomendaciones Actividad:</strong><%= actividad.recomendaciones_actividad %></p>
+                                <p><strong>Duracion:</strong><%= actividad.duracion %></p>   
+                                <p><strong>Hora:</strong><%= actividad.hora %></p>                              
+                            </div>
+                            <div class="acciones-tarjeta">
+                                <button class="btn-editar">Editar</button>
+                                <button class="btn-eliminar">Eliminar</button>
+                            </div>
+                        </div>                            
+
+                        <% }) %>
+
+                    </div>
+
+                    
+                </div>
+
+                <div id="quejas" class="tab-content">
+                    <div class="encabezado-principal">
+                        <h1 class="titulo-principal">Gestión de Quejas/Consultas</h1>
+                        <!-- <button class="btn-agregar-contenido">+ Agregar Queja</button> -->
+                    </div>
+
+                    <div class="cuadricula-contenido">
+                        <!-- Las tarjetas de Quejas se generarán dinámicamente -->
+                    </div>
+                </div>
+
+                <div id="miembros" class="tab-content">
+                    <div class="encabezado-principal">
+                        <h1 class="titulo-principal">Gestión de Miembros</h1>
+                        <!-- <button class="btn-agregar-contenido">+ Agregar Queja</button> -->
+                    </div>
+
+                    <div class="cuadricula-contenido">
+                        <!-- Las tarjetas de Quejas se generarán dinámicamente -->
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    
+    <script src="../js/admin-tabs.js"></script>
+    <script src="../js/admin-contenido.js"></script>
+</body>
+
+</html>

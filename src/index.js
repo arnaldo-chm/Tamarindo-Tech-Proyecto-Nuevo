@@ -8,19 +8,14 @@ app.set('views',path.join(__dirname,'views')); //donde se encuentran las vistas
 app.engine('html',require('ejs').renderFile);//Utilizamos la plantilla para los archivos html
 app.set('view engine','ejs');//Motor de plantillas predeterminado
 
-
 //Archivos staticos
 app.use(express.static(path.join(__dirname,'public')));
 
-
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
-//{"nombre": "steph","edad":25}
-//req.body.nombre -----steph
-//req.body.edad ---- 25
 app.use(bodyParser.urlencoded({extended:false}));
 
-//Rutas principales
+//#region Rutas principales
 //nombre ruta, accion
 app.get('/',(req,res)=>{
     res.render("inicio.html");//Renderiza la vista con el motor de plantillas
@@ -62,10 +57,10 @@ app.get('/Landing_page', (req, res) => {
     res.render('landingpage.html');
 });
 
-app.get('/Admin_panel', (req, res) => {
-    res.render('Admin_panel.html');
-});
+//#endregion
+//Rutas principales
 
+//#region Login
 //Login
 const User = require('../models/users.js');
 
@@ -138,7 +133,10 @@ existeUser();
 console.log("llamada desde post iniciarsesion")
 
 })
+//#endregion
 
+
+//#region Emprendimientos
 //Emprendimientos
 const Emprendimiento = require('../models/emprendimientos.js');
 
@@ -151,8 +149,7 @@ app.post('/api/registrarEmprendimiento',(req,res)=>{
         categoria:req.body.categoria,
         telefono:req.body.telefono,
         precio:req.body.precio,
-        nombreImagen:path.basename(req.body.archivo),
-        estadoEmprendimiento: 0 // 0: En Revision, 1: Aprobado, 2: Rechazado/Eliminado
+        nombreImagen:path.basename(req.body.archivo)
     })
     
     data.save()
@@ -199,6 +196,168 @@ app.get('/api/emprendimientos',(req,res)=>{
 
     obtenerEmprendimientos();
 })
+//#endregion
+
+//#region Noticias
+// NOTICIAS
+
+const Noticia = require('../models/noticias.js');
+
+app.post('/api/registrarNoticia',(req,res)=>{
+
+    console.log(req.body);
+    let fecha = new Date()
+    const formatoFecha = `${fecha.getDate()}/${fecha.getMonth() + 1}/${fecha.getFullYear()}`
+    
+    let data = new Noticia({
+        titulo:req.body.titulo,
+        autor:req.body.autor,
+        descripcionNoticia:req.body.descripcionNoticia,
+        categoria:req.body.categoria,
+        telefono:req.body.telefono,
+        fecha: formatoFecha,
+        nombreImagen:path.basename(req.body.archivo),
+    })
+
+    console.log(data);
+    
+    data.save()
+    .then(()=>{
+        console.log("Noticia registrada");
+        const resultado = { 
+            resultado: true,
+            mensaje: `Noticia registrada con exito`}
+        res.json(resultado);
+    })
+
+    .catch(err => {
+        console.log("Error al guardar Noticia:", err);
+        const resultado = { 
+            resultado: false,
+            mensaje: `Error al guardar Noticia ${err}`}
+        res.json(resultado);
+    });
+
+})
+//#endregion
+
+//#region 
+//TRANSPORTE
+
+const Transporte = require('../models/transportes.js');
+app.post('/api/registrarTransporte',(req,res)=>{
+
+    console.log(req.body);
+    
+    let data = new Transporte({
+        ruta:req.body.ruta,
+        tarifa:req.body.tarifa,
+        telefono:req.body.telefono,
+        nombreImagen:path.basename(req.body.archivo),
+    })
+
+    console.log(data);
+    
+    data.save()
+    .then(()=>{
+        console.log("Transporte registrado");
+        const resultado = { 
+            resultado: true,
+            mensaje: `Transporte registrado con exito`}
+        res.json(resultado);
+    })
+
+    .catch(err => {
+        console.log("Error al guardar Transporte:", err);
+        const resultado = { 
+            resultado: false,
+            mensaje: `Error al guardar Transporte ${err}`}
+        res.json(resultado);
+    });
+
+})
+
+//#endregion
+
+//#region ACTIVIDADES
+
+const Actividad = require('../models/actividades.js');
+app.post('/api/registrarActividad',(req,res)=>{
+    
+    let data = new Actividad({
+        titulo: req.body.titulo,   
+        descripcion_actividad: req.body.descripcion_actividad,
+        recomendaciones_actividad: req.body.recomendaciones_actividad,
+        duracion: req.body.duracion,
+        nombreImagen: path.basename(req.body.archivo),
+        fecha: req.body.fecha,
+        hora: req.body.hora
+    })
+
+    console.log(data);
+    
+    data.save()
+    .then(()=>{
+        console.log("Actividad registrada");
+        const resultado = { 
+            resultado: true,
+            mensaje: `Actividad registrada con exito`}
+        res.json(resultado);
+    })
+
+    .catch(err => {
+        console.log("Error al guardar Actividad:", err);
+        const resultado = { 
+            resultado: false,
+            mensaje: `Error al guardar Actividad ${err}`}
+        res.json(resultado);
+    });
+
+})
+
+//#endregion
+
+//#region Admin Panel
+app.get('/Admin_panel', async(req, res) => {
+    
+    const noticias = await Noticia.find();
+    const emprendimientos = await Emprendimiento.find();
+    const transportes = await Transporte.find();
+    const actividades = await Actividad.find();
+
+    res.render('contenido-admin',{noticias:noticias,emprendimientos:emprendimientos,transportes:transportes,actividades:actividades});
+});
+
+app.get('/Admin_panel/crear_noticia', (req, res) => {
+    res.render('crear_noticia.html');
+});
+
+// app.get('/Admin_panel/editar_noticia',async(req,res)=>{
+
+//     const noticaTitulo = req.query.titulo; 
+
+//     if (noticaTitulo) {
+//         const noticia = await user.findOne({titulo:noticaTitulo});
+//         //paso 2: enviar por parametros
+//         console.log(noticia);
+//         res.render("/Admin_panel/editar_noticia",{noticia:noticia});
+//     } else {
+//         console.log("Usario no pasa el valor de noticia");
+//         // res.send('No user ID provided in query.');
+//     }
+
+// })
+
+app.get('/Admin_panel/crear_transporte', (req, res) => {
+    res.render('crear_transporte.html');
+});
+
+app.get('/Admin_panel/crear_actividad', (req, res) => {
+    res.render('crear_actividad.html');
+});
+
+
+//#endregion
 
 //Encender el server
 app.listen(3000,()=>{

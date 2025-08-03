@@ -90,6 +90,11 @@
     bottom: 40px;
 }
 
+#grupo__dropdown .formulario__validacion-estado{
+    right: 20px;
+    bottom: 15px;
+}
+
 .formulario__input-error{
     font-size: 12px;
     margin-top: 5px;

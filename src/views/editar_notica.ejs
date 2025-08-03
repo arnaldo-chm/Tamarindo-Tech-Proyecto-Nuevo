@@ -26,11 +26,11 @@
         <nav class="Links_Header" id= "Links_Header">
             <ul>
                 <li><a href="/">Inicio</a></li>
-                <li><a href="noticias">Anuncios/Noticias</a></li>
-                <li><a href="emprendimientos">Emprendimientos</a></li>
-                <li><a href="Transportes">Transporte</a></li>
-                <li><a href="actividades">Actividades</a></li>
-                <button class="boton_sing_out" id="boton_sing_out"><a href="login">Cerrar Sesion</a></button>
+                <li><a href="/noticias">Anuncios/Noticias</a></li>
+                <li><a href="/emprendimientos">Emprendimientos</a></li>
+                <li><a href="/Transportes">Transporte</a></li>
+                <li><a href="/actividades">Actividades</a></li>
+                <button class="boton_sing_out" id="boton_sing_out"><a href="/login">Cerrar Sesion</a></button>
             </ul>
         </nav>
     </header>
@@ -38,58 +38,31 @@
 
     <main class="Contenido">
         <div class="contenedor-formulario">
-            <form class="formulario" id="formulario" name="registrar_emprendimiento">
-                <h1>Publica tu Emprendimiento</h1>
-                <!-- GRUPO NOMBRE-->
-                <!-- <div class="formulario__grupo" id="grupo__nombre">
+            <form class="formulario" id="formulario" name="editar_noticia">
+                <h1>Publicar una Noticia</h1>
+
+                <!-- GRUPO TITULO-->
+                <div class="formulario__grupo" id="grupo__titulo">
+                    <label class="formulario__label">Título de Noticia*</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="titulo" id="titulo" placeholder="Introduce el Título">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        Debe ingresar sel título de la notica. El título Acepta letras mayúsculas y minúsculas, acentos, números y espacios en blanco. Entre 5 y 50 caracteres.
+                    </p>
+                </div>
+
+                <!-- GRUPO AUTOR -->
+                <div class="formulario__grupo" id="grupo__autor">
                     <label class="formulario__label">Nombre completo*</label>
                     <div class="formulario__grupo-input">
-                        <input type="text" class="formulario__input" name="nombre" id="nombre" placeholder="Introduce tu nombre">
+                        <input type="text" class="formulario__input" name="autor" id="autor" placeholder="Introduce tu nombre">
                         <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
                     <p class="formulario__input-error">
                         Debe ingresar su nombre (requerido), primer apellido (requerido) y segundo apellido (opcional).
                         Separados por un espacio. Nombre puede tener de 3 a 10 letras, Apellidos de 2 a 10 letras, todos puede incluir maýusculas, minúsculas y acentos.
-                    </p>
-                </div> -->
-
-                <!-- GRUPO CORREO-->
-                <div class="formulario__grupo" id="grupo__correo">
-                    <label class="formulario__label">Correo electronico</label>
-                    <div class="formulario__grupo-input">
-                        <input type="email" class="formulario__input" name="correo" id="correo" placeholder="correo@correo.com">
-                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
-                    </div>
-                    <p class="formulario__input-error">
-                        Debe agregar un correo con la siguiente estructura usuario@dominio.extension,
-                        usuario acepta letras,guión bajo y números,
-                        dominio acepta solo letras,
-                        extension, acepta solo letras
-                    </p>
-                </div>
-
-                <!-- GRUPO NOMBRE EMPRENDIMIENTO-->
-                <div class="formulario__grupo" id="grupo__nombre_emprendimiento">
-                    <label class="formulario__label">Nombre Emprendimiento*</label>
-                    <div class="formulario__grupo-input">
-                        <input type="text" class="formulario__input" name="nombre_emprendimiento" id="nombre_emprendimiento" placeholder="Introduce el nombre de tu emprendimiento">
-                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
-                    </div>
-                    <p class="formulario__input-error">
-                        El nombre del emprendimiento debe tener mínimo 5 caracteres y máximo 20 y solo admite
-                        números, letras, guión, guión bajo, espacios y acentos.
-                    </p>
-                </div>
-
-                <!-- GRUPO Descripcion-->
-                <div class="formulario__grupo" id="grupo__descripcion_emprendimiento">
-                    <label class="formulario__label">Ingresa los detalles de tu Emprendimiento*</label>
-                    <div class="formulario__grupo-input">
-                        <textarea class="formulario__input" id="descripcion_emprendimiento" name="descripcion_emprendimiento" rows="3"></textarea>
-                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
-                    </div>
-                    <p class="formulario__input-error">
-                        La descripción debe tener al menos 10 caracteres.
                     </p>
                 </div>
 
@@ -99,10 +72,9 @@
                     <div class="formulario__grupo-input">                        
                         <select class="formulario__input" name="dropdown" id="dropdown" required>
                             <option value="default">-Selecciona una Opción-</option>
-                            <option value="Salud">Salud</option>
-                            <option value="Alimentos">Alimentos</option>
-                            <option value="Electronica">Electrónica</option>
-                            <option value="Mantenimiento">Mantenimiento</option>
+                            <option value="Noticias">Noticias</option>
+                            <option value="Anuncios">Anuncios</option>
+                            <option value="Eventos">Eventos</option>
                         </select>
                         <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
@@ -111,6 +83,19 @@
                     </p>
                 </div>
 
+
+                <!-- GRUPO Descripcion-->
+                <div class="formulario__grupo" id="grupo__descripcion_noticia">
+                    <label class="formulario__label">Ingresa los Detalles de tu Noticia*</label>
+                    <div class="formulario__grupo-input">
+                        <textarea class="formulario__input" id="descripcion_noticia" name="descripcion_noticia" rows="3"></textarea>
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        La descripción debe tener al menos 10 caracteres.
+                    </p>
+                </div>
+                
                 <!-- GRUPO Telefono-->
                 <div class="formulario__grupo " id="grupo__telefono">
                     <label class="formulario__label">Teléfono*</label>
@@ -123,21 +108,9 @@
                     </p>
                 </div>
 
-                <!-- GRUPO Precio-->
-                <div class="formulario__grupo " id="grupo__precio">
-                    <label class="formulario__label">Precio*</label>
-                    <div class="formulario__grupo-input">
-                        <input type="text" class="formulario__input" name="precio" id="precio" placeholder="">
-                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
-                    </div>
-                    <p class="formulario__input-error">
-                        El Precio debe tener entre 1 y 5 dígitos.
-                    </p>
-                </div>
-
                 <!-- GRUPO Archivo-->
                 <div class="formulario__grupo " id="grupo__archivo">
-                    <label class="formulario__label">Agrega una imagen de tu Emprendimiento</label>
+                    <label class="formulario__label">Agrega una imagen de tu Notica</label>
                     <div class="formulario__grupo-input">
                         <input type="file"  class="formulario__input" name="archivo" id="archivo" placeholder="" accept="image/*">
                     </div>                   
@@ -152,9 +125,9 @@
                 <!-- GRUPO ENVIAR-->
                 <div class="formulario__grupo formulario__grupo-btn-enviar">
                     <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">
-                        Su Emprendimiento se registró correctamente
+                        Su Noticia se registró correctamente
                     </p>
-                    <input type="submit" class="formulario__btn" value="Registrar Emprendimiento">
+                    <input type="submit" class="formulario__btn" value="Publicar Noticia">
                 </div>
 
             </form>
@@ -163,13 +136,15 @@
 
         <div class="contenedor-mensaje">
             <h3>
-                Nos da gusto ayudarte a publicar tu emprendimiento y verte crecer!
+                Hola Administrador!
             </h3>
             <br>
             <p>
-                Por favor comparte los datos de tu emprendimiento en el formulario de izquierda. 
+                Por favor comparte los datos de la noticia que deseas Publicar. 
                 <br><br>
-                Nuestro equipo revisará los datos de tu emprendimiento y te estará notificando si es aprobado o si necesitamos más detalles.
+                Agregar todos los detalles y si es posible agrega una imagen para brindar más claridad.
+                <br><br>
+                Puedes cambiar los datos de esta noticia o eliminarla en cualquier momento desde tu Panel de Administrador.
             </p>
         </div>
     </main>

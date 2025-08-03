@@ -1,6 +1,8 @@
 //Se crea una constante con todas las entradas del formulario
 // Se excluye de la validación los inputs tipo file, submit y checkbox.
 const inputs = document.querySelectorAll('#formulario input:not([type="submit"]):not([type="file"]):not([type="checkbox"]), #formulario textarea'); 
+const inputDropdown = document.querySelector('#dropdown');
+const inputFecha = document.querySelector('#fecha');
 
 // Se crea un elemento formulario para manipular el evento Submit.
 const formulario = document.getElementById("formulario");
@@ -29,8 +31,7 @@ if(formulario.name==="registrarse"){
         // nombre : /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/,  // Misma expresion regular usada para el nombre en Registrarse.
         correo :/^[a-zA-Z0-9\_]+@[a-zA-Z]+\.[a-zA-Z]+$/ , // Misma expresion regular usada para el correo en Registrarse.
         nombre_emprendimiento: /^[a-zA-Z0-9À-ÿ\s\_\-]{5,20}$/, // Nombre Emprendimiento acepta un rango de 5 a 15 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas, guión, guión bajo, espacios y acentos.
-        descripcion_emprendimiento: /^.{10,}$/, // Descripcion Emprendimiento Acepta 10 o más caracteres de cualquier tipo
-        categoria: /^[a-zA-Z]{5,10}$/, // Categoría de Emprendimiento acepta un rango de 5 a 10 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas.
+        descripcion_emprendimiento: /^.{10,}$/, // Descripcion Emprendimiento Acepta 10 o más caracteres de cualquier tipo        
         telefono :/^\+?\d{8,11}$/, // Misma expresion regular usada para el nombre en Registrarse.
         precio: /^\d{1,5}$/ //El precio acepta entre 1 y 5 digitos
     }
@@ -39,7 +40,29 @@ if(formulario.name==="registrarse"){
         nombre : /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/,  // Misma expresion regular usada para el nombre en Registrarse.
         reporte: /^.{10,}$/, // Reporte Acepta 10 o más caracteres de cualquier tipo        
     }
+} else if (formulario.name==="registrar_noticia") {
+    expresiones ={        
+        titulo : /^[a-zA-Z0-9À-ÿ\s]{5,50}$/, // Titulo Noticia acepta un rango de 5 a 50 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas, números, espacios y acentos.
+        autor : /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/,  // Misma expresion regular usada para el nombre en Registrarse.
+        descripcion_noticia: /^.{10,}$/, // Descripcion Emprendimiento Acepta 10 o más caracteres de cualquier tipo   
+        telefono :/^\+?\d{8,11}$/, // Misma expresion regular usada para el nombre en Registrarse.  
+    }
 }
+else if (formulario.name==="registrar_transporte") {
+    expresiones ={        
+        ruta : /^[a-zA-Z0-9À-ÿ\s\_\-]{5,50}$/, // Ruta Transporte acepta un rango de 5 a 50 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas, números, espacios, acentos y guiones.        
+        telefono :/^\+?\d{8,11}$/, // Misma expresion regular usada para el nombre en Registrarse. 
+        tarifa: /^\d{1,5}$/ //El precio acepta entre 1 y 5 digitos 
+    }
+}
+else if (formulario.name==="registrar_actividad") {
+    expresiones ={        
+        titulo : /^[a-zA-Z0-9À-ÿ\s\_\-]{5,50}$/, // Ruta Transporte acepta un rango de 5 a 50 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas, números, espacios, acentos y guiones.        
+        descripcion_actividad: /^.{10,}$/, // Descripcion Acepta 10 o más caracteres de cualquier tipo   
+        recomendaciones_actividad: /^.{10,}$/ // Recomendaciones Acepta 10 o más caracteres de cualquier tipo
+    }
+}
+
 
 // Se crea un objeto para mapear la validación de cada campo del formulario al momento de validar el formulario completo.
 // Cada propiedad de este objeto será actualizada en las función de validación respectiva a la propiedad.
@@ -63,7 +86,6 @@ if(formulario.name==="registrarse"){
         correo: false,
         nombre_emprendimiento: false,
         descripcion_emprendimiento: false,
-        categoria: false,
         telefono: false,
         precio: false
     }
@@ -71,6 +93,31 @@ if(formulario.name==="registrarse"){
     campos={
         nombre: false,
         reporte: false
+    }
+} else if (formulario.name==="registrar_noticia"){
+    campos={
+        titulo : false,
+        autor : false,
+        descripcion_noticia: false,
+        dropdown: false,
+        telefono: false
+    }
+}
+else if (formulario.name==="registrar_transporte"){
+    campos={
+        ruta : false,
+        telefono : false,
+        tarifa: false,
+    }
+}
+else if (formulario.name==="registrar_actividad"){
+    campos={
+        titulo : false,
+        descripcion_actividad: false,
+        recomendaciones_actividad: false,
+        duracion: false,
+        fecha: false,
+        hora: false
     }
 }
 
@@ -87,7 +134,16 @@ const validarFormulario = (e)=>{
         break;
         case "password2":
             validarPassword2();
-        break;        
+        break;    
+        case "dropdown":
+            validarDropdown();
+        break;  
+        case "fecha":
+            validarFecha();
+        break;   
+        case "duracion":
+            validarDuracion();
+        break;     
         default:
             validarCampo(expresiones[e.target.name],e.target,e.target.name)
             break;
@@ -135,14 +191,99 @@ const validarPassword2=()=>{
         document.querySelector(`#grupo__password2 .formulario__input-error`).classList.add("formulario__input-error-activo");
         document.querySelector(`#grupo__password2 i`).classList.add("bxs-x-circle");
         document.querySelector(`#grupo__password2 i`).classList.remove("bxs-check-circle");
-        campos[password]=false;
+        campos["password"]=false;
     }else{
         document.getElementById(`grupo__password2`).classList.remove("formulario__grupo-incorrecto");
         document.getElementById(`grupo__password2`).classList.add("formulario__grupo-correcto");
         document.querySelector(`#grupo__password2 .formulario__input-error`).classList.remove("formulario__input-error-activo");
         document.querySelector(`#grupo__password2 i`).classList.remove("bxs-x-circle");
         document.querySelector(`#grupo__password2 i`).classList.add("bxs-check-circle");
-        campos[password]=true;
+        campos["password"]=true;
+    }
+
+}
+
+const validarDropdown=()=>{
+    let inputDropdown = document.getElementById("dropdown");
+
+    if (inputDropdown.value=="default") {
+        document.getElementById(`grupo__dropdown`).classList.add("formulario__grupo-incorrecto");
+        document.getElementById(`grupo__dropdown`).classList.remove("formulario__grupo-correcto");
+        document.querySelector(`#grupo__dropdown .formulario__input-error`).classList.add("formulario__input-error-activo");
+        document.querySelector(`#grupo__dropdown i`).classList.add("bxs-x-circle");
+        document.querySelector(`#grupo__dropdown i`).classList.remove("bxs-check-circle");
+        campos["dropdown"]=false;
+    } else {
+        document.getElementById(`grupo__dropdown`).classList.remove("formulario__grupo-incorrecto");
+        document.getElementById(`grupo__dropdown`).classList.add("formulario__grupo-correcto");
+        document.querySelector(`#grupo__dropdown .formulario__input-error`).classList.remove("formulario__input-error-activo");
+        document.querySelector(`#grupo__dropdown i`).classList.remove("bxs-x-circle");
+        document.querySelector(`#grupo__dropdown i`).classList.add("bxs-check-circle");
+        campos["dropdown"]=true;                
+    }
+}
+
+const validarFecha=()=>{
+    console.log("Validando Fecha");
+
+    const fechaHora = document.getElementById('fecha');
+    const valor = fechaHora.value;
+
+    console.log(fechaHora);
+    console.log(valor);
+
+    if (!valor) {        
+        document.getElementById(`grupo__fecha`).classList.add("formulario__grupo-incorrecto");
+        document.getElementById(`grupo__fecha`).classList.remove("formulario__grupo-correcto");
+        document.querySelector(`#grupo__fecha .formulario__input-error`).classList.add("formulario__input-error-activo");
+        document.querySelector(`#grupo__fecha i`).classList.add("bxs-x-circle");
+        document.querySelector(`#grupo__fecha i`).classList.remove("bxs-check-circle");
+        campos["fecha"]=false;
+        campos["hora"]=false;
+    }else{
+        const fechaSeleccionada = new Date(valor);
+        const ahora = new Date();
+
+        if (fechaSeleccionada > ahora) {
+            document.getElementById(`grupo__fecha`).classList.remove("formulario__grupo-incorrecto");
+            document.getElementById(`grupo__fecha`).classList.add("formulario__grupo-correcto");
+            document.querySelector(`#grupo__fecha .formulario__input-error`).classList.remove("formulario__input-error-activo");
+            document.querySelector(`#grupo__fecha i`).classList.remove("bxs-x-circle");
+            document.querySelector(`#grupo__fecha i`).classList.add("bxs-check-circle");
+            campos["fecha"]=true;
+            campos["hora"]=true;
+        } else {
+            document.getElementById(`grupo__fecha`).classList.add("formulario__grupo-incorrecto");
+            document.getElementById(`grupo__fecha`).classList.remove("formulario__grupo-correcto");
+            document.querySelector(`#grupo__fecha .formulario__input-error`).classList.add("formulario__input-error-activo");
+            document.querySelector(`#grupo__fecha i`).classList.add("bxs-x-circle");
+            document.querySelector(`#grupo__fecha i`).classList.remove("bxs-check-circle");
+            campos["fecha"]=false;
+            campos["hora"]=false;
+        }
+
+    }
+
+}
+
+const validarDuracion=()=>{
+    console.log("Validando Duracion");
+    let duracion = document.getElementById("duracion");
+
+    if (duracion.value<=0) {
+        document.getElementById(`grupo__duracion`).classList.add("formulario__grupo-incorrecto");
+        document.getElementById(`grupo__duracion`).classList.remove("formulario__grupo-correcto");
+        document.querySelector(`#grupo__duracion .formulario__input-error`).classList.add("formulario__input-error-activo");
+        document.querySelector(`#grupo__duracion i`).classList.add("bxs-x-circle");
+        document.querySelector(`#grupo__duracion i`).classList.remove("bxs-check-circle");
+        campos["duracion"]=false;
+    }else{
+        document.getElementById(`grupo__duracion`).classList.remove("formulario__grupo-incorrecto");
+        document.getElementById(`grupo__duracion`).classList.add("formulario__grupo-correcto");
+        document.querySelector(`#grupo__duracion .formulario__input-error`).classList.remove("formulario__input-error-activo");
+        document.querySelector(`#grupo__duracion i`).classList.remove("bxs-x-circle");
+        document.querySelector(`#grupo__duracion i`).classList.add("bxs-check-circle");
+        campos["duracion"]=true;   
     }
 
 }
@@ -153,6 +294,15 @@ inputs.forEach((input)=>{
     input.addEventListener("keyup",validarFormulario)
     input.addEventListener("blur",validarFormulario)
 })
+
+if (inputDropdown != null) {
+    inputDropdown.addEventListener("change",validarFormulario);
+}
+
+if (inputFecha != null) {
+    inputFecha.addEventListener("input",validarFormulario);
+    inputFecha.addEventListener("change",validarFormulario);
+}
 
 
 async function registrarUsuario(){
@@ -244,13 +394,11 @@ async function registrarEmprendimiento() {
         correoUsuario:document.getElementById("correo").value,
         nombreEmprendimiento:document.getElementById("nombre_emprendimiento").value,
         descripcionEmprendimiento:document.getElementById("descripcion_emprendimiento").value,
-        categoria:document.getElementById("categoria").value,
+        categoria:document.getElementById("dropdown").value,
         telefono:document.getElementById("telefono").value,
         precio:document.getElementById("precio").value,
         archivo:document.getElementById("archivo").value
     }
-
-    console.log(datos)
 
     try {
        const respuesta = await fetch('http://localhost:3000/api/registrarEmprendimiento', {
@@ -284,14 +432,156 @@ async function registrarEmprendimiento() {
     }
 }
 
+async function registrarNoticia() {
+
+    console.log("Funcion registrarNoticia");
+    let datos = {
+        titulo : document.getElementById("titulo").value,
+        autor : document.getElementById("autor").value,
+        descripcionNoticia: document.getElementById("descripcion_noticia").value,
+        categoria: document.getElementById("dropdown").value,
+        archivo:document.getElementById("archivo").value,
+        telefono:document.getElementById("telefono").value,
+    }
+
+    try {
+       const respuesta = await fetch('http://localhost:3000/api/registrarNoticia', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(datos)
+       });
+
+       if (!respuesta.ok) {
+         throw new Error(`Error en la solicitud: ${respuesta.status}`);
+       }
+
+       const datosRespuesta = await respuesta.json();
+       if (datosRespuesta.resultado){
+            // Se muestra el mensaje de aprobación en función de la validación.
+        document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
+        document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
+
+        setTimeout(()=>{
+                window.location.href = "/Admin_panel";
+        },4000)
+
+       }else{
+            alert(datosRespuesta.mensaje);
+       }
+     } catch (error) {
+       console.error('Error al llamar al backend:', error);
+       document.getElementById('resultado').textContent = 'Error al obtener datos';
+    }
+}
+
+async function registrarTransporte() {
+
+    console.log("Funcion registrarTransporte");
+    let datos = {
+        ruta : document.getElementById("ruta").value,
+        tarifa : document.getElementById("tarifa").value,
+        archivo:document.getElementById("archivo").value,
+        telefono:document.getElementById("telefono").value,
+    }
+
+    console.log(datos);
+
+    try {
+       const respuesta = await fetch('http://localhost:3000/api/registrarTransporte', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(datos)
+       });
+
+       if (!respuesta.ok) {
+         throw new Error(`Error en la solicitud: ${respuesta.status}`);
+       }
+
+       const datosRespuesta = await respuesta.json();
+       if (datosRespuesta.resultado){
+            // Se muestra el mensaje de aprobación en función de la validación.
+        document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
+        document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
+
+        setTimeout(()=>{
+                window.location.href = "/Admin_panel";
+        },4000)
+
+       }else{
+            alert(datosRespuesta.mensaje);
+       }
+     } catch (error) {
+       console.error('Error al llamar al backend:', error);
+       document.getElementById('resultado').textContent = 'Error al obtener datos';
+    }
+}
+
+async function registrarActividad() {
+
+    console.log("Funcion registrarActividad");
+
+    const duracion = document.getElementById("fecha");
+    const valorfecha = duracion.value; // ejemplo: "2025-08-03T14:30"
+    const [fecha, hora] = valorfecha.split("T");
+
+    let datos = {
+        titulo : document.getElementById("titulo").value,
+        descripcion_actividad : document.getElementById("descripcion_actividad").value,
+        recomendaciones_actividad:document.getElementById("recomendaciones_actividad").value,
+        duracion:document.getElementById("duracion").value,
+        archivo:document.getElementById("archivo").value,
+        fecha:fecha,
+        hora:hora,
+    }
+
+    console.log(datos);
+
+    try {
+       const respuesta = await fetch('http://localhost:3000/api/registrarActividad', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(datos)
+       });
+
+       if (!respuesta.ok) {
+         throw new Error(`Error en la solicitud: ${respuesta.status}`);
+       }
+
+       const datosRespuesta = await respuesta.json();
+       if (datosRespuesta.resultado){
+            // Se muestra el mensaje de aprobación en función de la validación.
+        document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
+        document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
+
+        setTimeout(()=>{
+                window.location.href = "/Admin_panel";
+        },4000)
+
+       }else{
+            alert(datosRespuesta.mensaje);
+       }
+     } catch (error) {
+       console.error('Error al llamar al backend:', error);
+       document.getElementById('resultado').textContent = 'Error al obtener datos';
+    }
+}
+
 
 // Se crea un EventListener para el evento submit del Formulario.
 formulario.addEventListener("submit",(e) =>{
+
     // Se elimina el comportamiento por defecto para que no recargue la página y el usuario no pierda la información ingresada.
     e.preventDefault();
     const terminos = document.getElementById("terminos");
     let validacion = true;
 
+    console.log(campos);
     // Se valida que cada campo está completo y validado.
     for (const key in campos) {        
         if (campos[key] === false) {
@@ -315,6 +605,19 @@ formulario.addEventListener("submit",(e) =>{
             console.log("Llamando a Registrar Emprendimiento")
             registrarEmprendimiento();
         }
+        else if (formulario.name=="registrar_noticia"){
+            console.log("Llamando a Registrar Noticia")
+            registrarNoticia();
+        }
+        else if (formulario.name=="registrar_transporte"){
+            console.log("Llamando a Registrar Transporte")
+            registrarTransporte();
+        }
+        else if (formulario.name=="registrar_actividad"){
+            console.log("Llamando a Registrar Actividad")
+            registrarActividad();
+        }
+        
 
     }else{
 
