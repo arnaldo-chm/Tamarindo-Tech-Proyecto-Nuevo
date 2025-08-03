@@ -279,6 +279,43 @@ app.post('/api/registrarTransporte',(req,res)=>{
 
 //#endregion
 
+//#region ACTIVIDADES
+
+const Actividad = require('../models/actividades.js');
+app.post('/api/registrarActividad',(req,res)=>{
+    
+    let data = new Actividad({
+        titulo: req.body.titulo,   
+        descripcion_actividad: req.body.descripcion_actividad,
+        recomendaciones_actividad: req.body.recomendaciones_actividad,
+        duracion: req.body.duracion,
+        nombreImagen: path.basename(req.body.archivo),
+        fecha: req.body.fecha,
+        hora: req.body.hora
+    })
+
+    console.log(data);
+    
+    data.save()
+    .then(()=>{
+        console.log("Actividad registrada");
+        const resultado = { 
+            resultado: true,
+            mensaje: `Actividad registrada con exito`}
+        res.json(resultado);
+    })
+
+    .catch(err => {
+        console.log("Error al guardar Actividad:", err);
+        const resultado = { 
+            resultado: false,
+            mensaje: `Error al guardar Actividad ${err}`}
+        res.json(resultado);
+    });
+
+})
+
+//#endregion
 
 //#region Admin Panel
 app.get('/Admin_panel', async(req, res) => {
@@ -286,8 +323,9 @@ app.get('/Admin_panel', async(req, res) => {
     const noticias = await Noticia.find();
     const emprendimientos = await Emprendimiento.find();
     const transportes = await Transporte.find();
+    const actividades = await Actividad.find();
 
-    res.render('contenido-admin',{noticias:noticias,emprendimientos:emprendimientos,transportes:transportes});
+    res.render('contenido-admin',{noticias:noticias,emprendimientos:emprendimientos,transportes:transportes,actividades:actividades});
 });
 
 app.get('/Admin_panel/crear_noticia', (req, res) => {
@@ -313,6 +351,11 @@ app.get('/Admin_panel/crear_noticia', (req, res) => {
 app.get('/Admin_panel/crear_transporte', (req, res) => {
     res.render('crear_transporte.html');
 });
+
+app.get('/Admin_panel/crear_actividad', (req, res) => {
+    res.render('crear_actividad.html');
+});
+
 
 //#endregion
 

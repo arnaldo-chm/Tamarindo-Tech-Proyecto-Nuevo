@@ -180,48 +180,6 @@
                             </div>
                         <% }) %>
 
-                        
-
-                        <!-- Emprendimiento 2 - Aprobado -->
-                        <!-- <div class="tarjeta-emprendimiento" data-estado="aprobado">
-                            <div class="encabezado-tarjeta">
-                                <h4>Café Orgánico</h4>
-                                <span class="estado aprobado">Aprobado</span>
-                            </div>
-                            <div class="imagen-tarjeta">
-                                <img src="/img/NoticiaEjm.png" alt="Café Orgánico">
-                            </div>
-                            <div class="info-tarjeta">
-                                <p><strong>Emprendedor:</strong> Carlos Méndez</p>
-                                <p><strong>Categoría:</strong> Alimentos</p>
-                                <p><strong>Aprobado:</strong> 28/10/2023</p>
-                            </div>
-                            <div class="acciones-tarjeta">
-                                <button class="btn-detalles">Detalles</button>
-                            </div>
-                        </div> -->
-
-                        <!-- Emprendimiento 3 - Rechazado -->
-                        <!-- <div class="tarjeta-emprendimiento" data-estado="rechazado">
-                            <div class="encabezado-tarjeta">
-                                <h4>Taller Mecánico</h4>
-                                <span class="estado rechazado">Rechazado</span>
-                            </div>
-                            <div class="imagen-tarjeta">
-                                <img src="/img/NoticiaEjm.png" alt="Taller Mecánico">
-                            </div>
-                            <div class="info-tarjeta">
-                                <p><strong>Emprendedor:</strong> Luis Fernández</p>
-                                <p><strong>Categoría:</strong> Servicios</p>
-                                <p><strong>Rechazado:</strong> 15/10/2023</p>
-                                <div class="motivo-rechazo">
-                                    <strong>Motivo:</strong> Documentación incompleta
-                                </div>
-                            </div>
-                            <div class="acciones-tarjeta">
-                                <button class="btn-detalles">Detalles</button>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
 
@@ -298,8 +256,54 @@
                     </div>
 
                     <div class="cuadricula-contenido">
-                        <!-- Las tarjetas de actividades se generarán dinámicamente -->
+                        <div class="tarjeta-simple">
+                            <div class="encabezado-tarjeta">
+                                <h4>Taller de Pintura</h4>
+                                <span class="fecha">20/11/2023</span>
+                            </div>
+                            <div class="imagen-tarjeta">
+                                <img src="/img/Actividades_TrabajoEnBarro.png" alt="">
+                            </div>
+                            <div class="info-tarjeta">
+                                <p><strong>Descripcion Actividad:</strong> Taller de pintura al óleo para principiantes</p>
+                                <p><strong>Recomendaciones Actividad:</strong> Llevar Brochas y Pintura </p>
+                                <p><strong>Duracion:</strong> 1.5 h</p>   
+                                <p><strong>Hora:</strong> 10:30</p>                              
+                            </div>
+                            <div class="acciones-tarjeta">
+                                <button class="btn-editar">Editar</button>
+                                <button class="btn-eliminar">Eliminar</button>
+                            </div>
+                        </div>
+                        
+                        <% actividades.forEach(actividad=>{ %>
+                            
+
+                        <div class="tarjeta-simple">
+                            <div class="encabezado-tarjeta">
+                                <h4><%= actividad.titulo %></h4>
+                                <span class="fecha"><%= actividad.fecha %></span>
+                            </div>
+                            <div class="imagen-tarjeta">
+                                <img src="/img/<%= actividad.nombreImagen %>" alt="">
+                            </div>
+                            <div class="info-tarjeta">
+                                <p><strong>Descripcion Actividad:</strong><%= actividad.descripcion_actividad %></p>
+                                <p><strong>Recomendaciones Actividad:</strong><%= actividad.recomendaciones_actividad %></p>
+                                <p><strong>Duracion:</strong><%= actividad.duracion %></p>   
+                                <p><strong>Hora:</strong><%= actividad.hora %></p>                              
+                            </div>
+                            <div class="acciones-tarjeta">
+                                <button class="btn-editar">Editar</button>
+                                <button class="btn-eliminar">Eliminar</button>
+                            </div>
+                        </div>                            
+
+                        <% }) %>
+
                     </div>
+
+                    
                 </div>
 
                 <div id="quejas" class="tab-content">

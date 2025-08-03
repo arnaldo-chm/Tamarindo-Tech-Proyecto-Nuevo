@@ -2,6 +2,7 @@
 // Se excluye de la validación los inputs tipo file, submit y checkbox.
 const inputs = document.querySelectorAll('#formulario input:not([type="submit"]):not([type="file"]):not([type="checkbox"]), #formulario textarea'); 
 const inputDropdown = document.querySelector('#dropdown');
+const inputFecha = document.querySelector('#fecha');
 
 // Se crea un elemento formulario para manipular el evento Submit.
 const formulario = document.getElementById("formulario");
@@ -54,6 +55,14 @@ else if (formulario.name==="registrar_transporte") {
         tarifa: /^\d{1,5}$/ //El precio acepta entre 1 y 5 digitos 
     }
 }
+else if (formulario.name==="registrar_actividad") {
+    expresiones ={        
+        titulo : /^[a-zA-Z0-9À-ÿ\s\_\-]{5,50}$/, // Ruta Transporte acepta un rango de 5 a 50 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas, números, espacios, acentos y guiones.        
+        descripcion_actividad: /^.{10,}$/, // Descripcion Acepta 10 o más caracteres de cualquier tipo   
+        recomendaciones_actividad: /^.{10,}$/ // Recomendaciones Acepta 10 o más caracteres de cualquier tipo
+    }
+}
+
 
 // Se crea un objeto para mapear la validación de cada campo del formulario al momento de validar el formulario completo.
 // Cada propiedad de este objeto será actualizada en las función de validación respectiva a la propiedad.
@@ -101,6 +110,16 @@ else if (formulario.name==="registrar_transporte"){
         tarifa: false,
     }
 }
+else if (formulario.name==="registrar_actividad"){
+    campos={
+        titulo : false,
+        descripcion_actividad: false,
+        recomendaciones_actividad: false,
+        duracion: false,
+        fecha: false,
+        hora: false
+    }
+}
 
 // Función validarFormulario
 // Esta Función se encarga de dirigir la validación de cada campo a la función de validación correspondiente.
@@ -118,7 +137,13 @@ const validarFormulario = (e)=>{
         break;    
         case "dropdown":
             validarDropdown();
-        break;        
+        break;  
+        case "fecha":
+            validarFecha();
+        break;   
+        case "duracion":
+            validarDuracion();
+        break;     
         default:
             validarCampo(expresiones[e.target.name],e.target,e.target.name)
             break;
@@ -198,6 +223,71 @@ const validarDropdown=()=>{
     }
 }
 
+const validarFecha=()=>{
+    console.log("Validando Fecha");
+
+    const fechaHora = document.getElementById('fecha');
+    const valor = fechaHora.value;
+
+    console.log(fechaHora);
+    console.log(valor);
+
+    if (!valor) {        
+        document.getElementById(`grupo__fecha`).classList.add("formulario__grupo-incorrecto");
+        document.getElementById(`grupo__fecha`).classList.remove("formulario__grupo-correcto");
+        document.querySelector(`#grupo__fecha .formulario__input-error`).classList.add("formulario__input-error-activo");
+        document.querySelector(`#grupo__fecha i`).classList.add("bxs-x-circle");
+        document.querySelector(`#grupo__fecha i`).classList.remove("bxs-check-circle");
+        campos["fecha"]=false;
+        campos["hora"]=false;
+    }else{
+        const fechaSeleccionada = new Date(valor);
+        const ahora = new Date();
+
+        if (fechaSeleccionada > ahora) {
+            document.getElementById(`grupo__fecha`).classList.remove("formulario__grupo-incorrecto");
+            document.getElementById(`grupo__fecha`).classList.add("formulario__grupo-correcto");
+            document.querySelector(`#grupo__fecha .formulario__input-error`).classList.remove("formulario__input-error-activo");
+            document.querySelector(`#grupo__fecha i`).classList.remove("bxs-x-circle");
+            document.querySelector(`#grupo__fecha i`).classList.add("bxs-check-circle");
+            campos["fecha"]=true;
+            campos["hora"]=true;
+        } else {
+            document.getElementById(`grupo__fecha`).classList.add("formulario__grupo-incorrecto");
+            document.getElementById(`grupo__fecha`).classList.remove("formulario__grupo-correcto");
+            document.querySelector(`#grupo__fecha .formulario__input-error`).classList.add("formulario__input-error-activo");
+            document.querySelector(`#grupo__fecha i`).classList.add("bxs-x-circle");
+            document.querySelector(`#grupo__fecha i`).classList.remove("bxs-check-circle");
+            campos["fecha"]=false;
+            campos["hora"]=false;
+        }
+
+    }
+
+}
+
+const validarDuracion=()=>{
+    console.log("Validando Duracion");
+    let duracion = document.getElementById("duracion");
+
+    if (duracion.value<=0) {
+        document.getElementById(`grupo__duracion`).classList.add("formulario__grupo-incorrecto");
+        document.getElementById(`grupo__duracion`).classList.remove("formulario__grupo-correcto");
+        document.querySelector(`#grupo__duracion .formulario__input-error`).classList.add("formulario__input-error-activo");
+        document.querySelector(`#grupo__duracion i`).classList.add("bxs-x-circle");
+        document.querySelector(`#grupo__duracion i`).classList.remove("bxs-check-circle");
+        campos["duracion"]=false;
+    }else{
+        document.getElementById(`grupo__duracion`).classList.remove("formulario__grupo-incorrecto");
+        document.getElementById(`grupo__duracion`).classList.add("formulario__grupo-correcto");
+        document.querySelector(`#grupo__duracion .formulario__input-error`).classList.remove("formulario__input-error-activo");
+        document.querySelector(`#grupo__duracion i`).classList.remove("bxs-x-circle");
+        document.querySelector(`#grupo__duracion i`).classList.add("bxs-check-circle");
+        campos["duracion"]=true;   
+    }
+
+}
+
 // Para cada input seleccionado para validar, se crean los EventListeners para llamar a la función validarFormulario 
 // cada vez que el usuario ingrese un caracter, o bien elimine el foco de un input.
 inputs.forEach((input)=>{
@@ -207,6 +297,11 @@ inputs.forEach((input)=>{
 
 if (inputDropdown != null) {
     inputDropdown.addEventListener("change",validarFormulario);
+}
+
+if (inputFecha != null) {
+    inputFecha.addEventListener("input",validarFormulario);
+    inputFecha.addEventListener("change",validarFormulario);
 }
 
 
@@ -425,6 +520,58 @@ async function registrarTransporte() {
     }
 }
 
+async function registrarActividad() {
+
+    console.log("Funcion registrarActividad");
+
+    const duracion = document.getElementById("fecha");
+    const valorfecha = duracion.value; // ejemplo: "2025-08-03T14:30"
+    const [fecha, hora] = valorfecha.split("T");
+
+    let datos = {
+        titulo : document.getElementById("titulo").value,
+        descripcion_actividad : document.getElementById("descripcion_actividad").value,
+        recomendaciones_actividad:document.getElementById("recomendaciones_actividad").value,
+        duracion:document.getElementById("duracion").value,
+        archivo:document.getElementById("archivo").value,
+        fecha:fecha,
+        hora:hora,
+    }
+
+    console.log(datos);
+
+    try {
+       const respuesta = await fetch('http://localhost:3000/api/registrarActividad', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(datos)
+       });
+
+       if (!respuesta.ok) {
+         throw new Error(`Error en la solicitud: ${respuesta.status}`);
+       }
+
+       const datosRespuesta = await respuesta.json();
+       if (datosRespuesta.resultado){
+            // Se muestra el mensaje de aprobación en función de la validación.
+        document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
+        document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
+
+        setTimeout(()=>{
+                window.location.href = "/Admin_panel";
+        },4000)
+
+       }else{
+            alert(datosRespuesta.mensaje);
+       }
+     } catch (error) {
+       console.error('Error al llamar al backend:', error);
+       document.getElementById('resultado').textContent = 'Error al obtener datos';
+    }
+}
+
 
 // Se crea un EventListener para el evento submit del Formulario.
 formulario.addEventListener("submit",(e) =>{
@@ -465,6 +612,10 @@ formulario.addEventListener("submit",(e) =>{
         else if (formulario.name=="registrar_transporte"){
             console.log("Llamando a Registrar Transporte")
             registrarTransporte();
+        }
+        else if (formulario.name=="registrar_actividad"){
+            console.log("Llamando a Registrar Actividad")
+            registrarActividad();
         }
         
 
