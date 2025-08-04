@@ -29,10 +29,6 @@ app.get('/login',(req,res)=>{
     res.render("login.html");
 });
 
-app.get('/emprendimientos', (req, res) => {
-    res.render('emprendimientos.html');
-});
-
 app.get('/crear_emprendimiento', (req, res) => {
     res.render('crear_emprendimiento.html');
 });
@@ -139,6 +135,13 @@ console.log("llamada desde post iniciarsesion")
 //#region Emprendimientos
 //Emprendimientos
 const Emprendimiento = require('../models/emprendimientos.js');
+
+app.get('/emprendimientos', async(req, res) => {
+
+    const emprendimientos = await Emprendimiento.find();
+
+    res.render('emprendimientos.ejs',{emprendimientos:emprendimientos});
+});
 
 app.post('/api/registrarEmprendimiento',(req,res)=>{
     
