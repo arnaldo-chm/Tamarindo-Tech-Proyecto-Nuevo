@@ -41,10 +41,6 @@ app.get('/Transportes',(req,res)=>{
     res.render("Transportes.html");
 });
 
-app.get('/actividades', (req, res) => {
-    res.render('actividades.html');
-});
-
 app.get('/reportes', (req, res) => {
     res.render('reportes.html');
 });
@@ -174,31 +170,6 @@ app.post('/api/registrarEmprendimiento',(req,res)=>{
 
 })
 
-app.get('/api/emprendimientos',(req,res)=>{
-
-    const obtenerEmprendimientos = async()=>{
-
-        try {
-            const emprendimientos = await Emprendimiento.find();
-
-            const resultado = { 
-                resultado: true,
-                mensaje: emprendimientos}
-            res.json(resultado);
-
-        } catch (error) {
-            const resultado = { 
-                resultado: false,
-                mensaje: `Error al obtener emprendimientos ${error}`
-            }
-            res.json(resultado);
-        }
-
-    }
-
-
-    obtenerEmprendimientos();
-})
 //#endregion
 
 //#region Noticias
@@ -285,6 +256,14 @@ app.post('/api/registrarTransporte',(req,res)=>{
 //#region ACTIVIDADES
 
 const Actividad = require('../models/actividades.js');
+
+app.get('/actividades', async(req, res) => {
+
+    const actividades = await Actividad.find();
+
+    res.render('actividades.ejs',{actividades:actividades});
+});
+
 app.post('/api/registrarActividad',(req,res)=>{
     
     let data = new Actividad({
