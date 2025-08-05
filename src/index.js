@@ -29,10 +29,6 @@ app.get('/login',(req,res)=>{
     res.render("login.html");
 });
 
-app.get('/emprendimientos', (req, res) => {
-    res.render('emprendimientos.html');
-});
-
 app.get('/crear_emprendimiento', (req, res) => {
     res.render('crear_emprendimiento.html');
 });
@@ -41,13 +37,6 @@ app.get('/noticias', (req, res) => {
     res.render('noticias.html');
 });
 
-app.get('/Transportes',(req,res)=>{
-    res.render("Transportes.html");
-});
-
-app.get('/actividades', (req, res) => {
-    res.render('actividades.html');
-});
 
 app.get('/reportes', (req, res) => {
     res.render('reportes.html');
@@ -58,7 +47,6 @@ app.get('/Landing_page', (req, res) => {
 });
 
 //#endregion
-//Rutas principales
 
 //#region Login
 //Login
@@ -140,6 +128,13 @@ console.log("llamada desde post iniciarsesion")
 //Emprendimientos
 const Emprendimiento = require('../models/emprendimientos.js');
 
+app.get('/emprendimientos', async(req, res) => {
+
+    const emprendimientos = await Emprendimiento.find();
+
+    res.render('emprendimientos.ejs',{emprendimientos:emprendimientos});
+});
+
 app.post('/api/registrarEmprendimiento',(req,res)=>{
     
     let data = new Emprendimiento({
@@ -171,31 +166,6 @@ app.post('/api/registrarEmprendimiento',(req,res)=>{
 
 })
 
-app.get('/api/emprendimientos',(req,res)=>{
-
-    const obtenerEmprendimientos = async()=>{
-
-        try {
-            const emprendimientos = await Emprendimiento.find();
-
-            const resultado = { 
-                resultado: true,
-                mensaje: emprendimientos}
-            res.json(resultado);
-
-        } catch (error) {
-            const resultado = { 
-                resultado: false,
-                mensaje: `Error al obtener emprendimientos ${error}`
-            }
-            res.json(resultado);
-        }
-
-    }
-
-
-    obtenerEmprendimientos();
-})
 //#endregion
 
 //#region Noticias
@@ -241,10 +211,17 @@ app.post('/api/registrarNoticia',(req,res)=>{
 })
 //#endregion
 
-//#region 
-//TRANSPORTE
-
+//#region TRANSPORTE
 const Transporte = require('../models/transportes.js');
+
+app.get('/Transportes', async(req,res)=>{
+
+    const transportes = await Transporte.find();
+
+    res.render('Transportes.ejs',{transportes:transportes});
+});
+
+
 app.post('/api/registrarTransporte',(req,res)=>{
 
     console.log(req.body);
@@ -282,6 +259,14 @@ app.post('/api/registrarTransporte',(req,res)=>{
 //#region ACTIVIDADES
 
 const Actividad = require('../models/actividades.js');
+
+app.get('/actividades', async(req, res) => {
+
+    const actividades = await Actividad.find();
+
+    res.render('actividades.ejs',{actividades:actividades});
+});
+
 app.post('/api/registrarActividad',(req,res)=>{
     
     let data = new Actividad({

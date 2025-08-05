@@ -71,11 +71,11 @@
                             mayonesas en variedad de sabores</p>
                         <p class="precio_emprendimiento" id="precio_emprendimiento">$100</p>
                         <p class="numero_emprendimiento" id="numero_emprendimiento">88963245</p>
-                        <!-- <p class="categoria_emprendimiento" id="categoria_emprendimiento">Salud</p> -->
+                        <p class="categoria_emprendimiento" id="categoria_emprendimiento">Salud</p>
                     </div>
                 </a>
 
-                <a href="">
+                <!-- <a href="">
                     <div class="card" id="emprendimiento">
                         <img src="/img/empredimientos2.jpg" class="img_emprendimiento" id="emprendimiento"
                             alt="productos_agricolas" />
@@ -84,7 +84,7 @@
                             y Servicios Múltiples del Cáñamo y Otros Productos Agrícolas</p>
                         <p class="precio_emprendimiento" id="precio_emprendimiento">$100</p>
                         <p class="numero_emprendimiento" id="numero_emprendimiento">87521369</p>
-                        <!-- <p class="categoria_emprendimiento" id="categoria_emprendimiento">Salud</p> -->
+                        <p class="categoria_emprendimiento" id="categoria_emprendimiento">Salud</p>
                     </div>
                 </a>
 
@@ -97,7 +97,7 @@
                             cabo proyectos de construcción y arquitectura</p>
                         <p class="precio_emprendimiento" id="precio_emprendimiento">$100</p>
                         <p class="numero_emprendimiento" id="numero_emprendimiento">85213698</p>
-                        <!-- <p class="categoria_emprendimiento" id="categoria_emprendimiento">Salud</p> -->
+                        <p class="categoria_emprendimiento" id="categoria_emprendimiento">Salud</p>
                     </div>
                 </a>
 
@@ -111,7 +111,7 @@
                             de refrigeración y aire acondicionado</p>
                         <p class="precio_emprendimiento" id="precio_emprendimiento">$100</p>
                         <p class="numero_emprendimiento" id="numero_emprendimiento">85421367</p>
-                        <!-- <p class="categoria_emprendimiento" id="categoria_emprendimiento">Salud</p> -->
+                        <p class="categoria_emprendimiento" id="categoria_emprendimiento">Salud</p>
                     </div>
                 </a>
 
@@ -124,7 +124,7 @@
                             general humana.</p>
                         <p class="precio_emprendimiento" id="precio_emprendimiento">$100</p>
                         <p class="numero_emprendimiento" id="numero_emprendimiento">82314568</p>
-                        <!-- <p class="categoria_emprendimiento" id="categoria_emprendimiento">Salud</p> -->
+                        <p class="categoria_emprendimiento" id="categoria_emprendimiento">Salud</p>
                     </div>
                 </a>
 
@@ -137,7 +137,7 @@
                             Costarricense una gran oportunidad para todos los costarricenses.</p>
                         <p class="precio_emprendimiento" id="precio_emprendimiento">$100</p>
                         <p class="numero_emprendimiento" id="numero_emprendimiento">85254693</p>
-                        <!-- <p class="categoria_emprendimiento" id="categoria_emprendimiento">Salud</p> -->
+                        <p class="categoria_emprendimiento" id="categoria_emprendimiento">Salud</p>
                     </div>
                 </a>
 
@@ -151,7 +151,7 @@
                             Mantenimiento y reparación de equipos.</p>
                         <p class="precio_emprendimiento" id="precio_emprendimiento">$100</p>
                         <p class="numero_emprendimiento" id="numero_emprendimiento">85423652</p>
-                        <!-- <p class="categoria_emprendimiento" id="categoria_emprendimiento">Salud</p> -->
+                        <p class="categoria_emprendimiento" id="categoria_emprendimiento">Salud</p>
                     </div>
                 </a>
 
@@ -165,9 +165,25 @@
                             reparación de celures iPhone, Samsung, Huawei etc.</p>
                         <p class="precio_emprendimiento" id="precio_emprendimiento">$100</p>
                         <p class="numero_emprendimiento" id="numero_emprendimiento">83657142</p>
-                        <!-- <p class="categoria_emprendimiento" id="categoria_emprendimiento">Salud</p> -->
+                        <p class="categoria_emprendimiento" id="categoria_emprendimiento">Salud</p>
                     </div>
-                </a>
+                </a> -->
+
+                <% emprendimientos.forEach(emprendimiento=>{ %>
+                            
+                    <a href="">
+                        <div class="card" id="emprendimiento">
+                            <img src="/img/<%= emprendimiento.nombreImagen %>" class="img_emprendimiento" id="emprendimiento"
+                                alt="" />
+                            <h3 class="producto" id="producto"><%= emprendimiento.nombreEmprendimiento %></h3>
+                            <p class="descripcion_emprendimiento" id="descripcion_emprendimiento"><%= emprendimiento.descripcionEmprendimiento %></p>
+                            <p class="precio_emprendimiento" id="precio_emprendimiento">$<%= emprendimiento.precio %></p>
+                            <p class="numero_emprendimiento" id="numero_emprendimiento"><%= emprendimiento.telefono %></p>
+                            <p class="categoria_emprendimiento" id="categoria_emprendimiento"><%= emprendimiento.categoria %></p>
+                        </div>
+                    </a>                        
+
+                <% }) %>
 
             </div>
         </section>
@@ -230,7 +246,6 @@
             </div>
         </div>
     </footer>
-    <script src="./js/emprendimientos.js"></script>
 </body>
 
 </html>
