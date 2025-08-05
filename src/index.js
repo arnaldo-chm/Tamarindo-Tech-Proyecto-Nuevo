@@ -37,9 +37,6 @@ app.get('/noticias', (req, res) => {
     res.render('noticias.html');
 });
 
-app.get('/Transportes',(req,res)=>{
-    res.render("Transportes.html");
-});
 
 app.get('/reportes', (req, res) => {
     res.render('reportes.html');
@@ -50,7 +47,6 @@ app.get('/Landing_page', (req, res) => {
 });
 
 //#endregion
-//Rutas principales
 
 //#region Login
 //Login
@@ -215,10 +211,17 @@ app.post('/api/registrarNoticia',(req,res)=>{
 })
 //#endregion
 
-//#region 
-//TRANSPORTE
-
+//#region TRANSPORTE
 const Transporte = require('../models/transportes.js');
+
+app.get('/Transportes', async(req,res)=>{
+
+    const transportes = await Transporte.find();
+
+    res.render('Transportes.ejs',{transportes:transportes});
+});
+
+
 app.post('/api/registrarTransporte',(req,res)=>{
 
     console.log(req.body);

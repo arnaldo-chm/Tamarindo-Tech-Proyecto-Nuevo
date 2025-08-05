@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transportes</title>
+    <link rel="stylesheet" href="../css/Transporte.css">
+    <link rel="stylesheet" href="../css/general.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+
+    <!-- Link preconnect para Google fonts con la opción de Roboto como fuente de fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="logo">
+            <h1>Tamarindo Tech</h1>
+        </div>
+        <input type="checkbox" id="check">
+        <label for="check" class="btn">☰</label>
+
+        <nav class="Links_Header" id="Links_Header">
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="noticias">Anuncios/Noticias</a></li>
+                <li><a href="emprendimientos">Emprendimientos</a></li>
+                <li><a href="Transportes">Transporte</a></li>
+                <li><a href="actividades">Actividades</a></li>
+                <button class="boton_sing_out" id="boton_sing_out"><a href="login">Cerrar Sesion</a></button>
+            </ul>
+        </nav>
+    </header>
+    <!-- fin de header -->
+
+    <!-- Hero -->
+    <div class="Contenido">
+        <section>
+            <div class="contenedor">
+                <div class="texto_bienvenido">
+                    <h1 class="titulo">Bienvenidos a Transportes</h1>
+                    <p>Esta página está diseñada para ofrecerte información clave sobre las rutas de transporte
+                        disponibles en tu comunidad. Explora las distintas secciones para conocer los horarios, tarifas
+                        y contactos, y mantente al día con las actualizaciones más recientes del servicio de transporte.
+                    </p>
+
+                </div>
+                <div class="img">
+                    <img src="/img/buses.jpg" alt="Imagenes con autobuses">
+                </div>
+            </div>
+        </section>
+        <!-- Lista de transportes -->
+        <section class="Transporte">
+            <div>
+                <h2>Transportes</h2>
+            </div>
+            <div class="contenedor-cards">
+                <div class="card">
+                    <h3>Ruta Nunciatura – San Pedro</h3>
+                    <p class="ver-horario"><a href="#info1" class="info-btn">Ver horarios</a></p>
+                    <p>Tarifa: ₡600</p>
+                    <p>Contacto: 8888-8888</p>
+                </div>
+                <div id="info1" class="modal">
+                    <div class="modal-content"><a href="#cerrar" class="close">&times;</a><img
+                            src="/img/ruta1.png" alt="Ruta Nunciatura – San Pedro"></div>
+                </div>
+
+                <% transportes.forEach(transporte=>{ %>
+                    <div class="card">
+                        <h3>
+                            <%= transporte.ruta %>
+                        </h3>
+                        <p class="ver-horario"><a href="#<%= transporte.ruta %>" class="info-btn">Ver horarios</a></p>
+                        <p>Tarifa: ₡<%= transporte.tarifa %>
+                        </p>
+                        <p>Contacto: <%= transporte.telefono %>
+                        </p>
+                    </div>
+                    <div id="<%= transporte.ruta %>" class="modal">
+                        <div class="modal-content"><a href="#cerrar" class="close">&times;</a><img
+                                src="/img/<%= transporte.nombreImagen %>" alt="Imagen Horarios <%= transporte.ruta %>">
+                        </div>
+                    </div>
+
+                <% }) %>
+
+
+                <!-- <div class="card">
+                    <h3>Ruta Nunciatura – Barrio Escalante</h3>
+                    <p class="ver-horario"><a href="#info3" class="info-btn">Ver horarios</a></p>
+                    <p>Tarifa: ₡650</p>
+                    <p>Contacto: 8777-7777</p>
+                </div>
+                <div class="card">
+                    <h3>Ruta Nunciatura – Pavas</h3>
+                    <p class="ver-horario"><a href="#info4" class="info-btn">Ver horarios</a></p>
+                    <p>Tarifa: ₡750</p>
+                    <p>Contacto: 8666-6666</p>
+                </div> -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Modales de Transportes -->
+    <!-- <div id="info1" class="modal">
+        <div class="modal-content"><a href="#cerrar" class="close">&times;</a><img src="..\imagenes\ruta1.png"
+                alt="Ruta Nunciatura – San Pedro"></div>
+    </div>
+    <div id="info2" class="modal">
+        <div class="modal-content"><a href="#cerrar" class="close">&times;</a><img src="..\imagenes\ruta2.png"
+                alt="Ruta Nunciatura – Rohrmoser"></div>
+    </div>
+    <div id="info3" class="modal">
+        <div class="modal-content"><a href="#cerrar" class="close">&times;</a><img src="..\imagenes\ruta3.png"
+                alt="Ruta Nunciatura – Barrio Escalante"></div>
+    </div>
+    <div id="info4" class="modal">
+        <div class="modal-content"><a href="#cerrar" class="close">&times;</a><img src="..\imagenes\ruta4.png"
+                alt="Ruta Nunciatura – Pavas"></div>
+    </div> -->
+    <footer class="footer">
+        <div class="footer-contenedor">
+            <div class="footer-contenido">
+                <!-- Columna 1: Logo y redes sociales -->
+                <div class="footer-section">
+                    <h3>Nunciatura</h3>
+                    <div class="social-icons">
+                        <!-- Twitter/X -->
+                        <a href="#" aria-label="Twitter">
+                            <img src="/img/X.png" alt="Twitter/X">
+                        </a>
+                        <!-- Instagram -->
+                        <a href="#" aria-label="Instagram">
+                            <img src="/img/logotipo-de-instagram.png" alt="Instagram">
+                        </a>
+                        <!-- YouTube -->
+                        <a href="#" aria-label="YouTube">
+                            <img src="/img/youtube.png" alt="YouTube">
+                        </a>
+                        <!-- LinkedIn -->
+                        <a href="#" aria-label="LinkedIn">
+                            <img src="/img/linkedin.png" alt="LinkedIn">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Columna 2: Contactenos -->
+                <div class="footer-section">
+                    <h3>Contactenos</h3>
+                    <ul>
+                        <li><a href="mailto:nunciaturaAdmin@gmail.com">Contactar al Administrador</a></li>
+                        <!-- <li><a href="#">Preguntas Frecuentes</a></li> -->
+                    </ul>
+                </div>
+
+                <!-- Columna 3: Información -->
+                <div class="footer-section">
+                    <h3>Información</h3>
+                    <ul>
+                        <li><a href="Landing_page">Tamarindo Tech</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 4: Recursos -->
+                <div class="footer-section">
+                    <h3>Recursos</h3>
+                    <ul>
+                        <!-- <li><a href="#">Tutoriales</a></li>
+                            <li><a href="#">Ayuda</a></li> -->
+                        <li><a href="reportes">Crear un Reporte</a></li>
+                        <li><a href="reportes">Dar una Sugerencia</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
