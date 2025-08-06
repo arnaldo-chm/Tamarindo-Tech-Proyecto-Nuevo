@@ -34,7 +34,7 @@
 
     <div class="Contenido">
         <aside class="barra-lateral-admin">
-        
+
             <div class="seccion-barra-lateral">
                 <div class="titulo-seccion">Contenido</div>
                 <ul class="menu-barra-lateral">
@@ -101,25 +101,33 @@
                         </div>
 
                         <% noticias.forEach(noticia=>{ %>
-                            
+
                             <div class="tarjeta-simple">
                                 <div class="encabezado-tarjeta">
-                                    <h4><%= noticia.titulo %></h4>
-                                    <span class="fecha"><%= noticia.fecha %></span>
+                                    <h4>
+                                        <%= noticia.titulo %>
+                                    </h4>
+                                    <span class="fecha">
+                                        <%= noticia.fecha %>
+                                    </span>
                                 </div>
                                 <div class="imagen-tarjeta">
                                     <img src="/img/<%= noticia.nombreImagen %>" alt="">
                                 </div>
                                 <div class="info-tarjeta">
-                                    <p><strong>Autor:</strong><%= noticia.autor %></p>
-                                    <p><strong>Categoría:</strong><%= noticia.categoria %></p>
+                                    <p><strong>Autor:</strong>
+                                        <%= noticia.autor %>
+                                    </p>
+                                    <p><strong>Categoría:</strong>
+                                        <%= noticia.categoria %>
+                                    </p>
                                 </div>
                                 <div class="acciones-tarjeta">
                                     <button class="btn-editar">Editar</button>
                                     <button class="btn-eliminar">Eliminar</button>
                                 </div>
                             </div>
-                        <% }) %>
+                            <% }) %>
 
                     </div>
                 </div>
@@ -158,18 +166,27 @@
                         </div>
 
                         <% emprendimientos.forEach(emprendimiento=>{ %>
- 
-                            <div class="tarjeta-emprendimiento" data-estado="<%= emprendimiento.estadoEmprendimiento %>">
+
+                            <div class="tarjeta-emprendimiento"
+                                data-estado="<%= emprendimiento.estadoEmprendimiento %>">
                                 <div class="encabezado-tarjeta">
-                                    <h4><%= emprendimiento.nombreEmprendimiento %></h4>
-                                    <span class="estado <%= emprendimiento.estadoEmprendimiento %>"><%= emprendimiento.estadoEmprendimiento %></span>
+                                    <h4>
+                                        <%= emprendimiento.nombreEmprendimiento %>
+                                    </h4>
+                                    <span class="estado <%= emprendimiento.estadoEmprendimiento %>">
+                                        <%= emprendimiento.estadoEmprendimiento %>
+                                    </span>
                                 </div>
                                 <div class="imagen-tarjeta">
                                     <img src="/img/<%= emprendimiento.nombreImagen %>" alt="">
                                 </div>
                                 <div class="info-tarjeta">
-                                    <p><strong>Correo:</strong><%= emprendimiento.correoUsuario %></p>
-                                    <p><strong>Categoría:</strong><%= emprendimiento.categoria %></p>
+                                    <p><strong>Correo:</strong>
+                                        <%= emprendimiento.correoUsuario %>
+                                    </p>
+                                    <p><strong>Categoría:</strong>
+                                        <%= emprendimiento.categoria %>
+                                    </p>
                                     <!-- <p><strong>Solicitado:</strong> 05/11/2023</p> -->
                                 </div>
                                 <div class="acciones-tarjeta">
@@ -178,7 +195,7 @@
                                     <button class="btn-detalles">Detalles</button>
                                 </div>
                             </div>
-                        <% }) %>
+                            <% }) %>
 
                     </div>
                 </div>
@@ -202,12 +219,12 @@
 
                         <div class="tarjeta-simple">
                             <div class="encabezado-tarjeta">
-                            <h4>Ruta Nunciatura - San Pedro</h4>                           
+                                <h4>Ruta Nunciatura - San Pedro</h4>
                             </div>
                             <div class="imagen-tarjeta">
                                 <img src="/img/ruta1.png" alt="">
                             </div>
-                            <div class="info-tarjeta">                               
+                            <div class="info-tarjeta">
                                 <p><strong>Tarifa:</strong> $2.50</p>
                                 <p><strong>Contacto:</strong> 2222-2222</p>
                             </div>
@@ -216,19 +233,24 @@
                                 <button class="btn-eliminar" data-id="${transporte.id}">Eliminar</button>
                             </div>
                         </div>
-                        
+
                         <% transportes.forEach(transporte=>{ %>
-                            
+
                             <div class="tarjeta-simple">
                                 <div class="encabezado-tarjeta">
-                                <h4><%= transporte.ruta %></h4>                           
+                                    <h4>
+                                        <%= transporte.ruta %>
+                                    </h4>
                                 </div>
                                 <div class="imagen-tarjeta">
                                     <img src="/img/<%= transporte.nombreImagen %>" alt="">
                                 </div>
-                                <div class="info-tarjeta">                               
-                                    <p><strong>Tarifa:</strong>$<%= transporte.tarifa %></p>
-                                    <p><strong>Contacto:</strong><%= transporte.telefono %></p>
+                                <div class="info-tarjeta">
+                                    <p><strong>Tarifa:</strong>$<%= transporte.tarifa %>
+                                    </p>
+                                    <p><strong>Contacto:</strong>
+                                        <%= transporte.telefono %>
+                                    </p>
                                 </div>
                                 <div class="acciones-tarjeta">
                                     <button class="btn-editar" data-id="${transporte.id}">Editar</button>
@@ -236,7 +258,7 @@
                                 </div>
                             </div>
 
-                        <% }) %>
+                            <% }) %>
                     </div>
                 </div>
 
@@ -265,45 +287,58 @@
                                 <img src="/img/Actividades_TrabajoEnBarro.png" alt="">
                             </div>
                             <div class="info-tarjeta">
-                                <p><strong>Descripcion Actividad:</strong> Taller de pintura al óleo para principiantes</p>
+                                <p><strong>Descripcion Actividad:</strong> Taller de pintura al óleo para principiantes
+                                </p>
                                 <p><strong>Recomendaciones Actividad:</strong> Llevar Brochas y Pintura </p>
-                                <p><strong>Duracion:</strong> 1.5 h</p>   
-                                <p><strong>Hora:</strong> 10:30</p>                              
+                                <p><strong>Duracion:</strong> 1.5 h</p>
+                                <p><strong>Hora:</strong> 10:30</p>
                             </div>
                             <div class="acciones-tarjeta">
                                 <button class="btn-editar">Editar</button>
                                 <button class="btn-eliminar">Eliminar</button>
                             </div>
                         </div>
-                        
+
                         <% actividades.forEach(actividad=>{ %>
-                            
 
-                        <div class="tarjeta-simple">
-                            <div class="encabezado-tarjeta">
-                                <h4><%= actividad.titulo %></h4>
-                                <span class="fecha"><%= actividad.fecha %></span>
-                            </div>
-                            <div class="imagen-tarjeta">
-                                <img src="/img/<%= actividad.nombreImagen %>" alt="">
-                            </div>
-                            <div class="info-tarjeta">
-                                <p><strong>Descripcion Actividad:</strong><%= actividad.descripcion_actividad %></p>
-                                <p><strong>Recomendaciones Actividad:</strong><%= actividad.recomendaciones_actividad %></p>
-                                <p><strong>Duracion:</strong><%= actividad.duracion %></p>   
-                                <p><strong>Hora:</strong><%= actividad.hora %></p>                              
-                            </div>
-                            <div class="acciones-tarjeta">
-                                <button class="btn-editar">Editar</button>
-                                <button class="btn-eliminar">Eliminar</button>
-                            </div>
-                        </div>                            
 
-                        <% }) %>
+                            <div class="tarjeta-simple">
+                                <div class="encabezado-tarjeta">
+                                    <h4>
+                                        <%= actividad.titulo %>
+                                    </h4>
+                                    <span class="fecha">
+                                        <%= actividad.fecha %>
+                                    </span>
+                                </div>
+                                <div class="imagen-tarjeta">
+                                    <img src="/img/<%= actividad.nombreImagen %>" alt="">
+                                </div>
+                                <div class="info-tarjeta">
+                                    <p><strong>Descripcion Actividad:</strong>
+                                        <%= actividad.descripcion_actividad %>
+                                    </p>
+                                    <p><strong>Recomendaciones Actividad:</strong>
+                                        <%= actividad.recomendaciones_actividad %>
+                                    </p>
+                                    <p><strong>Duracion:</strong>
+                                        <%= actividad.duracion %>
+                                    </p>
+                                    <p><strong>Hora:</strong>
+                                        <%= actividad.hora %>
+                                    </p>
+                                </div>
+                                <div class="acciones-tarjeta">
+                                    <button class="btn-editar">Editar</button>
+                                    <button class="btn-eliminar">Eliminar</button>
+                                </div>
+                            </div>
+
+                            <% }) %>
 
                     </div>
 
-                    
+
                 </div>
 
                 <div id="quejas" class="tab-content">
@@ -312,8 +347,22 @@
                         <!-- <button class="btn-agregar-contenido">+ Agregar Queja</button> -->
                     </div>
 
-                    <div class="cuadricula-contenido">
+                    <div class="cuadricula-contenido" id="quejas-contenido">
                         <!-- Las tarjetas de Quejas se generarán dinámicamente -->
+                        <% quejas.forEach(queja=>{ %>
+
+                            <div class="tarjeta-simple">
+                                <div class="info-tarjeta">
+                                    <p><strong>Nombre:</strong> <%= queja.nombre %></p>
+                                    <p><strong>Reporte:</strong> <%= queja.reporte %></p>
+                                    <p><strong>Fecha:</strong> <%= queja.fecha %></p>
+                                    <p><strong>Archivo:</strong> <%= queja.archivo %></p>
+                                    <div class="imagen-tarjeta">
+                                    <img src="/img/<%= queja.archivo %>" alt="">
+                                </div>
+                                </div>
+                            </div>
+                            <% }) %>
                     </div>
                 </div>
 
@@ -325,13 +374,25 @@
 
                     <div class="cuadricula-contenido">
                         <!-- Las tarjetas de Quejas se generarán dinámicamente -->
+                         <% usuarios.forEach(usuario=>{ %>
+
+                            <div class="tarjeta-simple">
+                                <div class="info-tarjeta">
+                                    <p><strong>Nombre:</strong> <%= usuario.nombre %></p>
+                                    <p><strong>Correo:</strong> <%= usuario.correo %></p>
+                                    <p><strong>Contraseña:</strong> <%= usuario.contraseña %></p>
+                                    <p><strong>Telefono:</strong> <%= usuario.telefono %></p>
+                                    <p><strong>Tipo:</strong> <%= usuario.tipoUsuario %></p>
+                                </div>
+                            </div>
+                            <% }) %>
                     </div>
                 </div>
 
             </div>
         </main>
     </div>
-    
+
     <script src="../js/admin-tabs.js"></script>
     <script src="../js/admin-contenido.js"></script>
 </body>
