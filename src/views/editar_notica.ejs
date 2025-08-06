@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Emprendimiento</title>
-    <link rel="stylesheet" href="../css/general.css">
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/footer.css">
-    <link rel="stylesheet" href="../css/formularios.css">
+    <title>Editar Noticia</title>
+    <link rel="stylesheet" href="../../css/general.css">
+    <link rel="stylesheet" href="../../css/header.css">
+    <link rel="stylesheet" href="../../css/footer.css">
+    <link rel="stylesheet" href="../../css/formularios.css">
     <!-- Link preconnect para Google fonts con la opción de Roboto como fuente de fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,13 +39,13 @@
     <main class="Contenido">
         <div class="contenedor-formulario">
             <form class="formulario" id="formulario" name="editar_noticia">
-                <h1>Publicar una Noticia</h1>
+                <h1>Editar una Noticia</h1>
 
                 <!-- GRUPO TITULO-->
                 <div class="formulario__grupo" id="grupo__titulo">
                     <label class="formulario__label">Título de Noticia*</label>
                     <div class="formulario__grupo-input">
-                        <input type="text" class="formulario__input" name="titulo" id="titulo" placeholder="Introduce el Título">
+                        <input type="text" class="formulario__input" name="titulo" id="titulo" placeholder="Introduce el Título" value="<%= noticia.titulo %>">
                         <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
                     <p class="formulario__input-error">
@@ -57,7 +57,7 @@
                 <div class="formulario__grupo" id="grupo__autor">
                     <label class="formulario__label">Nombre completo*</label>
                     <div class="formulario__grupo-input">
-                        <input type="text" class="formulario__input" name="autor" id="autor" placeholder="Introduce tu nombre">
+                        <input type="text" class="formulario__input" name="autor" id="autor" placeholder="Introduce tu nombre" value="<%= noticia.autor %>">
                         <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
                     <p class="formulario__input-error">
@@ -72,9 +72,9 @@
                     <div class="formulario__grupo-input">                        
                         <select class="formulario__input" name="dropdown" id="dropdown" required>
                             <option value="default">-Selecciona una Opción-</option>
-                            <option value="Noticias">Noticias</option>
-                            <option value="Anuncios">Anuncios</option>
-                            <option value="Eventos">Eventos</option>
+                            <option value="Noticias" <%= noticia.categoria === 'Noticias' ? 'selected' : '' %>>Noticias</option>
+                            <option value="Anuncios" <%= noticia.categoria === 'Anuncios' ? 'selected' : '' %>>Anuncios</option>
+                            <option value="Eventos" <%= noticia.categoria === 'Eventos' ? 'selected' : '' %>>Eventos</option>
                         </select>
                         <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
@@ -88,7 +88,7 @@
                 <div class="formulario__grupo" id="grupo__descripcion_noticia">
                     <label class="formulario__label">Ingresa los Detalles de tu Noticia*</label>
                     <div class="formulario__grupo-input">
-                        <textarea class="formulario__input" id="descripcion_noticia" name="descripcion_noticia" rows="3"></textarea>
+                        <textarea class="formulario__input" id="descripcion_noticia" name="descripcion_noticia" rows="3" ><%= noticia.descripcionNoticia %></textarea>
                         <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
                     <p class="formulario__input-error">
@@ -100,7 +100,7 @@
                 <div class="formulario__grupo " id="grupo__telefono">
                     <label class="formulario__label">Teléfono*</label>
                     <div class="formulario__grupo-input">
-                        <input type="text" class="formulario__input" name="telefono" id="telefono" placeholder="">
+                        <input type="text" class="formulario__input" name="telefono" id="telefono" placeholder="" value="<%= noticia.telefono %>">
                         <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
                     <p class="formulario__input-error">
@@ -113,6 +113,7 @@
                     <label class="formulario__label">Agrega una imagen de tu Notica</label>
                     <div class="formulario__grupo-input">
                         <input type="file"  class="formulario__input" name="archivo" id="archivo" placeholder="" accept="image/*">
+                        <input type="hidden" name="imagenActual" value="<%= noticia.nombreImagen %>">
                     </div>                   
                 </div>
                 
@@ -127,7 +128,7 @@
                     <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">
                         Su Noticia se registró correctamente
                     </p>
-                    <input type="submit" class="formulario__btn" value="Publicar Noticia">
+                    <input type="submit" class="formulario__btn" value="Editar Noticia">
                 </div>
 
             </form>
@@ -205,6 +206,6 @@
             </div>
         </div>
     </footer>   
-    <script src="../js/formulario.js"></script> 
+    <script src="../../js/formulario.js"></script> 
 </body>
 </html>

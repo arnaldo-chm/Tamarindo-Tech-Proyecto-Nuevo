@@ -40,7 +40,7 @@ if (formulario.name === "registrarse") {
         nombre: /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/,  // Misma expresion regular usada para el nombre en Registrarse.
         reporte: /^.{10,}$/, // Reporte Acepta 10 o más caracteres de cualquier tipo        
     }
-} else if (formulario.name === "registrar_noticia") {
+} else if (formulario.name === "registrar_noticia" || formulario.name === "editar_noticia") {
     expresiones = {
         titulo: /^[a-zA-Z0-9À-ÿ\s]{5,50}$/, // Titulo Noticia acepta un rango de 5 a 50 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas, números, espacios y acentos.
         autor: /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/,  // Misma expresion regular usada para el nombre en Registrarse.
@@ -102,6 +102,17 @@ if (formulario.name === "registrarse") {
         dropdown: false,
         telefono: false
     }
+    
+}
+else if (formulario.name === "editar_noticia") {
+    campos = {
+        titulo: true,
+        autor: true,
+        descripcion_noticia: true,
+        dropdown: true,
+        telefono: true
+    }
+    
 }
 else if (formulario.name === "registrar_transporte") {
     campos = {
@@ -476,6 +487,50 @@ async function registrarNoticia() {
     }
 }
 
+async function editarNoticia() {
+
+    console.log("Funcion editarNoticia");
+    let datos = {
+        titulo: document.getElementById("titulo").value,
+        autor: document.getElementById("autor").value,
+        descripcionNoticia: document.getElementById("descripcion_noticia").value,
+        categoria: document.getElementById("dropdown").value,
+        archivo: document.getElementById("archivo").value,
+        telefono: document.getElementById("telefono").value,
+    }
+
+    try {
+        const respuesta = await fetch('http://localhost:3000/api/editarNoticia', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datos)
+        });
+
+        if (!respuesta.ok) {
+            throw new Error(`Error en la solicitud: ${respuesta.status}`);
+        }
+
+        const datosRespuesta = await respuesta.json();
+        if (datosRespuesta.resultado) {
+            // Se muestra el mensaje de aprobación en función de la validación.
+            document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
+            document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
+
+            setTimeout(() => {
+                window.location.href = "/Admin_panel";
+            }, 4000)
+
+        } else {
+            alert(datosRespuesta.mensaje);
+        }
+    } catch (error) {
+        console.error('Error al llamar al backend:', error);
+        document.getElementById('resultado').textContent = 'Error al obtener datos';
+    }
+}
+
 async function registrarTransporte() {
 
     console.log("Funcion registrarTransporte");
@@ -649,6 +704,10 @@ formulario.addEventListener("submit", (e) => {
         }
         else if (formulario.name == "crear_reporte") {
             registrarQueja();
+        }
+        else if(formulario.name === "editar_noticia"){
+            console.log("Llamando a Editar Noticia")
+            editarNoticia();
         }
 
 

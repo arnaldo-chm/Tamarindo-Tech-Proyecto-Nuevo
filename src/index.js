@@ -219,13 +219,55 @@ app.post('/api/registrarNoticia', (req, res) => {
 
 })
 
+app.post('/api/editarNoticia', async(req, res) => {
+
+    console.log(req.body);
+    let fecha = new Date()
+    const formatoFecha = `${fecha.getDate()}/${fecha.getMonth() + 1}/${fecha.getFullYear()}`
+
+    const noticia = await Noticia.findOne({ titulo: req.body.titulo });
+
+
+
+    await Noticia.findByIdAndUpdate(noticia.id, {
+        titulo: req.body.titulo,
+        autor: req.body.autor,
+        descripcionNoticia: req.body.descripcionNoticia,
+        categoria: req.body.categoria,
+        telefono: req.body.telefono,
+        fecha: formatoFecha,
+        nombreImagen: req.body.archivo,
+})
+    .then(() => {
+        console.log("Noticia editada");
+        const resultado = {
+            resultado: true,
+            mensaje: `Noticia editada con exito`
+        }
+        res.json(resultado);
+    })
+
+    .catch(err => {
+        console.log("Error al editar Noticia:", err);
+        const resultado = {
+            resultado: false,
+            mensaje: `Error al editar Noticia ${err}`
+        }
+        res.json(resultado);
+    });
+
+})
+
 // Mostrar formulario de edición
 app.get('/noticias/:id/editar', async (req, res) => {
+    
     const noticia = await Noticia.findById(req.params.id);
+    // console.log(noticia);
+
     if (!noticia) {
         return res.status(404).send('Noticia no encontrada');
     }
-    res.render('noticias/editar', { noticia });
+    res.render('editar_notica.ejs', { noticia:noticia });
 });
 
 //#endregion
