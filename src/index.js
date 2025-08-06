@@ -299,6 +299,22 @@ app.post('/api/registrarActividad',(req,res)=>{
     });
 
 })
+//#region QUEJAS
+const Queja = require('../models/quejas.js');
+
+// Guardar una queja
+app.post('/api/registrarQueja', async (req, res) => {
+    try {
+        const { nombre, reporte, archivo } = req.body;
+        const fecha = new Date().toLocaleDateString('es-CR');
+        const nuevaQueja = new Queja({ nombre, reporte, archivo:path.basename(req.body.archivo), fecha });
+        await nuevaQueja.save();
+        res.json({ resultado: true, mensaje: "Queja registrada con éxito" });
+    } catch (err) {
+        res.json({ resultado: false, mensaje: `Error al guardar Queja: ${err}` });
+    }
+});
+
 
 //#endregion
 
@@ -309,8 +325,9 @@ app.get('/Admin_panel', async(req, res) => {
     const emprendimientos = await Emprendimiento.find();
     const transportes = await Transporte.find();
     const actividades = await Actividad.find();
-
-    res.render('contenido-admin',{noticias:noticias,emprendimientos:emprendimientos,transportes:transportes,actividades:actividades});
+    const quejas = await Queja.find();
+    const usuarios = await User.find();
+    res.render('contenido-admin',{noticias:noticias,emprendimientos:emprendimientos,transportes:transportes,actividades:actividades, quejas:quejas, usuarios:usuarios});
 });
 
 app.get('/Admin_panel/crear_noticia', (req, res) => {

@@ -3,7 +3,7 @@ const DB_URI = 'mongodb://localhost:27017/TamarindoTech';
 
 mongoose.connect(DB_URI,{})
 
-    .then(() => console.log("DB CONECTADA"))
+    .then(() => console.log("DB TRANSPORTES CONECTADA"))
     .catch(err => console.log("Error de conexión:", err));
 
 //Modelo de usuario

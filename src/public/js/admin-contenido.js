@@ -144,6 +144,33 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+//     async function cargarQuejas() {
+//     const res = await fetch('/api/quejas');
+//     const quejas = await res.json();
+//     const grid = document.getElementById('quejas-contenido');
+//     grid.innerHTML = '';
+//     quejas.forEach(queja => {
+//         const card = document.createElement('div');
+//         card.className = 'tarjeta-simple';
+//         card.innerHTML = `
+//             <div class="info-tarjeta">
+//                 <p><strong>Nombre:</strong> ${queja.nombre}</p>
+//                 <p><strong>Reporte:</strong> ${queja.reporte}</p>
+//                 <p><strong>Fecha:</strong> ${queja.fecha}</p>
+//                 ${queja.archivo ? `<p><strong>Archivo:</strong> ${queja.archivo}</p>` : ''}
+//             </div>
+//         `;
+//         grid.appendChild(card);
+//     });
+// }
+
+//  if (document.getElementById('quejas').classList.contains('active')) {
+//         cargarQuejas();
+//     }
+
+// // Llama a cargarQuejas cuando se activa la pestaña de quejas
+// document.querySelector('[data-tab="quejas"]').addEventListener('click', cargarQuejas);
+
     function crearTarjetaNoticia(noticia) {
         const card = document.createElement('div');
         card.className = 'tarjeta-simple';
