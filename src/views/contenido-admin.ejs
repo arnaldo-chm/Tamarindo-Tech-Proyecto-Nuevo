@@ -95,7 +95,9 @@
                                 <p><strong>Categoría:</strong> Anuncios</p>
                             </div>
                             <div class="acciones-tarjeta">
-                                <button class="btn-editar">Editar</button>
+                                <a href="/noticias/<%= noticia._id %>/editar">
+                                    <button class="btn-editar">Editar</button>
+                                </a>
                                 <button class="btn-eliminar">Eliminar</button>
                             </div>
                         </div>
@@ -123,7 +125,9 @@
                                     </p>
                                 </div>
                                 <div class="acciones-tarjeta">
-                                    <button class="btn-editar">Editar</button>
+                                    <a href="/noticias/<%= noticia._id %>/editar">
+                                        <button class="btn-editar">Editar</button>
+                                    </a>
                                     <button class="btn-eliminar">Eliminar</button>
                                 </div>
                             </div>
@@ -353,13 +357,21 @@
 
                             <div class="tarjeta-simple">
                                 <div class="info-tarjeta">
-                                    <p><strong>Nombre:</strong> <%= queja.nombre %></p>
-                                    <p><strong>Reporte:</strong> <%= queja.reporte %></p>
-                                    <p><strong>Fecha:</strong> <%= queja.fecha %></p>
-                                    <p><strong>Archivo:</strong> <%= queja.archivo %></p>
+                                    <p><strong>Nombre:</strong>
+                                        <%= queja.nombre %>
+                                    </p>
+                                    <p><strong>Reporte:</strong>
+                                        <%= queja.reporte %>
+                                    </p>
+                                    <p><strong>Fecha:</strong>
+                                        <%= queja.fecha %>
+                                    </p>
+                                    <p><strong>Archivo:</strong>
+                                        <%= queja.archivo %>
+                                    </p>
                                     <div class="imagen-tarjeta">
-                                    <img src="/img/<%= queja.archivo %>" alt="">
-                                </div>
+                                        <img src="/img/<%= queja.archivo %>" alt="">
+                                    </div>
                                 </div>
                             </div>
                             <% }) %>
@@ -374,15 +386,25 @@
 
                     <div class="cuadricula-contenido">
                         <!-- Las tarjetas de Quejas se generarán dinámicamente -->
-                         <% usuarios.forEach(usuario=>{ %>
+                        <% usuarios.forEach(usuario=>{ %>
 
                             <div class="tarjeta-simple">
                                 <div class="info-tarjeta">
-                                    <p><strong>Nombre:</strong> <%= usuario.nombre %></p>
-                                    <p><strong>Correo:</strong> <%= usuario.correo %></p>
-                                    <p><strong>Contraseña:</strong> <%= usuario.contraseña %></p>
-                                    <p><strong>Telefono:</strong> <%= usuario.telefono %></p>
-                                    <p><strong>Tipo:</strong> <%= usuario.tipoUsuario %></p>
+                                    <p><strong>Nombre:</strong>
+                                        <%= usuario.nombre %>
+                                    </p>
+                                    <p><strong>Correo:</strong>
+                                        <%= usuario.correo %>
+                                    </p>
+                                    <p><strong>Contraseña:</strong>
+                                        <%= usuario.contraseña %>
+                                    </p>
+                                    <p><strong>Telefono:</strong>
+                                        <%= usuario.telefono %>
+                                    </p>
+                                    <p><strong>Tipo:</strong>
+                                        <%= usuario.tipoUsuario %>
+                                    </p>
                                 </div>
                             </div>
                             <% }) %>
