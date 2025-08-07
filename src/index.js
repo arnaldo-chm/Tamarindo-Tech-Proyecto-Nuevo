@@ -317,6 +317,36 @@ app.post('/api/registrarTransporte', (req, res) => {
 
 })
 
+app.post('/api/editarTransporte', async (req, res) => {
+    try {
+        let fecha = new Date();
+        const formatoFecha = `${fecha.getDate()}/${fecha.getMonth() + 1}/${fecha.getFullYear()}`;
+        // Busca el transporte por ID y actualiza los campos
+        await Transporte.findByIdAndUpdate(req.body.id, {
+            ruta: req.body.ruta,
+            tarifa: req.body.tarifa,
+            telefono: req.body.telefono,
+            fecha: formatoFecha,
+            nombreImagen: req.body.archivo,
+        });
+        res.json({ resultado: true, mensaje: 'Transporte editado con exito' });
+    } catch (err) {
+        res.json({ resultado: false, mensaje: `Error al editar Transporte: ${err}` });
+    }
+});
+
+// Mostrar formulario de edición
+app.get('/Transportes/:id/editar', async (req, res) => {
+
+    const transporte = await Transporte.findById(req.params.id);
+    // console.log(transporte);
+
+    if (!transporte) {
+        return res.status(404).send('Transporte no encontrado');
+    }
+    res.render('editar_transporte.ejs', { transporte:transporte });
+});
+
 //#endregion
 
 //#region ACTIVIDADES
@@ -391,7 +421,7 @@ app.get('/Admin_panel', async (req, res) => {
     const transportes = await Transporte.find();
     const actividades = await Actividad.find();
     const quejas = await Queja.find();
-    const usuarios = await User.find();
+    const usuarios = await User.find(); 
     res.render('contenido-admin', { noticias: noticias, emprendimientos: emprendimientos, transportes: transportes, actividades: actividades, quejas: quejas, usuarios: usuarios });
 });
 

@@ -257,7 +257,9 @@
                                     </p>
                                 </div>
                                 <div class="acciones-tarjeta">
-                                    <button class="btn-editar" data-id="${transporte.id}">Editar</button>
+                                    <a href="/Transportes/<%= transporte._id %>/editar">
+                                        <button class="btn-editar">Editar</button>
+                                    </a>
                                     <button class="btn-eliminar" data-id="${transporte.id}">Eliminar</button>
                                 </div>
                             </div>
