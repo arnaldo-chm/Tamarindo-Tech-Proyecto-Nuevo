@@ -203,6 +203,113 @@
   margin-bottom: 20px;
 }
 
+/* Contenedor general del slider */
+#slider-actividades {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 0;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Contenedor de todas las diapositivas en línea */
+#slider-actividades .diapositiva-actividades {
+  min-width: 100%;
+  box-sizing: border-box;
+  padding: 40px 20px;
+  background: #f1f1f1;
+  border-radius: 8px;
+  text-align: center;
+  transition: opacity 0.4s ease;
+  flex-shrink: 0;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Diapositiva activa */
+#slider-actividades .diapositiva-actividades.activo {
+  opacity: 1;
+  display: block;
+}
+
+#slider-actividades .diapositiva-actividades:not(.activo) {
+  display: none;
+}
+
+/* Flechas de navegación */
+.flecha-actividades {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  z-index: 10;
+  transition: background-color 0.2s;
+}
+
+.flecha-actividades:hover {
+  background-color: #555;
+}
+
+.flecha-actividades.izquierda {
+  left: 10px;
+}
+
+.flecha-actividades.derecha {
+  right: 10px;
+}
+
+/* Puntos de navegación */
+.contenedor-puntos-actividades {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.punto-actividades {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin: 0 6px;
+  background-color: #bbb;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.punto-actividades.activo {
+  background-color: #333;
+}
+
+/* Título animado de la sección */
+.seccion-actividades h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  #slider-actividades .diapositiva-actividades {
+    padding: 30px 15px;
+  }
+
+  .flecha-actividades {
+    padding: 8px;
+    font-size: 16px;
+  }
+
+  .seccion-actividades h2 {
+    font-size: 1.5rem;
+  }
+}
+
 /* Tablets grandes (hasta 1024px) */
 @media (max-width: 1024px) {
   .contenedor {
@@ -242,6 +349,27 @@
   }
 }
 
+#modalActividad {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: none;
+  justify-content: center; align-items: center;
+}
+#modalActividad.mostrar { display: flex; }
+
+.modal-contenido {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 400px;
+  text-align: center;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 /* Teléfonos móviles (hasta 600px) */
 @media (max-width: 600px) {
   .contenedor {

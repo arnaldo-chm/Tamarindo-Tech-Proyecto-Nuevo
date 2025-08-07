@@ -258,47 +258,68 @@ app.post('/api/registrarTransporte',(req,res)=>{
 
 //#region ACTIVIDADES
 
+const path = require('path');
 const Actividad = require('../models/actividades.js');
 
-app.get('/actividades', async(req, res) => {
-
+// Renderiza la vista con todas las actividades
+app.get('/actividades', async (req, res) => {
+  try {
     const actividades = await Actividad.find();
-
-    res.render('actividades.ejs',{actividades:actividades});
+    res.render('actividades.ejs', { actividades: actividades });
+  } catch (err) {
+    console.error("Error al cargar actividades:", err);
+    res.status(500).send("Error al cargar actividades");
+  }
 });
 
-app.post('/api/registrarActividad',(req,res)=>{
-    
-    let data = new Actividad({
-        titulo: req.body.titulo,   
-        descripcion_actividad: req.body.descripcion_actividad,
-        recomendaciones_actividad: req.body.recomendaciones_actividad,
-        duracion: req.body.duracion,
-        nombreImagen: path.basename(req.body.archivo),
-        fecha: req.body.fecha,
-        hora: req.body.hora
-    })
-
-    console.log(data);
-    
-    data.save()
-    .then(()=>{
-        console.log("Actividad registrada");
-        const resultado = { 
-            resultado: true,
-            mensaje: `Actividad registrada con exito`}
-        res.json(resultado);
-    })
-
-    .catch(err => {
-        console.log("Error al guardar Actividad:", err);
-        const resultado = { 
-            resultado: false,
-            mensaje: `Error al guardar Actividad ${err}`}
-        res.json(resultado);
+// Registra una nueva actividad desde el formulario
+app.post('/api/registrarActividad', async (req, res) => {
+  try {
+    const data = new Actividad({
+      titulo: req.body.titulo,
+      descripcion_actividad: req.body.descripcion_actividad,
+      recomendaciones_actividad: req.body.recomendaciones_actividad,
+      duracion: req.body.duracion,
+      nombreImagen: path.basename(req.body.archivo),
+      fecha: req.body.fecha,
+      hora: req.body.hora
     });
 
-})
+    await data.save();
+    console.log("Actividad registrada");
+
+    res.json({
+      resultado: true,
+      mensaje: "Actividad registrada con éxito"
+    });
+
+  } catch (err) {
+    console.error("Error al guardar Actividad:", err);
+    res.json({
+      resultado: false,
+      mensaje: `Error al guardar Actividad: ${err}`
+    });
+  }
+});
+
+// Devuelve actividades por fecha (usado por el frontend)
+app.get('/api/actividades/:fecha', async (req, res) => {
+  try {
+    const fecha = req.params.fecha;
+    const actividades = await Actividad.find({ fecha: fecha });
+    res.json(actividades);
+  } catch (err) {
+    console.error("Error al buscar actividades:", err);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+//#endregion
+
+
+
+
+
 //#region QUEJAS
 const Queja = require('../models/quejas.js');
 

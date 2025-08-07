@@ -59,11 +59,14 @@
             <span>Dom</span><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span>
           </div>
           <div class="dias">
-            <span></span><span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
-            <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
-            <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
-            <span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span>
-            <span>27</span><span>28</span><span>29</span><span>30</span><span>31</span>
+            <span></span><span></span><span class="dia" data-dia="2025-07-01">1</span><span class="dia" data-dia="2025-07-02">2</span><span class="dia" data-dia="2025-07-03">3</span><span class="dia" data-dia="2025-07-04">4</span><span class="dia" data-dia="2025-07-05">5</span><span class="dia" data-dia="2025-07-06">6</span>
+            <span class="dia" data-dia="2025-07-07">7</span><span class="dia" data-dia="2025-07-08">8</span><span class="dia" data-dia="2025-07-09">9</span>
+            <span class="dia" data-dia="2025-07-10">10</span><span class="dia" data-dia="2025-07-11">11</span><span class="dia" data-dia="2025-07-12">12</span><span class="dia" data-dia="2025-07-13">13</span><span class="dia" data-dia="2025-07-14">14</span>
+            <span class="dia" data-dia="2025-07-15">15</span><span class="dia" data-dia="2025-07-16">16</span><span class="dia" data-dia="2025-07-17">17</span><span class="dia" data-dia="2025-07-18">18</span>
+            <span class="dia" data-dia="2025-07-19">19</span><span class="dia" data-dia="2025-07-20">20</span><span class="dia" data-dia="2025-07-21">21</span><span class="dia" data-dia="2025-07-22">22</span>
+            <span class="dia" data-dia="2025-07-23">23</span><span class="dia" data-dia="2025-07-24">24</span><span class="dia" data-dia="2025-07-25">25</span><span class="dia" data-dia="2025-07-26">26</span>
+            <span class="dia" data-dia="2025-07-27">27</span><span class="dia" data-dia="2025-07-28">28</span><span class="dia" data-dia="2025-07-29">29</span><span class="dia" data-dia="2025-07-30">30</span><span class="dia" data-dia="2025-07-31">31</span>
+
           </div>
         </div>
 
@@ -121,6 +124,13 @@
           </div>
 
         <% }) %>
+        <div id="contenedor-actividades">
+  <h2>Actividades del día</h2>
+  <ul id="lista-actividades">
+    <li>Selecciona un día del calendario para ver sus actividades.</li>
+  </ul>
+</div>
+
 
         <!-- <div class="tarjeta">
           <img src="/img/teatro.jpg" alt="Actividad 2" />
@@ -286,6 +296,8 @@
   </div> -->
 
   <div id="cerrar"></div>
+  <script src="/js/actividades.js"></script>
+
 
   <!-- Inicio de Footer -->
   <footer class="footer">
