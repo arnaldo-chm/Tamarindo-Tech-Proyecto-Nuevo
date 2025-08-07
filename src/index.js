@@ -219,7 +219,7 @@ app.post('/api/registrarNoticia', (req, res) => {
 
 })
 
-app.post('/api/editarNoticia', async(req, res) => {
+app.post('/api/editarNoticia', async (req, res) => {
 
     console.log(req.body);
     let fecha = new Date()
@@ -237,37 +237,37 @@ app.post('/api/editarNoticia', async(req, res) => {
         telefono: req.body.telefono,
         fecha: formatoFecha,
         nombreImagen: req.body.archivo,
-})
-    .then(() => {
-        console.log("Noticia editada");
-        const resultado = {
-            resultado: true,
-            mensaje: `Noticia editada con exito`
-        }
-        res.json(resultado);
     })
+        .then(() => {
+            console.log("Noticia editada");
+            const resultado = {
+                resultado: true,
+                mensaje: `Noticia editada con exito`
+            }
+            res.json(resultado);
+        })
 
-    .catch(err => {
-        console.log("Error al editar Noticia:", err);
-        const resultado = {
-            resultado: false,
-            mensaje: `Error al editar Noticia ${err}`
-        }
-        res.json(resultado);
-    });
+        .catch(err => {
+            console.log("Error al editar Noticia:", err);
+            const resultado = {
+                resultado: false,
+                mensaje: `Error al editar Noticia ${err}`
+            }
+            res.json(resultado);
+        });
 
 })
 
 // Mostrar formulario de edición
 app.get('/noticias/:id/editar', async (req, res) => {
-    
+
     const noticia = await Noticia.findById(req.params.id);
     // console.log(noticia);
 
     if (!noticia) {
         return res.status(404).send('Noticia no encontrada');
     }
-    res.render('editar_notica.ejs', { noticia:noticia });
+    res.render('editar_notica.ejs', { noticia: noticia });
 });
 
 //#endregion
@@ -344,7 +344,7 @@ app.get('/Transportes/:id/editar', async (req, res) => {
     if (!transporte) {
         return res.status(404).send('Transporte no encontrado');
     }
-    res.render('editar_transporte.ejs', { transporte:transporte });
+    res.render('editar_transporte.ejs', { transporte: transporte });
 });
 
 //#endregion
@@ -394,6 +394,39 @@ app.post('/api/registrarActividad', (req, res) => {
         });
 
 })
+
+// Mostrar formulario de edición
+app.post('/api/editarActividad', async (req, res) => {
+    try {
+        let fecha = new Date();
+        const formatoFecha = `${fecha.getDate()}/${fecha.getMonth() + 1}/${fecha.getFullYear()}`;
+        // Busca el transporte por ID y actualiza los campos
+        await Actividad.findByIdAndUpdate(req.body.id, {
+            titulo: req.body.titulo,
+            descripcion_actividad: req.body.descripcion_actividad,
+            recomendaciones_actividad: req.body.recomendaciones_actividad,
+            duracion: req.body.duracion,
+            fecha: formatoFecha,
+            nombreImagen: req.body.archivo,
+        });
+        res.json({ resultado: true, mensaje: 'Actividad editada con exito' });
+    } catch (err) {
+        res.json({ resultado: false, mensaje: `Error al editar Actividad: ${err}` });
+    }
+});
+
+// Mostrar formulario de edición
+app.get('/Actividades/:id/editar', async (req, res) => {
+
+    const actividad = await Actividad.findById(req.params.id);
+    // console.log(actividad);
+
+    if (!actividad) {
+        return res.status(404).send('Actividad no encontrada');
+    }
+    res.render('editar_actividad.ejs', { actividad: actividad });
+});
+
 //#region QUEJAS
 const Queja = require('../models/quejas.js');
 
@@ -421,7 +454,7 @@ app.get('/Admin_panel', async (req, res) => {
     const transportes = await Transporte.find();
     const actividades = await Actividad.find();
     const quejas = await Queja.find();
-    const usuarios = await User.find(); 
+    const usuarios = await User.find();
     res.render('contenido-admin', { noticias: noticias, emprendimientos: emprendimientos, transportes: transportes, actividades: actividades, quejas: quejas, usuarios: usuarios });
 });
 

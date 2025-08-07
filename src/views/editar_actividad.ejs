@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Trasporte</title>
+    <link rel="stylesheet" href="../../css/general.css">
+    <link rel="stylesheet" href="../../css/header.css">
+    <link rel="stylesheet" href="../../css/footer.css">
+    <link rel="stylesheet" href="../../css/formularios.css">
+    <!-- Link preconnect para Google fonts con la opción de Roboto como fuente de fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="logo">
+            <h1>Tamarindo Tech</h1>
+        </div>
+        <input type="checkbox" id="check">
+        <label for="check" class="btn">☰</label>
+
+        <nav class="Links_Header" id="Links_Header">
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/noticias">Anuncios/Noticias</a></li>
+                <li><a href="/emprendimientos">Emprendimientos</a></li>
+                <li><a href="/Transportes">Transporte</a></li>
+                <li><a href="/actividades">Actividades</a></li>
+                <button class="boton_sing_out" id="boton_sing_out"><a href="/login">Cerrar Sesion</a></button>
+            </ul>
+        </nav>
+    </header>
+    <!-- fin de header -->
+
+    <main class="Contenido">
+        <div class="contenedor-formulario">
+            <form class="formulario" id="formulario" name="editar_actividad" method="POST" action="/api/editarActividad" enctype="multipart/form-data">
+                <h1>Editar una actividad</h1>
+
+                <input type="hidden" name="id" value="<%= actividad._id %>">
+
+                <!-- GRUPO TITULO -->
+                <div class="formulario__grupo" id="grupo__titulo">
+                    <label class="formulario__label">Título de Actividad*</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="titulo" id="titulo"
+                            placeholder="Introduce el Título" value="<%= actividad.titulo %>">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        Debe ingresar el título de la actividad. Entre 5 y 50 caracteres.
+                    </p>
+                </div>
+
+                <!-- GRUPO DESCRIPCIÓN -->
+                <div class="formulario__grupo" id="grupo__descripcion_actividad">
+                    <label class="formulario__label">Descripción*</label>
+                    <div class="formulario__grupo-input">
+                        <textarea class="formulario__input" name="descripcion_actividad" id="descripcion_actividad"
+                            placeholder="Describe la actividad"><%= actividad.descripcion_actividad %></textarea>
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        Debe ingresar una descripción (mínimo 10 caracteres).
+                    </p>
+                </div>
+
+                <!-- GRUPO RECOMENDACIONES -->
+                <div class="formulario__grupo" id="grupo__recomendaciones_actividad">
+                    <label class="formulario__label">Recomendaciones*</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="recomendaciones_actividad"
+                            id="recomendaciones_actividad" placeholder="Recomendaciones"
+                            value="<%= actividad.recomendaciones_actividad %>">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        Debe ingresar recomendaciones (mínimo 5 caracteres).
+                    </p>
+                </div>
+
+                <div class="formulario__grupo" id="grupo__fecha">
+                    <label class="formulario__label">Fecha y Hora*</label>
+                    <div class="formulario__grupo-input">
+                        <input type="datetime-local" class="formulario__input" name="fecha" id="fecha"
+                            value="<%= actividad.fecha ? actividad.fecha : '' %>">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        Debe ingresar una fecha y hora válida.
+                    </p>
+                </div>
+
+                <!-- GRUPO DURACIÓN -->
+                <div class="formulario__grupo" id="grupo__duracion">
+                    <label class="formulario__label">Duración*</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="duracion" id="duracion"
+                            placeholder="Duración en minutos" value="<%= actividad.duracion %>">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        Debe ingresar la duración en minutos.
+                    </p>
+                </div>
+
+
+                <!-- GRUPO ARCHIVO -->
+                <div class="formulario__grupo" id="grupo__archivo">
+                    <label class="formulario__label">Imagen actual</label>
+                    <div class="formulario__grupo-input">
+                        <% if (actividad.nombreImagen) { %>
+                            <img src="/uploads/<%= actividad.nombreImagen %>" alt="Imagen actual"
+                                style="max-width: 150px;">
+                            <% } %>
+                                <input type="file" class="formulario__input" name="archivo" id="archivo"
+                                    accept="image/*">
+                                <input type="hidden" name="imagenActual" value="<%= actividad.nombreImagen %>">
+                    </div>
+                    <p class="formulario__input-error">
+                        Puedes subir una nueva imagen.
+                    </p>
+                </div>
+
+                <!-- MENSAJE DE ERROR -->
+                <div class="formulario__mensaje" id="formulario__mensaje">
+                    <p>Error: Debes completar todos los campos</p>
+                </div>
+
+                <!-- MENSAJE DE EXITO -->
+                <div class="formulario__grupo formulario__grupo-btn-enviar">
+                    <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">
+                        La actividad se editó correctamente
+                    </p>
+                    <input type="submit" class="formulario__btn" value="Editar Actividad">
+                </div>
+            </form>
+
+        </div>
+
+        <div class="contenedor-mensaje">
+            <h3>
+                Hola Administrador!
+            </h3>
+            <br>
+            <p>
+                Por favor comparte los datos de la noticia que deseas Publicar.
+                <br><br>
+                Agregar todos los detalles y si es posible agrega una imagen para brindar más claridad.
+                <br><br>
+                Puedes cambiar los datos de esta noticia o eliminarla en cualquier momento desde tu Panel de
+                Administrador.
+            </p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-contenedor">
+            <div class="footer-contenido">
+                <!-- Columna 1: Logo y redes sociales -->
+                <div class="footer-section">
+                    <h3>Nunciatura</h3>
+                    <div class="social-icons">
+                        <!-- Twitter/X -->
+                        <a href="#" aria-label="Twitter">
+                            <img src="/img/X.png" alt="Twitter/X">
+                        </a>
+                        <!-- Instagram -->
+                        <a href="#" aria-label="Instagram">
+                            <img src="/img/logotipo-de-instagram.png" alt="Instagram">
+                        </a>
+                        <!-- YouTube -->
+                        <a href="#" aria-label="YouTube">
+                            <img src="/img/youtube.png" alt="YouTube">
+                        </a>
+                        <!-- LinkedIn -->
+                        <a href="#" aria-label="LinkedIn">
+                            <img src="/img/linkedin.png" alt="LinkedIn">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Columna 2: Contactenos -->
+                <div class="footer-section">
+                    <h3>Contactenos</h3>
+                    <ul>
+                        <li><a href="mailto:nunciaturaAdmin@gmail.com">Contactar al Administrador</a></li>
+                        <!-- <li><a href="#">Preguntas Frecuentes</a></li> -->
+                    </ul>
+                </div>
+
+                <!-- Columna 3: Información -->
+                <div class="footer-section">
+                    <h3>Información</h3>
+                    <ul>
+                        <li><a href="Landing_page">Tamarindo Tech</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 4: Recursos -->
+                <div class="footer-section">
+                    <h3>Recursos</h3>
+                    <ul>
+                        <!-- <li><a href="#">Tutoriales</a></li>
+                            <li><a href="#">Ayuda</a></li> -->
+                        <li><a href="reportes">Crear un Reporte</a></li>
+                        <li><a href="reportes">Dar una Sugerencia</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="../../js/formulario.js"></script>
+</body>
+
+</html>

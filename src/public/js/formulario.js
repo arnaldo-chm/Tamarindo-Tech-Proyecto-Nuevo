@@ -55,7 +55,7 @@ else if (formulario.name === "registrar_transporte" || formulario.name === "edit
         tarifa: /^\d{1,5}$/ //El precio acepta entre 1 y 5 digitos 
     }
 }
-else if (formulario.name === "registrar_actividad") {
+else if (formulario.name === "registrar_actividad" || formulario.name === "editar_actividad") {
     expresiones = {
         titulo: /^[a-zA-Z0-9À-ÿ\s\_\-]{5,50}$/, // Ruta Transporte acepta un rango de 5 a 50 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas, números, espacios, acentos y guiones.        
         descripcion_actividad: /^.{10,}$/, // Descripcion Acepta 10 o más caracteres de cualquier tipo   
@@ -116,11 +116,19 @@ else if (formulario.name === "editar_noticia") {
 }
 else if (formulario.name === "editar_transporte") {
     campos = {
-        titulo: true,
         ruta: true,
         tarifa: true,
         telefono: true,
         archivo: true
+    }
+} else if (formulario.name === "editar_actividad") {
+    campos = {
+        titulo: true,
+        descripcion_actividad: true,
+        recomendaciones_actividad: true,
+        duracion: true,
+        fecha: true,
+        hora: true
     }
 }
 else if (formulario.name === "registrar_transporte") {
@@ -679,6 +687,59 @@ async function registrarActividad() {
     }
 }
 
+async function editarActividad() {
+
+    console.log("Funcion editarActividad");
+    const valorFecha = document.getElementById("fecha").value; // ejemplo: "2025-08-03T14:30"
+    let fecha = "";
+    let hora = "";
+    if (valorFecha && valorFecha.includes("T")) {
+        [fecha, hora] = valorFecha.split("T");
+    }
+    let datos = {
+        id: document.querySelector('input[name="id"]').value,
+        titulo: document.getElementById("titulo").value,
+        descripcion_actividad: document.getElementById("descripcion_actividad").value,
+        recomendaciones_actividad: document.getElementById("recomendaciones_actividad").value,
+        fecha: fecha,
+        hora: hora,
+        archivo: document.getElementById("archivo").value,
+        duracion: document.getElementById("duracion").value
+    }
+
+    try {
+        const respuesta = await fetch('http://localhost:3000/api/editarActividad', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datos)
+        });
+
+        if (!respuesta.ok) {
+            throw new Error(`Error en la solicitud: ${respuesta.status}`);
+        }
+
+        const datosRespuesta = await respuesta.json();
+        if (datosRespuesta.resultado) {
+            // Se muestra el mensaje de aprobación en función de la validación.
+            document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
+            document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
+
+            setTimeout(() => {
+                window.location.href = "/Admin_panel";
+            }, 4000)
+
+        } else {
+            alert(datosRespuesta.mensaje);
+        }
+    } catch (error) {
+        console.error('Error al llamar al backend:', error);
+        document.getElementById('resultado').textContent = 'Error al obtener datos';
+    }
+}
+
+
 async function registrarQueja() {
     let datos = {
         nombre: document.getElementById("nombre").value,
@@ -763,6 +824,9 @@ formulario.addEventListener("submit", (e) => {
         } else if (formulario.name === "editar_transporte") {
             console.log("Llamando a Editar Transporte")
             editarTransporte();
+        } else if (formulario.name === "editar_actividad") {
+            console.log("Llamando a Editar Actividad")
+            editarActividad();
         }
 
 
