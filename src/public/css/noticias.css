@@ -34,6 +34,8 @@ body {
     align-self:flex-end;
 }
 
+
+
 /* El resto de los elementos se ordena acorde a su orden en 
 html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
 .ultima-noticia{
@@ -202,9 +204,10 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
 .diapositiva-noticias {
     flex: 0 0 100%;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(250px, auto)); /* Ancho mínimo 250px */
     gap: 25px;
     padding: 20px 0;
+    justify-content: center;
 }
 
  /* Controles del slider */
