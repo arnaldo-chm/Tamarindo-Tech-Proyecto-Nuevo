@@ -268,6 +268,37 @@ app.get('/noticias/:id/editar', async (req, res) => {
     res.render('editar_notica.ejs', { noticia: noticia });
 });
 
+// Eliminar Noticia
+app.post('/api/eliminarNoticia', async (req, res) => {
+    try {
+        await Noticia.findByIdAndDelete(req.body.id);
+        res.json({ resultado: true, mensaje: "Noticia eliminada con éxito" });
+    } catch (err) {
+        res.json({ resultado: false, mensaje: `Error al eliminar Noticia: ${err}` });
+    }
+});
+
+// Eliminar Queja
+app.post('/api/eliminarQueja', async (req, res) => {
+    try {
+        await Queja.findByIdAndDelete(req.body.id);
+        res.json({ resultado: true, mensaje: "Queja eliminada con éxito" });
+    } catch (err) {
+        res.json({ resultado: false, mensaje: `Error al eliminar Queja: ${err}` });
+    }
+});
+
+// Eliminar Miembro (Usuario)
+app.post('/api/eliminarUsuario', async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.body.id);
+        res.json({ resultado: true, mensaje: "Usuario eliminado con éxito" });
+    } catch (err) {
+        res.json({ resultado: false, mensaje: `Error al eliminar Usuario: ${err}` });
+    }
+});
+
+
 //#endregion
 
 //#region TRANSPORTE
@@ -346,6 +377,16 @@ app.get('/Transportes/:id/editar', async (req, res) => {
         return res.status(404).send('Transporte no encontrado');
     }
     res.render('editar_transporte.ejs', { transporte: transporte });
+});
+
+// Eliminar Transporte
+app.post('/api/eliminarTransporte', async (req, res) => {
+    try {
+        await Transporte.findByIdAndDelete(req.body.id);
+        res.json({ resultado: true, mensaje: "Transporte eliminado con éxito" });
+    } catch (err) {
+        res.json({ resultado: false, mensaje: `Error al eliminar Transporte: ${err}` });
+    }
 });
 
 //#endregion
@@ -428,6 +469,16 @@ app.get('/Actividades/:id/editar', async (req, res) => {
         return res.status(404).send('Actividad no encontrada');
     }
     res.render('editar_actividad.ejs', { actividad: actividad });
+});
+
+// Eliminar Actividad
+app.post('/api/eliminarActividad', async (req, res) => {
+    try {
+        await Actividad.findByIdAndDelete(req.body.id);
+        res.json({ resultado: true, mensaje: "Actividad eliminada con éxito" });
+    } catch (err) {
+        res.json({ resultado: false, mensaje: `Error al eliminar Actividad: ${err}` });
+    }
 });
 
 //#region QUEJAS

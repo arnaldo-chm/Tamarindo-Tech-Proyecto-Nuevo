@@ -340,6 +340,76 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Filtro y búsqueda para todos los tabs
+    function filtrarTarjetas(tabId) {
+        const tab = document.getElementById(tabId);
+        if (!tab) return;
+        const select = tab.querySelector('.filtro-select');
+        const input = tab.querySelector('.busqueda-input');
+        const grid = tab.querySelector('.cuadricula-contenido');
+        if (!grid) return;
+        const tarjetas = Array.from(grid.children).filter(card => card.classList.contains('tarjeta-simple') || card.classList.contains('tarjeta-emprendimiento'));
+        let filtro = select ? select.value : '';
+        let busqueda = input ? input.value.trim().toLowerCase() : '';
+        tarjetas.forEach(card => {
+            let mostrar = true;
+            // Filtro por categoría/estado/tipo
+            if (select && filtro) {
+                if (tabId === 'noticias') {
+                    mostrar = (card.dataset.categoria === filtro.toLowerCase());
+                } else if (tabId === 'emprendimientos') {
+                    // Mapear filtro textual a valor numérico
+                    let estadoFiltro = filtro.trim().toLowerCase();
+                    let valorFiltro = '';
+                    if (estadoFiltro === 'pendiente') valorFiltro = '0';
+                    else if (estadoFiltro === 'aprobado') valorFiltro = '1';
+                    else if (estadoFiltro === 'rechazado') valorFiltro = '2';
+                    const estadoCard = card.dataset.estado ? card.dataset.estado.trim() : '';
+                    mostrar = (valorFiltro !== '') ? (estadoCard === valorFiltro) : true;
+                } else if (tabId === 'transporte') {
+                    mostrar = (card.dataset.tipo === filtro.toLowerCase());
+                } else if (tabId === 'actividades') {
+                    mostrar = (card.dataset.categoria === filtro.toLowerCase());
+                }
+            }
+            // Filtro por búsqueda
+            if (input && busqueda) {
+                let texto = card.textContent.toLowerCase();
+                mostrar = mostrar && texto.includes(busqueda);
+            }
+            card.style.display = mostrar ? '' : 'none';
+        });
+    }
+
+    // Inicializar filtros en todos los tabs
+    ['noticias','emprendimientos','transporte','actividades','quejas','miembros'].forEach(tabId => {
+        const tab = document.getElementById(tabId);
+        if (!tab) return;
+        const select = tab.querySelector('.filtro-select');
+        const input = tab.querySelector('.busqueda-input');
+        if (select) {
+            select.addEventListener('change', () => filtrarTarjetas(tabId));
+        }
+        if (input) {
+            input.addEventListener('input', () => filtrarTarjetas(tabId));
+        }
+    });
+
+    // Para tabs que no tienen filtro, agregarlo dinámicamente
+    ['quejas','miembros'].forEach(tabId => {
+        const tab = document.getElementById(tabId);
+        if (!tab) return;
+        if (!tab.querySelector('.filtros-contenido')) {
+            const filtros = document.createElement('div');
+            filtros.className = 'filtros-contenido';
+            filtros.innerHTML = `
+                <input type="text" class="busqueda-input" placeholder="Buscar...">
+            `;
+            tab.insertBefore(filtros, tab.querySelector('.cuadricula-contenido'));
+            filtros.querySelector('.busqueda-input').addEventListener('input', () => filtrarTarjetas(tabId));
+        }
+    });
+
     function aplicarFiltros() {
         const tabActive = document.querySelector('.tab-content.active');
         if (!tabActive) return;
@@ -788,21 +858,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function eliminarContenido(id, tipo) {
-        if (!confirm(`¿Está seguro de eliminar esta ${tipo}? Esta acción no se puede deshacer.`)) return;
-        
-        const card = document.querySelector(`.tarjeta-${tipo === 'noticia' || tipo === 'transporte' || tipo === 'actividad' ? 'simple' : 'emprendimiento'}[data-id="${id}"]`);
-        if (!card) return;
-        
-        card.style.opacity = '0.5';
-        card.style.pointerEvents = 'none';
-        
-        setTimeout(() => {
-            card.remove();
-            mostrarNotificacion(`${tipo} eliminada correctamente`, 'exito');
-        }, 300);
-    }
-
     function verDetalles(id, tipo) {
         const card = document.querySelector(`.tarjeta-${tipo === 'noticia' || tipo === 'transporte' || tipo === 'actividad' ? 'simple' : 'emprendimiento'}[data-id="${id}"]`);
         if (!card) return;
@@ -898,4 +953,52 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 300);
         }, 3000);
     }
+    
+    // Manejo de eliminación de tarjetas y base de datos
+    document.addEventListener('click', async function(e) {
+        if (e.target.classList.contains('btn-eliminar')) {
+            const card = e.target.closest('.tarjeta-simple, .tarjeta-emprendimiento');
+            if (!card) return;
+            const id = e.target.getAttribute('data-id');
+            // Detecta el tipo de card
+            let tipo = '';
+            if (card.closest('#noticias')) tipo = 'noticia';
+            else if (card.closest('#emprendimientos')) tipo = 'emprendimiento';
+            else if (card.closest('#transporte')) tipo = 'transporte';
+            else if (card.closest('#actividades')) tipo = 'actividad';
+            else if (card.closest('#quejas')) tipo = 'queja';
+            else if (card.closest('#miembros')) tipo = 'usuario';
+
+            let url = '';
+            if (tipo === 'noticia') url = '/api/eliminarNoticia';
+            else if (tipo === 'emprendimiento') url = '/api/eliminarEmprendimiento';
+            else if (tipo === 'transporte') url = '/api/eliminarTransporte';
+            else if (tipo === 'actividad') url = '/api/eliminarActividad';
+            else if (tipo === 'queja') url = '/api/eliminarQueja';
+            else if (tipo === 'usuario') url = '/api/eliminarUsuario';
+
+            if (!url) return;
+
+            if (confirm('¿Estás seguro de que quieres eliminar este registro? Esta acción no se puede deshacer.')) {
+                try {
+                    const res = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ id })
+                    });
+                    const data = await res.json();
+                    if (data.resultado) {
+                        card.remove();
+                        mostrarNotificacion('¡El registro fue eliminado exitosamente!', 'exito');
+                    } else {
+                        mostrarNotificacion('Error al eliminar: ' + data.mensaje, 'error');
+                    }
+                } catch (err) {
+                    mostrarNotificacion('Error de conexión', 'error');
+                }
+            }
+        }
+    });
 });
