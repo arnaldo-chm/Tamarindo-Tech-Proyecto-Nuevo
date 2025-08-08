@@ -112,21 +112,20 @@
                 </div>
 
 
-                <!-- GRUPO ARCHIVO -->
-                <div class="formulario__grupo" id="grupo__archivo">
-                    <label class="formulario__label">Imagen actual</label>
+                <!-- GRUPO Imagen-->
+                <div class="formulario__grupo " id="grupo__imagen">
+                    <label class="formulario__label">Imagen Actual de tu Actividad</label>
                     <div class="formulario__grupo-input">
-                        <% if (actividad.nombreImagen) { %>
-                            <img src="/uploads/<%= actividad.nombreImagen %>" alt="Imagen actual"
-                                style="max-width: 150px;">
-                            <% } %>
-                                <input type="file" class="formulario__input" name="archivo" id="archivo"
-                                    accept="image/*">
-                                <input type="hidden" name="imagenActual" value="<%= actividad.nombreImagen %>">
+                        <img class="formulario__img" src="/img/<%= actividad.nombreImagen %>" alt="Imagen actual" >
                     </div>
-                    <p class="formulario__input-error">
-                        Puedes subir una nueva imagen.
-                    </p>
+                </div>
+
+                <!-- GRUPO Archivo-->
+                <div class="formulario__grupo " id="grupo__archivo">
+                    <label class="formulario__label">Actualiza la imagen de tu Actividad</label>
+                    <div class="formulario__grupo-input">
+                        <input type="file"  class="formulario__input" name="archivo" id="archivo" placeholder="" accept="image/*">
+                    </div>                   
                 </div>
 
                 <!-- MENSAJE DE ERROR -->

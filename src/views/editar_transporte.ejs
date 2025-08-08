@@ -46,19 +46,6 @@
 
                 <input type="hidden" name="id" value="<%= transporte._id %>">
 
-                <!-- GRUPO TITULO-->
-                <!-- <div class="formulario__grupo" id="grupo__titulo">
-                    <label class="formulario__label">Título de Transporte*</label>
-                    <div class="formulario__grupo-input">
-                        <input type="text" class="formulario__input" name="titulo" id="titulo"
-                            placeholder="Introduce el Título" value="<%= transporte.titulo %>">
-                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
-                    </div>
-                    <p class="formulario__input-error">
-                        Debe ingresar el título del transporte. Entre 5 y 50 caracteres.
-                    </p>
-                </div> -->
-
                 <!-- GRUPO RUTA -->
                 <div class="formulario__grupo" id="grupo__ruta">
                     <label class="formulario__label">Ruta*</label>
@@ -98,21 +85,20 @@
                     </p>
                 </div>
 
-                <!-- GRUPO ARCHIVO -->
-                <div class="formulario__grupo" id="grupo__archivo">
-                    <label class="formulario__label">Imagen actual</label>
+                <!-- GRUPO Imagen-->
+                <div class="formulario__grupo " id="grupo__imagen">
+                    <label class="formulario__label">Imagen Actual de tu Transporte</label>
                     <div class="formulario__grupo-input">
-                        <% if (transporte.nombreImagen) { %>
-                            <img src="/uploads/<%= transporte.nombreImagen %>" alt="Imagen actual"
-                                style="max-width: 150px;">
-                            <% } %>
-                                <input type="file" class="formulario__input" name="archivo" id="archivo"
-                                    accept="image/*">
-                                <input type="hidden" name="imagenActual" value="<%= transporte.nombreImagen %>">
+                        <img class="formulario__img" src="/img/<%= transporte.nombreImagen %>" alt="Imagen actual" >
                     </div>
-                    <p class="formulario__input-error">
-                        Puedes subir una nueva imagen.
-                    </p>
+                </div>
+
+                <!-- GRUPO Archivo-->
+                <div class="formulario__grupo " id="grupo__archivo">
+                    <label class="formulario__label">Actualiza la imagen de tu Transporte</label>
+                    <div class="formulario__grupo-input">
+                        <input type="file"  class="formulario__input" name="archivo" id="archivo" placeholder="" accept="image/*">
+                    </div>                   
                 </div>
 
                 <!-- MENSAJE DE ERROR -->

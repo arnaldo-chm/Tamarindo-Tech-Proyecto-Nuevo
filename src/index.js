@@ -319,13 +319,16 @@ app.post('/api/editarTransporte', async (req, res) => {
     try {
         let fecha = new Date();
         const formatoFecha = `${fecha.getDate()}/${fecha.getMonth() + 1}/${fecha.getFullYear()}`;
+        // Busca el transporte por ID
+        const transporte = await Transporte.findById(req.body.id);
+
         // Busca el transporte por ID y actualiza los campos
         await Transporte.findByIdAndUpdate(req.body.id, {
             ruta: req.body.ruta,
             tarifa: req.body.tarifa,
             telefono: req.body.telefono,
             fecha: formatoFecha,
-            nombreImagen: req.body.archivo,
+            nombreImagen: req.body.archivo ? path.basename(req.body.archivo) : transporte.nombreImagen // Mantener la imagen actual si no se proporciona una nueva
         });
         res.json({ resultado: true, mensaje: 'Transporte editado con exito' });
     } catch (err) {
@@ -398,6 +401,8 @@ app.post('/api/editarActividad', async (req, res) => {
     try {
         let fecha = new Date();
         const formatoFecha = `${fecha.getDate()}/${fecha.getMonth() + 1}/${fecha.getFullYear()}`;
+        // Busca la actividad por ID
+        const actividad = await Actividad.findById(req.body.id);
         // Busca el transporte por ID y actualiza los campos
         await Actividad.findByIdAndUpdate(req.body.id, {
             titulo: req.body.titulo,
@@ -405,7 +410,7 @@ app.post('/api/editarActividad', async (req, res) => {
             recomendaciones_actividad: req.body.recomendaciones_actividad,
             duracion: req.body.duracion,
             fecha: formatoFecha,
-            nombreImagen: req.body.archivo,
+            nombreImagen: req.body.archivo ? path.basename(req.body.archivo) : actividad.nombreImagen // Mantener la imagen actual si no se proporciona una nueva
         });
         res.json({ resultado: true, mensaje: 'Actividad editada con exito' });
     } catch (err) {
