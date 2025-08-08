@@ -225,18 +225,16 @@ app.post('/api/editarNoticia', async (req, res) => {
     let fecha = new Date()
     const formatoFecha = `${fecha.getDate()}/${fecha.getMonth() + 1}/${fecha.getFullYear()}`
 
-    const noticia = await Noticia.findOne({ titulo: req.body.titulo });
+    const noticia = await Noticia.findById(req.body.id);
 
-
-
-    await Noticia.findByIdAndUpdate(noticia.id, {
+    await Noticia.findByIdAndUpdate(req.body.id, {
         titulo: req.body.titulo,
         autor: req.body.autor,
         descripcionNoticia: req.body.descripcionNoticia,
         categoria: req.body.categoria,
         telefono: req.body.telefono,
         fecha: formatoFecha,
-        nombreImagen: req.body.archivo,
+        nombreImagen: req.body.archivo ? path.basename(req.body.archivo) : noticia.nombreImagen // Mantener la imagen actual si no se proporciona una nueva
     })
         .then(() => {
             console.log("Noticia editada");

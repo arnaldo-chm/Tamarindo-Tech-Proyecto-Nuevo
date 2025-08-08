@@ -367,13 +367,9 @@ async function registrarUsuario() {
         } else {
             alert(datosRespuesta.mensaje);
         }
-        //    console.log('Respuesta del backend:', datosRespuesta);
-        //    // Actualizar la interfaz con los datos recibidos
-        //    document.getElementById('resultado').textContent = datosRespuesta.mensaje;
 
     } catch (error) {
         console.error('Error al llamar al backend:', error);
-        document.getElementById('resultado').textContent = 'Error al obtener datos';
     }
 }
 
@@ -412,7 +408,6 @@ async function iniciarsesion() {
 
     } catch (error) {
         console.error('Error al llamar al backend:', error);
-        document.getElementById('resultado').textContent = 'Error al obtener datos';
     }
 }
 
@@ -456,7 +451,6 @@ async function registrarEmprendimiento() {
         }
     } catch (error) {
         console.error('Error al llamar al backend:', error);
-        document.getElementById('resultado').textContent = 'Error al obtener datos';
     }
 }
 
@@ -500,7 +494,6 @@ async function registrarNoticia() {
         }
     } catch (error) {
         console.error('Error al llamar al backend:', error);
-        document.getElementById('resultado').textContent = 'Error al obtener datos';
     }
 }
 
@@ -508,6 +501,7 @@ async function editarNoticia() {
 
     console.log("Funcion editarNoticia");
     let datos = {
+        id: document.querySelector('input[name="id"]').value,
         titulo: document.getElementById("titulo").value,
         autor: document.getElementById("autor").value,
         descripcionNoticia: document.getElementById("descripcion_noticia").value,
@@ -543,8 +537,7 @@ async function editarNoticia() {
             alert(datosRespuesta.mensaje);
         }
     } catch (error) {
-        console.error('Error al llamar al backend:', error);
-        document.getElementById('resultado').textContent = 'Error al obtener datos';
+        console.error('Error al llamar al backend:', error);       
     }
 }
 
@@ -587,8 +580,7 @@ async function registrarTransporte() {
             alert(datosRespuesta.mensaje);
         }
     } catch (error) {
-        console.error('Error al llamar al backend:', error);
-        document.getElementById('resultado').textContent = 'Error al obtener datos';
+        console.error('Error al llamar al backend:', error);        
     }
 }
 
@@ -631,7 +623,7 @@ async function editarTransporte() {
         }
     } catch (error) {
         console.error('Error al llamar al backend:', error);
-        document.getElementById('resultado').textContent = 'Error al obtener datos';
+        
     }
 }
 
@@ -683,7 +675,7 @@ async function registrarActividad() {
         }
     } catch (error) {
         console.error('Error al llamar al backend:', error);
-        document.getElementById('resultado').textContent = 'Error al obtener datos';
+        
     }
 }
 
@@ -734,8 +726,7 @@ async function editarActividad() {
             alert(datosRespuesta.mensaje);
         }
     } catch (error) {
-        console.error('Error al llamar al backend:', error);
-        document.getElementById('resultado').textContent = 'Error al obtener datos';
+        console.error('Error al llamar al backend:', error);        
     }
 }
 
@@ -765,8 +756,7 @@ async function registrarQueja() {
             alert(datosRespuesta.mensaje);
         }
     } catch (error) {
-        console.error('Error al llamar al backend:', error);
-        document.getElementById('resultado').textContent = 'Error al obtener datos';
+        console.error('Error al llamar al backend:', error);        
     }
 }
 

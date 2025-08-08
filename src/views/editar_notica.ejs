@@ -41,6 +41,8 @@
             <form class="formulario" id="formulario" name="editar_noticia">
                 <h1>Editar una Noticia</h1>
 
+                <input type="hidden" name="id" value="<%= noticia._id %>">
+
                 <!-- GRUPO TITULO-->
                 <div class="formulario__grupo" id="grupo__titulo">
                     <label class="formulario__label">Título de Noticia*</label>
@@ -108,12 +110,19 @@
                     </p>
                 </div>
 
+                <!-- GRUPO Imagen-->
+                <div class="formulario__grupo " id="grupo__imagen">
+                    <label class="formulario__label">Imagen Actual de tu Noticia</label>
+                    <div class="formulario__grupo-input">
+                        <img class="formulario__img" src="/img/<%= noticia.nombreImagen %>" alt="Imagen actual" >
+                    </div>                   
+                </div>
+
                 <!-- GRUPO Archivo-->
                 <div class="formulario__grupo " id="grupo__archivo">
-                    <label class="formulario__label">Agrega una imagen de tu Notica</label>
+                    <label class="formulario__label">Actualiza la imagen de tu Notica</label>
                     <div class="formulario__grupo-input">
-                        <input type="file"  class="formulario__input" name="archivo" id="archivo" placeholder="" accept="image/*">
-                        <input type="hidden" name="imagenActual" value="<%= noticia.nombreImagen %>">
+                        <input type="file"  class="formulario__input" name="archivo" id="archivo" placeholder="<%= noticia.nombreImagen %>" accept="image/*">
                     </div>                   
                 </div>
                 
