@@ -74,6 +74,13 @@
     box-shadow: 0 0 10px #668c31;
 }
 
+.formulario__img{
+    margin-top: 10px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: #0a0a09 0 0 10px;
+}
+
 .formulario__validacion-estado{
     position: absolute;
     bottom: 15px;

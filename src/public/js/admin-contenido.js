@@ -104,45 +104,45 @@ document.addEventListener('DOMContentLoaded', function() {
         setupEventListeners();
     }
 
-    function cargarNoticias(noticias) {
-        const grid = document.querySelector('#noticias .cuadricula-contenido');
-        if (!grid) return;
+    // function cargarNoticias(noticias) {
+    //     const grid = document.querySelector('#noticias .cuadricula-contenido');
+    //     if (!grid) return;
         
-        grid.innerHTML = '';
-        noticias.forEach(noticia => {
-            grid.appendChild(crearTarjetaNoticia(noticia));
-        });
-    }
+    //     grid.innerHTML = '';
+    //     noticias.forEach(noticia => {
+    //         grid.appendChild(crearTarjetaNoticia(noticia));
+    //     });
+    // }
 
-    function cargarEmprendimientos(emprendimientos) {
-        const grid = document.querySelector('#emprendimientos .cuadricula-contenido');
-        if (!grid) return;
+    // function cargarEmprendimientos(emprendimientos) {
+    //     const grid = document.querySelector('#emprendimientos .cuadricula-contenido');
+    //     if (!grid) return;
         
-        grid.innerHTML = '';
-        emprendimientos.forEach(emprendimiento => {
-            grid.appendChild(crearTarjetaEmprendimiento(emprendimiento));
-        });
-    }
+    //     grid.innerHTML = '';
+    //     emprendimientos.forEach(emprendimiento => {
+    //         grid.appendChild(crearTarjetaEmprendimiento(emprendimiento));
+    //     });
+    // }
 
-    function cargarTransportes(transportes) {
-        const grid = document.querySelector('#transporte .cuadricula-contenido');
-        if (!grid) return;
+    // function cargarTransportes(transportes) {
+    //     const grid = document.querySelector('#transporte .cuadricula-contenido');
+    //     if (!grid) return;
         
-        grid.innerHTML = '';
-        transportes.forEach(transporte => {
-            grid.appendChild(crearTarjetaTransporte(transporte));
-        });
-    }
+    //     grid.innerHTML = '';
+    //     transportes.forEach(transporte => {
+    //         grid.appendChild(crearTarjetaTransporte(transporte));
+    //     });
+    // }
 
-    function cargarActividades(actividades) {
-        const grid = document.querySelector('#actividades .cuadricula-contenido');
-        if (!grid) return;
+    // function cargarActividades(actividades) {
+    //     const grid = document.querySelector('#actividades .cuadricula-contenido');
+    //     if (!grid) return;
         
-        grid.innerHTML = '';
-        actividades.forEach(actividad => {
-            grid.appendChild(crearTarjetaActividad(actividad));
-        });
-    }
+    //     grid.innerHTML = '';
+    //     actividades.forEach(actividad => {
+    //         grid.appendChild(crearTarjetaActividad(actividad));
+    //     });
+    // }
 
 //     async function cargarQuejas() {
 //     const res = await fetch('/api/quejas');
@@ -171,137 +171,137 @@ document.addEventListener('DOMContentLoaded', function() {
 // // Llama a cargarQuejas cuando se activa la pestaña de quejas
 // document.querySelector('[data-tab="quejas"]').addEventListener('click', cargarQuejas);
 
-    function crearTarjetaNoticia(noticia) {
-        const card = document.createElement('div');
-        card.className = 'tarjeta-simple';
-        card.dataset.id = noticia.id;
-        card.dataset.categoria = noticia.categoria.toLowerCase();
+    // function crearTarjetaNoticia(noticia) {
+    //     const card = document.createElement('div');
+    //     card.className = 'tarjeta-simple';
+    //     card.dataset.id = noticia.id;
+    //     card.dataset.categoria = noticia.categoria.toLowerCase();
 
-        card.innerHTML = `
-            <div class="encabezado-tarjeta">
-                <h4>${noticia.titulo}</h4>
-                <span class="fecha">${noticia.fecha}</span>
-            </div>
-            <div class="imagen-tarjeta">
-                <img src="${noticia.imagen}" alt="${noticia.titulo}">
-            </div>
-            <div class="info-tarjeta">
-                <p><strong>Autor:</strong> ${noticia.autor}</p>
-                <p><strong>Categoría:</strong> ${noticia.categoria}</p>
-                <p><strong>Estado:</strong> ${formatEstado(noticia.estado)}</p>
-                ${noticia.descripcion ? `<p class="descripcion-tarjeta">${noticia.descripcion}</p>` : ''}
-            </div>
-            <div class="acciones-tarjeta">
-                <button class="btn-editar" data-id="${noticia.id}">Editar</button>
-                <button class="btn-eliminar" data-id="${noticia.id}">Eliminar</button>
-            </div>
-        `;
-        return card;
-    }
+    //     card.innerHTML = `
+    //         <div class="encabezado-tarjeta">
+    //             <h4>${noticia.titulo}</h4>
+    //             <span class="fecha">${noticia.fecha}</span>
+    //         </div>
+    //         <div class="imagen-tarjeta">
+    //             <img src="${noticia.imagen}" alt="${noticia.titulo}">
+    //         </div>
+    //         <div class="info-tarjeta">
+    //             <p><strong>Autor:</strong> ${noticia.autor}</p>
+    //             <p><strong>Categoría:</strong> ${noticia.categoria}</p>
+    //             <p><strong>Estado:</strong> ${formatEstado(noticia.estado)}</p>
+    //             ${noticia.descripcion ? `<p class="descripcion-tarjeta">${noticia.descripcion}</p>` : ''}
+    //         </div>
+    //         <div class="acciones-tarjeta">
+    //             <button class="btn-editar" data-id="${noticia.id}">Editar</button>
+    //             <button class="btn-eliminar" data-id="${noticia.id}">Eliminar</button>
+    //         </div>
+    //     `;
+    //     return card;
+    // }
 
-    function crearTarjetaEmprendimiento(emprendimiento) {
-        const card = document.createElement('div');
-        card.className = 'tarjeta-emprendimiento';
-        card.dataset.id = emprendimiento.id;
-        card.dataset.estado = emprendimiento.estado;
-        card.dataset.categoria = emprendimiento.categoria.toLowerCase();
+    // function crearTarjetaEmprendimiento(emprendimiento) {
+    //     const card = document.createElement('div');
+    //     card.className = 'tarjeta-emprendimiento';
+    //     card.dataset.id = emprendimiento.id;
+    //     card.dataset.estado = emprendimiento.estado;
+    //     card.dataset.categoria = emprendimiento.categoria.toLowerCase();
 
-        const motivoRechazo = emprendimiento.motivoRechazo ? 
-            `<div class="motivo-rechazo"><strong>Motivo:</strong> ${emprendimiento.motivoRechazo}</div>` : '';
+    //     const motivoRechazo = emprendimiento.motivoRechazo ? 
+    //         `<div class="motivo-rechazo"><strong>Motivo:</strong> ${emprendimiento.motivoRechazo}</div>` : '';
 
-        const fechaTexto = emprendimiento.estado === 'aprobado' ? 'Aprobado' : 
-                          emprendimiento.estado === 'rechazado' ? 'Rechazado' : 'Solicitado';
+    //     const fechaTexto = emprendimiento.estado === 'aprobado' ? 'Aprobado' : 
+    //                       emprendimiento.estado === 'rechazado' ? 'Rechazado' : 'Solicitado';
 
-        card.innerHTML = `
-            <div class="encabezado-tarjeta">
-                <h4>${emprendimiento.titulo}</h4>
-                <span class="estado ${emprendimiento.estado}">${formatEstado(emprendimiento.estado)}</span>
-            </div>
-            <div class="imagen-tarjeta">
-                <img src="${emprendimiento.imagen}" alt="${emprendimiento.titulo}">
-            </div>
-            <div class="info-tarjeta">
-                <p><strong>Emprendedor:</strong> ${emprendimiento.emprendedor}</p>
-                <p><strong>Categoría:</strong> ${emprendimiento.categoria}</p>
-                <p><strong>${fechaTexto}:</strong> ${emprendimiento.fecha}</p>
-                ${motivoRechazo}
-            </div>
-            <div class="acciones-tarjeta">
-                ${emprendimiento.estado === 'pendiente' ? `
-                <button class="btn-aprobar" data-id="${emprendimiento.id}">Aprobar</button>
-                <button class="btn-rechazar" data-id="${emprendimiento.id}">Rechazar</button>
-                ` : ''}
-                <button class="btn-detalles" data-id="${emprendimiento.id}">Detalles</button>
-            </div>
-        `;
-        return card;
-    }
+    //     card.innerHTML = `
+    //         <div class="encabezado-tarjeta">
+    //             <h4>${emprendimiento.titulo}</h4>
+    //             <span class="estado ${emprendimiento.estado}">${formatEstado(emprendimiento.estado)}</span>
+    //         </div>
+    //         <div class="imagen-tarjeta">
+    //             <img src="${emprendimiento.imagen}" alt="${emprendimiento.titulo}">
+    //         </div>
+    //         <div class="info-tarjeta">
+    //             <p><strong>Emprendedor:</strong> ${emprendimiento.emprendedor}</p>
+    //             <p><strong>Categoría:</strong> ${emprendimiento.categoria}</p>
+    //             <p><strong>${fechaTexto}:</strong> ${emprendimiento.fecha}</p>
+    //             ${motivoRechazo}
+    //         </div>
+    //         <div class="acciones-tarjeta">
+    //             ${emprendimiento.estado === 'pendiente' ? `
+    //             <button class="btn-aprobar" data-id="${emprendimiento.id}">Aprobar</button>
+    //             <button class="btn-rechazar" data-id="${emprendimiento.id}">Rechazar</button>
+    //             ` : ''}
+    //             <button class="btn-detalles" data-id="${emprendimiento.id}">Detalles</button>
+    //         </div>
+    //     `;
+    //     return card;
+    // }
 
-    function crearTarjetaTransporte(transporte) {
-        const card = document.createElement('div');
-        card.className = 'tarjeta-simple';
-        card.dataset.id = transporte.id;
-        card.dataset.tipo = transporte.tipo.toLowerCase();
+    // function crearTarjetaTransporte(transporte) {
+    //     const card = document.createElement('div');
+    //     card.className = 'tarjeta-simple';
+    //     card.dataset.id = transporte.id;
+    //     card.dataset.tipo = transporte.tipo.toLowerCase();
 
-        card.innerHTML = `
-            <div class="encabezado-tarjeta">
-                <h4>${transporte.nombre}</h4>
-                <span class="fecha">${transporte.tipo}</span>
-            </div>
-            <div class="imagen-tarjeta">
-                <img src="${transporte.imagen}" alt="${transporte.nombre}">
-            </div>
-            <div class="info-tarjeta">
-                <p><strong>Horarios:</strong> ${typeof transporte.horarios === 'string' ? transporte.horarios : 
-                    `<img src="${transporte.horarios}" alt="Horarios" style="max-width:100%;">`}</p>
-                <p><strong>Tarifa:</strong> ${transporte.tarifa}</p>
-                <p><strong>Contacto:</strong> ${transporte.contacto}</p>
-            </div>
-            <div class="acciones-tarjeta">
-                <button class="btn-editar" data-id="${transporte.id}">Editar</button>
-                <button class="btn-eliminar" data-id="${transporte.id}">Eliminar</button>
-            </div>
-        `;
+    //     card.innerHTML = `
+    //         <div class="encabezado-tarjeta">
+    //             <h4>${transporte.nombre}</h4>
+    //             <span class="fecha">${transporte.tipo}</span>
+    //         </div>
+    //         <div class="imagen-tarjeta">
+    //             <img src="${transporte.imagen}" alt="${transporte.nombre}">
+    //         </div>
+    //         <div class="info-tarjeta">
+    //             <p><strong>Horarios:</strong> ${typeof transporte.horarios === 'string' ? transporte.horarios : 
+    //                 `<img src="${transporte.horarios}" alt="Horarios" style="max-width:100%;">`}</p>
+    //             <p><strong>Tarifa:</strong> ${transporte.tarifa}</p>
+    //             <p><strong>Contacto:</strong> ${transporte.contacto}</p>
+    //         </div>
+    //         <div class="acciones-tarjeta">
+    //             <button class="btn-editar" data-id="${transporte.id}">Editar</button>
+    //             <button class="btn-eliminar" data-id="${transporte.id}">Eliminar</button>
+    //         </div>
+    //     `;
         
-        return card;
-    }
+    //     return card;
+    // }
 
-    function crearTarjetaActividad(actividad) {
-        const card = document.createElement('div');
-        card.className = 'tarjeta-simple';
-        card.dataset.id = actividad.id;
-        card.dataset.categoria = actividad.categoria.toLowerCase();
+    // function crearTarjetaActividad(actividad) {
+    //     const card = document.createElement('div');
+    //     card.className = 'tarjeta-simple';
+    //     card.dataset.id = actividad.id;
+    //     card.dataset.categoria = actividad.categoria.toLowerCase();
 
-        card.innerHTML = `
-            <div class="encabezado-tarjeta">
-                <h4>${actividad.titulo}</h4>
-                <span class="fecha">${actividad.fecha}</span>
-            </div>
-            <div class="imagen-tarjeta">
-                <img src="${actividad.imagen}" alt="${actividad.titulo}">
-            </div>
-            <div class="info-tarjeta">
-                <p><strong>Categoría:</strong> ${actividad.categoria}</p>
-                <p class="descripcion-tarjeta">${actividad.descripcion}</p>
-            </div>
-            <div class="acciones-tarjeta">
-                <button class="btn-editar" data-id="${actividad.id}">Editar</button>
-                <button class="btn-eliminar" data-id="${actividad.id}">Eliminar</button>
-            </div>
-        `;
+    //     card.innerHTML = `
+    //         <div class="encabezado-tarjeta">
+    //             <h4>${actividad.titulo}</h4>
+    //             <span class="fecha">${actividad.fecha}</span>
+    //         </div>
+    //         <div class="imagen-tarjeta">
+    //             <img src="${actividad.imagen}" alt="${actividad.titulo}">
+    //         </div>
+    //         <div class="info-tarjeta">
+    //             <p><strong>Categoría:</strong> ${actividad.categoria}</p>
+    //             <p class="descripcion-tarjeta">${actividad.descripcion}</p>
+    //         </div>
+    //         <div class="acciones-tarjeta">
+    //             <button class="btn-editar" data-id="${actividad.id}">Editar</button>
+    //             <button class="btn-eliminar" data-id="${actividad.id}">Eliminar</button>
+    //         </div>
+    //     `;
         
-        return card;
-    }
+    //     return card;
+    // }
 
-    function formatEstado(estado) {
-        const estados = {
-            'pendiente': 'Pendiente',
-            'aprobado': 'Aprobado',
-            'rechazado': 'Rechazado',
-            'publicado': 'Publicado'
-        };
-        return estados[estado] || estado;
-    }
+    // function formatEstado(estado) {
+    //     const estados = {
+    //         'pendiente': 'Pendiente',
+    //         'aprobado': 'Aprobado',
+    //         'rechazado': 'Rechazado',
+    //         'publicado': 'Publicado'
+    //     };
+    //     return estados[estado] || estado;
+    // }
 
     function setupEventListeners() {
         tabs.forEach(tab => tab.addEventListener('click', cambiarPestaña));
@@ -847,7 +847,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function mostrarFormularioNoticia() {
 
-        window.location.href = 'Admin_panel/formulario_noticias';
+        window.location.href = '/Admin_panel/crear_noticia';
         
     }
 

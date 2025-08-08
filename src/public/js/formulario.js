@@ -40,7 +40,7 @@ if (formulario.name === "registrarse") {
         nombre: /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/,  // Misma expresion regular usada para el nombre en Registrarse.
         reporte: /^.{10,}$/, // Reporte Acepta 10 o más caracteres de cualquier tipo        
     }
-} else if (formulario.name === "registrar_noticia") {
+} else if (formulario.name === "registrar_noticia" || formulario.name === "editar_noticia") {
     expresiones = {
         titulo: /^[a-zA-Z0-9À-ÿ\s]{5,50}$/, // Titulo Noticia acepta un rango de 5 a 50 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas, números, espacios y acentos.
         autor: /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/,  // Misma expresion regular usada para el nombre en Registrarse.
@@ -48,14 +48,14 @@ if (formulario.name === "registrarse") {
         telefono: /^\+?\d{8,11}$/, // Misma expresion regular usada para el nombre en Registrarse.  
     }
 }
-else if (formulario.name === "registrar_transporte") {
+else if (formulario.name === "registrar_transporte" || formulario.name === "editar_transporte") {
     expresiones = {
         ruta: /^[a-zA-Z0-9À-ÿ\s\_\-]{5,50}$/, // Ruta Transporte acepta un rango de 5 a 50 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas, números, espacios, acentos y guiones.        
         telefono: /^\+?\d{8,11}$/, // Misma expresion regular usada para el nombre en Registrarse. 
         tarifa: /^\d{1,5}$/ //El precio acepta entre 1 y 5 digitos 
     }
 }
-else if (formulario.name === "registrar_actividad") {
+else if (formulario.name === "registrar_actividad" || formulario.name === "editar_actividad") {
     expresiones = {
         titulo: /^[a-zA-Z0-9À-ÿ\s\_\-]{5,50}$/, // Ruta Transporte acepta un rango de 5 a 50 caracteres, incluyendo una combinación de letras minúsculas, mayúsculas, números, espacios, acentos y guiones.        
         descripcion_actividad: /^.{10,}$/, // Descripcion Acepta 10 o más caracteres de cualquier tipo   
@@ -101,6 +101,34 @@ if (formulario.name === "registrarse") {
         descripcion_noticia: false,
         dropdown: false,
         telefono: false
+    }
+
+}
+else if (formulario.name === "editar_noticia") {
+    campos = {
+        titulo: true,
+        autor: true,
+        descripcion_noticia: true,
+        dropdown: true,
+        telefono: true
+    }
+
+}
+else if (formulario.name === "editar_transporte") {
+    campos = {
+        ruta: true,
+        tarifa: true,
+        telefono: true,
+        archivo: true
+    }
+} else if (formulario.name === "editar_actividad") {
+    campos = {
+        titulo: true,
+        descripcion_actividad: true,
+        recomendaciones_actividad: true,
+        duracion: true,
+        fecha: true,
+        hora: true
     }
 }
 else if (formulario.name === "registrar_transporte") {
@@ -339,13 +367,9 @@ async function registrarUsuario() {
         } else {
             alert(datosRespuesta.mensaje);
         }
-        //    console.log('Respuesta del backend:', datosRespuesta);
-        //    // Actualizar la interfaz con los datos recibidos
-        //    document.getElementById('resultado').textContent = datosRespuesta.mensaje;
 
     } catch (error) {
         console.error('Error al llamar al backend:', error);
-        document.getElementById('resultado').textContent = 'Error al obtener datos';
     }
 }
 
@@ -384,7 +408,6 @@ async function iniciarsesion() {
 
     } catch (error) {
         console.error('Error al llamar al backend:', error);
-        document.getElementById('resultado').textContent = 'Error al obtener datos';
     }
 }
 
@@ -428,7 +451,6 @@ async function registrarEmprendimiento() {
         }
     } catch (error) {
         console.error('Error al llamar al backend:', error);
-        document.getElementById('resultado').textContent = 'Error al obtener datos';
     }
 }
 
@@ -472,7 +494,50 @@ async function registrarNoticia() {
         }
     } catch (error) {
         console.error('Error al llamar al backend:', error);
-        document.getElementById('resultado').textContent = 'Error al obtener datos';
+    }
+}
+
+async function editarNoticia() {
+
+    console.log("Funcion editarNoticia");
+    let datos = {
+        id: document.querySelector('input[name="id"]').value,
+        titulo: document.getElementById("titulo").value,
+        autor: document.getElementById("autor").value,
+        descripcionNoticia: document.getElementById("descripcion_noticia").value,
+        categoria: document.getElementById("dropdown").value,
+        archivo: document.getElementById("archivo").value,
+        telefono: document.getElementById("telefono").value,
+    }
+
+    try {
+        const respuesta = await fetch('http://localhost:3000/api/editarNoticia', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datos)
+        });
+
+        if (!respuesta.ok) {
+            throw new Error(`Error en la solicitud: ${respuesta.status}`);
+        }
+
+        const datosRespuesta = await respuesta.json();
+        if (datosRespuesta.resultado) {
+            // Se muestra el mensaje de aprobación en función de la validación.
+            document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
+            document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
+
+            setTimeout(() => {
+                window.location.href = "/Admin_panel";
+            }, 4000)
+
+        } else {
+            alert(datosRespuesta.mensaje);
+        }
+    } catch (error) {
+        console.error('Error al llamar al backend:', error);       
     }
 }
 
@@ -515,8 +580,50 @@ async function registrarTransporte() {
             alert(datosRespuesta.mensaje);
         }
     } catch (error) {
+        console.error('Error al llamar al backend:', error);        
+    }
+}
+
+async function editarTransporte() {
+
+    console.log("Funcion editarTransporte");
+    let datos = {
+        id: document.querySelector('input[name="id"]').value,
+        ruta: document.getElementById("ruta").value,
+        tarifa: document.getElementById("tarifa").value,
+        archivo: document.getElementById("archivo").value,
+        telefono: document.getElementById("telefono").value,
+    }
+
+    try {
+        const respuesta = await fetch('http://localhost:3000/api/editarTransporte', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datos)
+        });
+
+        if (!respuesta.ok) {
+            throw new Error(`Error en la solicitud: ${respuesta.status}`);
+        }
+
+        const datosRespuesta = await respuesta.json();
+        if (datosRespuesta.resultado) {
+            // Se muestra el mensaje de aprobación en función de la validación.
+            document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
+            document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
+
+            setTimeout(() => {
+                window.location.href = "/Admin_panel";
+            }, 4000)
+
+        } else {
+            alert(datosRespuesta.mensaje);
+        }
+    } catch (error) {
         console.error('Error al llamar al backend:', error);
-        document.getElementById('resultado').textContent = 'Error al obtener datos';
+        
     }
 }
 
@@ -568,9 +675,61 @@ async function registrarActividad() {
         }
     } catch (error) {
         console.error('Error al llamar al backend:', error);
-        document.getElementById('resultado').textContent = 'Error al obtener datos';
+        
     }
 }
+
+async function editarActividad() {
+
+    console.log("Funcion editarActividad");
+    const valorFecha = document.getElementById("fecha").value; // ejemplo: "2025-08-03T14:30"
+    let fecha = "";
+    let hora = "";
+    if (valorFecha && valorFecha.includes("T")) {
+        [fecha, hora] = valorFecha.split("T");
+    }
+    let datos = {
+        id: document.querySelector('input[name="id"]').value,
+        titulo: document.getElementById("titulo").value,
+        descripcion_actividad: document.getElementById("descripcion_actividad").value,
+        recomendaciones_actividad: document.getElementById("recomendaciones_actividad").value,
+        fecha: fecha,
+        hora: hora,
+        archivo: document.getElementById("archivo").value,
+        duracion: document.getElementById("duracion").value
+    }
+
+    try {
+        const respuesta = await fetch('http://localhost:3000/api/editarActividad', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datos)
+        });
+
+        if (!respuesta.ok) {
+            throw new Error(`Error en la solicitud: ${respuesta.status}`);
+        }
+
+        const datosRespuesta = await respuesta.json();
+        if (datosRespuesta.resultado) {
+            // Se muestra el mensaje de aprobación en función de la validación.
+            document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
+            document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
+
+            setTimeout(() => {
+                window.location.href = "/Admin_panel";
+            }, 4000)
+
+        } else {
+            alert(datosRespuesta.mensaje);
+        }
+    } catch (error) {
+        console.error('Error al llamar al backend:', error);        
+    }
+}
+
 
 async function registrarQueja() {
     let datos = {
@@ -597,8 +756,7 @@ async function registrarQueja() {
             alert(datosRespuesta.mensaje);
         }
     } catch (error) {
-        console.error('Error al llamar al backend:', error);
-        document.getElementById('resultado').textContent = 'Error al obtener datos';
+        console.error('Error al llamar al backend:', error);        
     }
 }
 
@@ -649,6 +807,16 @@ formulario.addEventListener("submit", (e) => {
         }
         else if (formulario.name == "crear_reporte") {
             registrarQueja();
+        }
+        else if (formulario.name === "editar_noticia") {
+            console.log("Llamando a Editar Noticia")
+            editarNoticia();
+        } else if (formulario.name === "editar_transporte") {
+            console.log("Llamando a Editar Transporte")
+            editarTransporte();
+        } else if (formulario.name === "editar_actividad") {
+            console.log("Llamando a Editar Actividad")
+            editarActividad();
         }
 
 
