@@ -44,40 +44,28 @@
             <h3>Lo más nuevo</h3>
         </div>
 
-        <div class="ultima-noticia">
-            <div class="contenedor-imagen-ultima-noticia">
-                <button class="boton-navegacion izquierda">←</button>
-                <img src="/img/Feria_Agricultor.jpeg" alt="Imagen de la Feria del Agricultor">
-                <button class="boton-navegacion derecha">→</button>
+        <div class="slider-ultimas-noticias">
+            <button class="boton-navegacion izquierda" id="slider-prev">←</button>
+            <div class="slide-noticia" id="slide-noticia">
+                <% noticiasRecientes.forEach(function(noticia, idx) { %>
+                    <div class="slide-item" style="<%= idx === 0 ? '' : 'display:none;' %>">
+                        <img src="/img/<%= noticia.nombreImagen %>" alt="<%= noticia.titulo %>">
+                        <div class="slide-contenido">
+                            <h2><%= noticia.titulo %></h2>
+                            <p><%= noticia.descripcionNoticia %></p>
+                        </div>
+                    </div>
+                <% }) %>
             </div>
-            <div class="ultima-noticia-contenido">
-                <h2>¡Vení a la Feria del Agricultor y apoyá lo nuestro!</h2>
-                <p>Te invitamos a disfrutar de la auténtica frescura del campo en la Feria del Agricultor...</p>
-            </div>
-            <div class="indicadores-noticias"></div>
+            <button class="boton-navegacion derecha" id="slider-next">→</button>
         </div>
-
         <div class="contenedor-noticias-recientes">
-            <div class="contenedor-noticia-reciente">
-                <img src="/img/noticias_1.jpg" alt="Imagen de una Playa">
-                <p>Empresa local de turismo ofrece tours guiados...</p>
-            </div>
-            <div class="contenedor-noticia-reciente">
-                <img src="/img/noticias_2.jpg" alt="Imagen de dos flamencos">
-                <p>Club de Exploradores de Nunciatura pide apoyo...</p>
-            </div>
-            <div class="contenedor-noticia-reciente">
-                <img src="/img/noticias_3.jpg" alt="Imagen de mapa de epicentro de terremoto">
-                <p>Temblor en Parrita provocó más de 10 réplicas...</p>
-            </div>
-            <div class="contenedor-noticia-reciente">
-                <img src="/img/noticias_4.jpg" alt="Imagen the Nunciatura con humo">
-                <p>¡Nunciatura se sacude! CNE reporta impacto...</p>
-            </div>
-            <div class="contenedor-noticia-reciente">
-                <img src="/img/noticias_5.jpg" alt="Imagen de Hospital Local">
-                <p>Riña en Nunciatura termina en dos heridos...</p>
-            </div>
+            <% noticiasRecientes.forEach(function(noticia, idx) { %>
+                <div class="contenedor-noticia-reciente<%= idx === 0 ? ' activa' : '' %>">
+                    <img src="/img/<%= noticia.nombreImagen %>" alt="<%= noticia.titulo %>">
+                    <p><%= noticia.titulo %></p>
+                </div>
+            <% }) %>
         </div>
     </div>
 

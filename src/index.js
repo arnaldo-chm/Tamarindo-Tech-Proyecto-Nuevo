@@ -46,7 +46,11 @@ app.get('/noticias', async (req, res) => {
             noticiasPorCategoria[noticia.categoria].push(noticia);
         });
 
-        res.render('noticias.ejs', { noticiasPorCategoria });
+        const noticiasRecientes = noticias
+            .sort((a, b) => b.fecha.localeCompare(a.fecha))
+            .slice(0, 4);
+
+        res.render('noticias.ejs', { noticiasPorCategoria, noticiasRecientes });
 
     } catch (error) {
         console.error("Error al cargar noticias:", error);
