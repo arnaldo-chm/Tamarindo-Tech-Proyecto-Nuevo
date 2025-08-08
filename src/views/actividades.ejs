@@ -59,13 +59,24 @@
             <span>Dom</span><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span>
           </div>
           <div class="dias">
-            <span></span><span></span><span class="dia" data-dia="2025-07-01">1</span><span class="dia" data-dia="2025-07-02">2</span><span class="dia" data-dia="2025-07-03">3</span><span class="dia" data-dia="2025-07-04">4</span><span class="dia" data-dia="2025-07-05">5</span><span class="dia" data-dia="2025-07-06">6</span>
-            <span class="dia" data-dia="2025-07-07">7</span><span class="dia" data-dia="2025-07-08">8</span><span class="dia" data-dia="2025-07-09">9</span>
-            <span class="dia" data-dia="2025-07-10">10</span><span class="dia" data-dia="2025-07-11">11</span><span class="dia" data-dia="2025-07-12">12</span><span class="dia" data-dia="2025-07-13">13</span><span class="dia" data-dia="2025-07-14">14</span>
-            <span class="dia" data-dia="2025-07-15">15</span><span class="dia" data-dia="2025-07-16">16</span><span class="dia" data-dia="2025-07-17">17</span><span class="dia" data-dia="2025-07-18">18</span>
-            <span class="dia" data-dia="2025-07-19">19</span><span class="dia" data-dia="2025-07-20">20</span><span class="dia" data-dia="2025-07-21">21</span><span class="dia" data-dia="2025-07-22">22</span>
-            <span class="dia" data-dia="2025-07-23">23</span><span class="dia" data-dia="2025-07-24">24</span><span class="dia" data-dia="2025-07-25">25</span><span class="dia" data-dia="2025-07-26">26</span>
-            <span class="dia" data-dia="2025-07-27">27</span><span class="dia" data-dia="2025-07-28">28</span><span class="dia" data-dia="2025-07-29">29</span><span class="dia" data-dia="2025-07-30">30</span><span class="dia" data-dia="2025-07-31">31</span>
+            <span></span><span></span><span class="dia" data-dia="2025-07-01">1</span><span class="dia"
+              data-dia="2025-07-02">2</span><span class="dia" data-dia="2025-07-03">3</span><span class="dia"
+              data-dia="2025-07-04">4</span><span class="dia" data-dia="2025-07-05">5</span><span class="dia"
+              data-dia="2025-07-06">6</span>
+            <span class="dia" data-dia="2025-07-07">7</span><span class="dia" data-dia="2025-07-08">8</span><span
+              class="dia" data-dia="2025-07-09">9</span>
+            <span class="dia" data-dia="2025-07-10">10</span><span class="dia" data-dia="2025-07-11">11</span><span
+              class="dia" data-dia="2025-07-12">12</span><span class="dia" data-dia="2025-07-13">13</span><span
+              class="dia" data-dia="2025-07-14">14</span>
+            <span class="dia" data-dia="2025-07-15">15</span><span class="dia" data-dia="2025-07-16">16</span><span
+              class="dia" data-dia="2025-07-17">17</span><span class="dia" data-dia="2025-07-18">18</span>
+            <span class="dia" data-dia="2025-07-19">19</span><span class="dia" data-dia="2025-07-20">20</span><span
+              class="dia" data-dia="2025-07-21">21</span><span class="dia" data-dia="2025-07-22">22</span>
+            <span class="dia" data-dia="2025-07-23">23</span><span class="dia" data-dia="2025-07-24">24</span><span
+              class="dia" data-dia="2025-07-25">25</span><span class="dia" data-dia="2025-07-26">26</span>
+            <span class="dia" data-dia="2025-07-27">27</span><span class="dia" data-dia="2025-07-28">28</span><span
+              class="dia" data-dia="2025-07-29">29</span><span class="dia" data-dia="2025-07-30">30</span><span
+              class="dia" data-dia="2025-07-31">31</span>
 
           </div>
         </div>
@@ -75,11 +86,12 @@
 
     </section>
 
+
     <!-- Tarjetas de actividades -->
     <div class="Contenido">
       <div class="contenedor-tarjetas">
 
-        <div class="tarjeta">
+        <!--<div class="tarjeta">
           <img src="/img/sabana.jpg" alt="Actividad 1" />
           <h3>Caminata recreativa en el parque la sabana</h3>
           <p>Sábado 05 de julio</p>
@@ -98,41 +110,55 @@
               <li><strong>Recomendación:</strong> Ropa cómoda, hidratación y protector solar.</li>
             </ul>
           </div>
-        </div>
+        </div> -->
 
 
-        <% actividades.forEach(actividad=>{ %>
-
-          <div class="tarjeta">
-            <img src="/img/<%= actividad.nombreImagen %>" alt="Actividad 2" />
-            <h3><%= actividad.titulo %></h3>
-            <p><%= actividad.fecha %></p>
-            <a href="#<%= actividad.titulo %>" class="boton-informacion">Más información</a>
+        <% actividades.forEach((actividad, index)=> {
+          const idSeguro = `modal-actividad-${index}`;
+          %>
+          <div class="tarjeta" data-titulo="<%= actividad.titulo.trim() %>">
+            <img src="/img/<%= actividad.nombreImagen %>" alt="<%= actividad.titulo %>" />
+            <h3>
+              <%= actividad.titulo %>
+            </h3>
+            <p>
+              <%= actividad.fecha %>
+            </p>
+            <button class="boton-informacion" data-modal-id="<%= idSeguro %>">Más información</button>
           </div>
 
-          <div id="<%= actividad.titulo %>" class="modal">
+          <div id="<%= idSeguro %>" class="modal">
             <div class="modal-contenido">
-              <a href="#cerrar" class="cerrar">&times;</a>
-              <h3><%= actividad.titulo %></h3>
-              <p><%= actividad.descripcion_actividad %></p>
+              <span class="cerrar" data-modal-id="<%= idSeguro %>">&times;</span>
+              <h3>
+                <%= actividad.titulo %>
+              </h3>
+              <p>
+                <%= actividad.descripcion_actividad %>
+              </p>
               <ul>
-                <li><strong>Hora:</strong><%= actividad.hora %></li>
-                <li><strong>Recomendaciones:</strong><%= actividad.recomendaciones_actividad %></li>
-                <li><strong>Duracion:</strong><%= actividad.duracion %></li>
+                <li><strong>Recomendaciones:</strong>
+                  <%= actividad.recomendaciones_actividad %>
+                </li>
+                <li><strong>Fecha:</strong>
+                  <%= actividad.fecha %>
+                </li>
+                <li><strong>Costo:</strong> ₡<%= actividad.costo %>
+                </li>
+                <li><strong>Hora:</strong>
+                  <%= actividad.hora %>
+                </li>
+
               </ul>
             </div>
           </div>
-
-        <% }) %>
-        <div id="contenedor-actividades">
-  <h2>Actividades del día</h2>
-  <ul id="lista-actividades">
-    <li>Selecciona un día del calendario para ver sus actividades.</li>
-  </ul>
-</div>
+          <% }) %>
 
 
-        <!-- <div class="tarjeta">
+
+
+
+            <!-- <div class="tarjeta">
           <img src="/img/teatro.jpg" alt="Actividad 2" />
           <h3>Visita cultural al teatro nacional</h3>
           <p>Domingo 06 de julio</p>
@@ -181,10 +207,21 @@
           <a href="#info8" class="boton-informacion">Más información</a>
         </div> -->
 
-        <!-- ↑↑↑ FIN DE TARJETAS ↑↑↑ -->
+            <!-- ↑↑↑ FIN DE TARJETAS ↑↑↑ -->
       </div>
     </div>
   </div>
+  <div id="modal-actividades" class="modal">
+    <div class="modal-contenido2">
+      <h2>Actividades del día</h2>
+      <div id="contenido-modal" class="contenedor-tarjetas"></div>
+      <button id="cerrar-modal" class="btn-cerrar">Cerrar</button>
+
+
+
+    </div>
+  </div>
+
 
   <!-- Modales -->
   <!-- <div id="info1" class="modal">
@@ -356,6 +393,9 @@
       </div>
     </div>
   </footer>
+
+
+
 </body>
 
 </html>

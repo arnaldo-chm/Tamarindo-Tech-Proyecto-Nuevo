@@ -258,7 +258,7 @@ app.post('/api/registrarTransporte',(req,res)=>{
 
 //#region ACTIVIDADES
 
-const path = require('path');
+
 const Actividad = require('../models/actividades.js');
 
 // Renderiza la vista con todas las actividades
