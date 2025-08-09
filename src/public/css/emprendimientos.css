@@ -92,10 +92,10 @@
 }
 
 .contenedor-emprendimientos{
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    display: flex; 
+    flex-wrap: wrap; 
     gap: 25px; 
-    justify-items: start; 
+    justify-content: start; 
 }
 
 .contenedor-emprendimientos a{
@@ -181,59 +181,6 @@
 }
 
 /* RESPONSIVE DESIGN */
-@media (max-width: 1200px) {
-    .contenedor_encabezado {
-        margin: 30px auto;
-        padding: 0 60px;
-        gap: 30px;
-    }
-    
-    .Emprendimientos {
-        padding: 0 60px;
-    }
-    
-    .img_encabezado_emprendimientos img {
-        height: 480px;
-    }
-}
-
-@media (max-width: 1024px) {
-    .contenedor_encabezado {
-        padding: 0 40px;
-        gap: 25px;
-        flex-wrap: wrap;
-        justify-content: center;
-        text-align: center;
-    }
-    
-    .Emprendimientos {
-        padding: 0 40px;
-        margin: 40px auto;
-    }
-    
-    .img_encabezado_emprendimientos img {
-        width: 100%;
-        max-width: 400px;
-        height: 350px;
-    }
-    
-    .texto_encabezado_emprendimientos {
-        flex: none;
-        width: 100%;
-        max-width: 500px;
-        min-height: auto;
-    }
-    
-    .texto_encabezado_emprendimientos h1 {
-        font-size: 1.8em;
-    }
-    
-    .contenedor-emprendimientos {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        justify-items: center;
-        gap: 20px;
-    }
-}
 
 @media (max-width: 768px) {
     .contenedor_encabezado {
@@ -285,6 +232,7 @@
     .contenedor-emprendimientos {
         grid-template-columns: 1fr;
         gap: 18px;
+        justify-content: center;
     }
     
     .card {

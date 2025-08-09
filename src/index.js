@@ -220,9 +220,11 @@ const Emprendimiento = require('../models/emprendimientos.js');
 
 app.get('/emprendimientos', isAuthenticated, async (req, res) => {
 
-    const emprendimientos = await Emprendimiento.find();
+    const emprendimientos = await Emprendimiento.find({ estadoEmprendimiento: "Aprobado" });
 
-    res.render('emprendimientos.ejs', { emprendimientos: emprendimientos });
+    const emprendimientosUsuario = await Emprendimiento.find({ correoUsuario: req.session.user.correo });
+
+    res.render('emprendimientos.ejs', { emprendimientos: emprendimientos, emprendimientosUsuario: emprendimientosUsuario });
 });
 
 app.post('/api/registrarEmprendimiento', isAuthenticated, (req, res) => {
