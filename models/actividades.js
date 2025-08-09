@@ -23,3 +23,4 @@ const actividadesSchema = new mongoose.Schema({
 let actividad = new mongoose.model('Actividades',actividadesSchema);
 
 module.exports = actividad;
+

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias/Anuncios</title>
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/noticias.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+<header class="header" id="header">
+    <div class="logo">
+        <h1>Tamarindo Tech</h1>
+    </div>
+    <input type="checkbox" id="check">
+    <label for="check" class="btn">☰</label>
+    <nav class="Links_Header" id="Links_Header">
+        <ul>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="noticias">Anuncios/Noticias</a></li>
+            <li><a href="emprendimientos">Emprendimientos</a></li>
+            <li><a href="Transportes">Transporte</a></li>
+            <li><a href="actividades">Actividades</a></li>
+            <button class="boton_sing_out" id="boton_sing_out"><a href="login">Cerrar Sesion</a></button>
+        </ul>
+    </nav>
+</header>
+
+<div class="Contenido">
+    <div class="barra-busqueda">
+        <input type="text" placeholder="🔍 Buscar una Noticia"/>
+    </div>
+
+    <!-- Noticias nuevas (estáticas o modificables luego) -->
+    <div class="seccion-noticias-nuevas">
+        <div class="noticia-header">
+            <i class='bxr bx-clock-9'></i>
+            <h3>Lo más nuevo</h3>
+        </div>
+
+        <div class="slider-ultimas-noticias">
+            <button class="boton-navegacion izquierda" id="slider-prev">←</button>
+            <div class="slide-noticia" id="slide-noticia">
+                <% noticiasRecientes.forEach(function(noticia, idx) { %>
+                    <div class="slide-item" <%= idx === 0 ? '' : 'style="display:none;"' %>>
+                        <img src="/img/<%= noticia.nombreImagen %>" alt="<%= noticia.titulo %>">
+                        <div class="slide-contenido">
+                            <h2><%= noticia.titulo %></h2>
+                            <p><%= noticia.descripcionNoticia %></p>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+            <button class="boton-navegacion derecha" id="slider-next">→</button>
+        </div>
+        <div class="contenedor-noticias-recientes">
+            <% noticiasRecientes.forEach(function(noticia, idx) { %>
+                <div class="contenedor-noticia-reciente<%= idx === 0 ? ' activa' : '' %>">
+                    <img src="/img/<%= noticia.nombreImagen %>" alt="<%= noticia.titulo %>">
+                    <p><%= noticia.titulo %></p>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <!-- Sliders dinámicos por categoría desde MongoDB -->
+<% if (Object.keys(noticiasPorCategoria).length === 0) { %>
+    <p class="mensaje-error">⚠️ No se pudieron cargar las noticias dinámicas.</p>
+<% } else { %>
+    <% for (let categoria in noticiasPorCategoria) { %>
+        <div class="seccion-noticias">
+            <h2><%= categoria %></h2>
+            
+            <div id="contenedor-slider-noticias">
+                <div class="envoltorio-slider-noticias">
+                    <div id="slider-noticias">
+                        <% for (let i = 0; i < noticiasPorCategoria[categoria].length; i += 4) { %>
+                            <div class="diapositiva-noticias">
+                                <% noticiasPorCategoria[categoria]
+                                    .slice(i, i + 4)
+                                    .forEach(noticia => { %>
+                                    <div class="card">
+                                        <img src="/img/<%= noticia.nombreImagen %>" alt="<%= noticia.titulo %>"/>
+                                        <h3><%= noticia.titulo %></h3>
+                                        <p><%= noticia.descripcionNoticia %></p>
+                                        <p class="contacto-noticia">
+                                            Más Información al Teléfono <br> <%= noticia.telefono %>
+                                        </p>
+                                    </div>
+                                <% }) %>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+                <!-- Controles del slider -->
+                <div class="controles-slider-noticias">
+                    <button class="flecha-slider flecha-anterior">←</button>
+                    <button class="flecha-slider flecha-siguiente">→</button>
+                </div>
+            </div>
+            <!-- Indicadores de puntos -->
+            <div class="contenedor-puntos"></div>
+        </div>
+    <% } %>
+<% } %>
+</div>
+
+<footer class="footer">
+    <div class="footer-contenedor">
+        <div class="footer-contenido">
+            <div class="footer-section">
+                <h3>Nunciatura</h3>
+                <div class="social-icons">
+                    <a href="#"><img src="/img/X.png" alt="Twitter/X"></a>
+                    <a href="#"><img src="/img/logotipo-de-instagram.png" alt="Instagram"></a>
+                    <a href="#"><img src="/img/youtube.png" alt="YouTube"></a>
+                    <a href="#"><img src="/img/linkedin.png" alt="LinkedIn"></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Contactenos</h3>
+                <ul><li><a href="mailto:nunciaturaAdmin@gmail.com">Contactar al Administrador</a></li></ul>
+            </div>
+            <div class="footer-section">
+                <h3>Información</h3>
+                <ul><li><a href="Landing_page">Tamarindo Tech</a></li></ul>
+            </div>
+            <div class="footer-section">
+                <h3>Recursos</h3>
+                <ul>
+                    <li><a href="reportes">Crear un Reporte</a></li>
+                    <li><a href="reportes">Dar una Sugerencia</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="/js/slider_Noticias.js"></script>
+</body>
+</html>
