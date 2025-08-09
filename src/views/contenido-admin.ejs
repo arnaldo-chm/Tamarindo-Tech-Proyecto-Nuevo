@@ -423,7 +423,13 @@
                                         <%= usuario.telefono %>
                                     </p>
                                     <p><strong>Tipo:</strong>
-                                        <%= usuario.tipoUsuario %>
+                                        <% if (usuario.tipoUsuario === 2) { %>
+                                            Administrador
+                                        <% } else if (usuario.tipoUsuario === 1) { %>
+                                            Emprendedor
+                                        <% } else { %>
+                                            General                                           
+                                        <% } %>
                                     </p>
                                 </div>
                                 <div class="acciones-tarjeta">
