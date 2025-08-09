@@ -48,7 +48,7 @@
             <button class="boton-navegacion izquierda" id="slider-prev">←</button>
             <div class="slide-noticia" id="slide-noticia">
                 <% noticiasRecientes.forEach(function(noticia, idx) { %>
-                    <div class="slide-item" style="<%= idx === 0 ? '' : 'display:none;' %>">
+                    <div class="slide-item" <%= idx === 0 ? '' : 'style="display:none;"' %>>
                         <img src="/img/<%= noticia.nombreImagen %>" alt="<%= noticia.titulo %>">
                         <div class="slide-contenido">
                             <h2><%= noticia.titulo %></h2>
