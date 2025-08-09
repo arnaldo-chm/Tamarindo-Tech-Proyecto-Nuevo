@@ -4,16 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Trasporte</title>
+    <title>Editar Usuario</title>
     <link rel="stylesheet" href="../../css/general.css">
+    <link rel="stylesheet" href="../../css/formularios.css">
     <link rel="stylesheet" href="../../css/header.css">
     <link rel="stylesheet" href="../../css/footer.css">
-    <link rel="stylesheet" href="../../css/formularios.css">
-    <!-- Link preconnect para Google fonts con la opción de Roboto como fuente de fuentes -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
@@ -38,100 +33,129 @@
         </nav>
     </header>
     <!-- fin de header -->
-
-    <main class="Contenido">
+    <div class="Contenido">
         <div class="contenedor-formulario">
-            <form class="formulario" id="formulario" name="editar_transporte">
-                <h1>Editar un transporte</h1>
 
-                <input type="hidden" name="id" value="<%= transporte._id %>">
-
-                <!-- GRUPO RUTA -->
-                <div class="formulario__grupo" id="grupo__ruta">
-                    <label class="formulario__label">Ruta*</label>
+            <form class="formulario" id="formulario" name="editar_usuario">
+                <h1>
+                    Editar Usuario
+                </h1>
+                <input type="hidden" name="id" value="<%= usuario._id %>">
+                <!-- GRUPO NOMBRE-->
+                <div class="formulario__grupo" id="grupo__nombre">
+                    <label class="formulario__label">Nombre completo*</label>
                     <div class="formulario__grupo-input">
-                        <input type="text" class="formulario__input" name="ruta" id="ruta"
-                            placeholder="Introduce la ruta" value="<%= transporte.ruta %>">
+                        <input type="text" class="formulario__input" name="nombre" id="nombre"
+                            placeholder="Introduce tu nombre" value="<%= usuario.nombre %>">
                         <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
                     <p class="formulario__input-error">
-                        Debe ingresar la ruta. Entre 5 y 50 caracteres.
+                        Debe ingresar su nombre (requerido), primer apellido (requerido) y segundo apellido (opcional).
+                        Separados por un espacio. Nombre puede tener de 3 a 10 letras, Apellidos de 2 a 10 letras, todos
+                        puede incluir maýusculas, minúsculas y acentos.
                     </p>
                 </div>
 
-                <!-- GRUPO TARIFA -->
-                <div class="formulario__grupo" id="grupo__tarifa">
-                    <label class="formulario__label">Tarifa*</label>
+                <!-- GRUPO CORREO-->
+                <div class="formulario__grupo" id="grupo__correo">
+                    <label class="formulario__label">Correo electronico</label>
                     <div class="formulario__grupo-input">
-                        <input type="text" class="formulario__input" name="tarifa" id="tarifa"
-                            placeholder="Introduce la tarifa" value="<%= transporte.tarifa %>">
+                        <input type="email" class="formulario__input" name="correo" id="correo"
+                            placeholder="correo@correo.com" value="<%= usuario.correo %>">
                         <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
                     <p class="formulario__input-error">
-                        Debe ingresar la tarifa. Solo números, entre 1 y 5 dígitos.
+                        Debe agregar un correo con la siguiente estructura usuario@dominio.extension,
+                        usuario acepta letras,guión bajo y números,
+                        dominio acepta solo letras,
+                        extension, acepta solo letras
                     </p>
                 </div>
 
-                <!-- GRUPO TELEFONO -->
-                <div class="formulario__grupo" id="grupo__telefono">
-                    <label class="formulario__label">Teléfono*</label>
+                <!-- GRUPO CONTRASEÑA-->
+                <div class="formulario__grupo" id="grupo__password">
+                    <label class="formulario__label">Contraseña*</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="password" id="password"
+                            value="<%= usuario.password %>">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        La contraseña debe ser de 4 a 12 caracteres
+                    </p>
+                </div>
+
+                <!-- GRUPO CONTRASEÑA2-->
+                <div class="formulario__grupo" id="grupo__password2">
+                    <label class="formulario__label">Repetir contraseña*</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="password2" id="password2"
+                            value="<%= usuario.password %>">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        Las contraseñas no coinciden
+                    </p>
+                </div>
+
+                <!-- GRUPO DROPDOWN-->
+                <div class="formulario__grupo" id="grupo__dropdown">
+                    <label class="formulario__label">Categoría</label>
+                    <div class="formulario__grupo-input">
+                        <select class="formulario__input" name="dropdown" id="dropdown" required>
+                            <option value="default">-Selecciona una Opción-</option>
+                            <option value="0" <%=usuario.tipoUsuario===0 ? 'selected' : '' %>>General</option>
+                            <option value="1" <%=usuario.tipoUsuario===1 ? 'selected' : '' %>>Emprendedor</option>
+                            <option value="2" <%=usuario.tipoUsuario===2 ? 'selected' : '' %>>Administrador</option>
+                        </select>
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        Debe Seleccionar un valor del dropdown.
+                    </p>
+                </div>
+
+                <!-- GRUPO Telefono-->
+                <div class="formulario__grupo " id="grupo__telefono">
+                    <label class="formulario__label">Teléfono</label>
                     <div class="formulario__grupo-input">
                         <input type="text" class="formulario__input" name="telefono" id="telefono"
-                            placeholder="Introduce el teléfono" value="<%= transporte.telefono %>">
+                            value="<%= usuario.telefono %>">
                         <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
                     <p class="formulario__input-error">
-                        El número debe tener entre 8 y 11 dígitos. Acepta un + para código de país.
+                        El número debe tener entre 8 y 11 dígitos. Acepta un + para codigo de país
                     </p>
                 </div>
 
-                <!-- GRUPO Imagen-->
-                <div class="formulario__grupo " id="grupo__imagen">
-                    <label class="formulario__label">Imagen Actual de tu Transporte</label>
-                    <div class="formulario__grupo-input">
-                        <img class="formulario__img" src="/img/<%= transporte.nombreImagen %>" alt="Imagen actual" >
-                    </div>
+                <!-- GRUPO DE CAMPOS REQUERIDOS-->
+                <div class="formulario__mensaje " id="formulario__mensaje">
+                    <p>Error: Debes completar todos los campos</i></p>
                 </div>
 
-                <!-- GRUPO Archivo-->
-                <div class="formulario__grupo " id="grupo__archivo">
-                    <label class="formulario__label">Actualiza la imagen de tu Transporte</label>
-                    <div class="formulario__grupo-input">
-                        <input type="file"  class="formulario__input" name="archivo" id="archivo" placeholder="" accept="image/*">
-                    </div>                   
-                </div>
-
-                <!-- MENSAJE DE ERROR -->
-                <div class="formulario__mensaje" id="formulario__mensaje">
-                    <p>Error: Debes completar todos los campos</p>
-                </div>
-
-                <!-- MENSAJE DE EXITO -->
+                <!-- GRUPO ENVIAR-->
                 <div class="formulario__grupo formulario__grupo-btn-enviar">
                     <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">
-                        El transporte se editó correctamente
+                        El usuario se actualizó correctamente.
                     </p>
-                    <input type="submit" class="formulario__btn" value="Editar Transporte">
+                    <input type="submit" class="formulario__btn" value="Actualizar Usuario">
                 </div>
-            </form>
 
+            </form>
         </div>
 
         <div class="contenedor-mensaje">
             <h3>
-                Hola Administrador!
+                ¡Actualizar Usuario!
             </h3>
             <br>
             <p>
-                Por favor comparte los datos de la noticia que deseas Publicar.
+                Actualiza la Informacion del Usuario.
                 <br><br>
-                Agregar todos los detalles y si es posible agrega una imagen para brindar más claridad.
-                <br><br>
-                Puedes cambiar los datos de esta noticia o eliminarla en cualquier momento desde tu Panel de
-                Administrador.
+                Por favor Ingresa la Informacion Nueva del Usuario.
             </p>
         </div>
-    </main>
+    </div>
 
     <footer class="footer">
         <div class="footer-contenedor">

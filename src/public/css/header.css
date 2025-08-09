@@ -14,7 +14,7 @@ header{
 .logo{
     color: #668c31;
     margin-left: 80px;
-    font-size: 1.2em;
+    font-size: 1em;
 }
 
 .Links_Header ul{
@@ -32,7 +32,7 @@ header{
 .Links_Header li a{
     text-decoration: none;
     color: #668c31;
-    font-size: 1.1em;
+    font-size: 0.9em;
     transition: all 0.8s;
     font-weight: bold;
 }
@@ -43,7 +43,7 @@ header{
     border: none;
     padding:7px;
     border-radius: 10px;
-    font-size: 1.1em;
+    font-size: 0.9em;
     cursor: pointer;
     transition: all 0.5s;
 }
@@ -56,14 +56,14 @@ header{
 .boton_sing_out:hover{
     background-color: #A93226;
     transition: all 0.5s;
-    font-size: 1.2em;
+    font-size: 1em;
     box-shadow: 0 0 10px #A93226;
 }
 
 .Links_Header li a:hover{
     color: #547A20;
     transition: all 0.8s;
-    font-size: 1.2em; 
+    font-size: 1em; 
 }   
 
 /* Menú hamburguesa - oculto por defecto */

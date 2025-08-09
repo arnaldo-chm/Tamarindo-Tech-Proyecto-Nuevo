@@ -61,6 +61,13 @@ else if (formulario.name === "registrar_actividad" || formulario.name === "edita
         descripcion_actividad: /^.{10,}$/, // Descripcion Acepta 10 o más caracteres de cualquier tipo   
         recomendaciones_actividad: /^.{10,}$/ // Recomendaciones Acepta 10 o más caracteres de cualquier tipo
     }
+}else if (formulario.name === "editar_usuario") {
+    expresiones = {
+        nombre: /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/,
+        password: /^.{4,12}$/, //Acepta todo caracter Rango de 4 a 12
+        correo: /^[a-zA-Z0-9\_]+@[a-zA-Z]+\.[a-zA-Z]+$/, //Estructura dato1@dato2.dato3 dato1:acepta letras minusculas y mayusculas, numeros, y acepta guion bajo  dato2 y 3 : Aceptan solo letras mayusculas y minusculas
+        telefono: /^\+?\d{8,11}$/ //Acepta de 8 a 15 digitos. Permite ingresar un + al inicio para código de pais.      
+    }
 }
 
 
@@ -146,6 +153,15 @@ else if (formulario.name === "registrar_actividad") {
         duracion: false,
         fecha: false,
         hora: false
+    }
+}
+else if (formulario.name === "editar_usuario") {
+    campos = {
+        nombre: true,
+        password: true,
+        correo: true,
+        telefono: true,
+        dropdown: true,
     }
 }
 
@@ -760,6 +776,51 @@ async function registrarQueja() {
     }
 }
 
+async function editarUsuario(){
+
+    let datos = {
+        id: document.querySelector('input[name="id"]').value,
+        nombre: document.getElementById("nombre").value,
+        password: document.getElementById("password").value,
+        correo: document.getElementById("correo").value,
+        telefono: document.getElementById("telefono").value,
+        tipoUsuario: document.getElementById("dropdown").value
+    }
+    console.log(datos);
+
+    try {
+        const respuesta = await fetch('http://localhost:3000/api/editarUsuario', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datos)
+        });
+
+        if (!respuesta.ok) {
+            throw new Error(`Error en la solicitud: ${respuesta.status}`);
+        }
+
+        const datosRespuesta = await respuesta.json();
+        if (datosRespuesta.resultado) {
+            // Se muestra el mensaje de aprobación en función de la validación.
+            document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
+            document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
+
+            setTimeout(() => {
+                window.location.href = "/Admin_panel";
+            }, 4000)
+
+        } else {
+            alert(datosRespuesta.mensaje);
+        }
+    } catch (error) {
+        console.error('Error al llamar al backend:', error);
+        
+    }
+
+}
+
 
 // Se crea un EventListener para el evento submit del Formulario.
 formulario.addEventListener("submit", (e) => {
@@ -817,6 +878,9 @@ formulario.addEventListener("submit", (e) => {
         } else if (formulario.name === "editar_actividad") {
             console.log("Llamando a Editar Actividad")
             editarActividad();
+        }else if (formulario.name === "editar_usuario") {
+            console.log("Llamando a Editar Usuario")
+            editarUsuario();
         }
 
 
