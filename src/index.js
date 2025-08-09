@@ -33,8 +33,31 @@ app.get('/crear_emprendimiento', (req, res) => {
     res.render('crear_emprendimiento.html');
 });
 
-app.get('/noticias', (req, res) => {
-    res.render('noticias.html');
+app.get('/noticias', async (req, res) => {
+    try {
+        const noticias = await Noticia.find().lean();
+
+        const noticiasPorCategoria = {};
+
+        noticias.forEach(noticia => {
+            if (!noticiasPorCategoria[noticia.categoria]) {
+                noticiasPorCategoria[noticia.categoria] = [];
+            }
+            noticiasPorCategoria[noticia.categoria].push(noticia);
+        });
+
+        const noticiasRecientes = noticias
+            .sort((a, b) => b.fecha.localeCompare(a.fecha))
+            .slice(0, 4);
+
+        res.render('noticias.ejs', { noticiasPorCategoria, noticiasRecientes });
+
+    } catch (error) {
+        console.error("Error al cargar noticias:", error);
+
+        // Renderiza la vista aunque falle el módulo de noticias
+        res.render('noticias.ejs', { noticiasPorCategoria: {} });
+    }
 });
 
 
