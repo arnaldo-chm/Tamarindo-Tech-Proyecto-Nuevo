@@ -21,11 +21,23 @@
 
 <body>
     <!-- Header -->
-    <header class="header" id="header">
+    <header class = "header" id="header">
         <div class="logo">
             <h1>Tamarindo Tech</h1>
         </div>
-        <label for="verificacion-barra-lateral" class="alternar-barra-lateral">☰</label>
+            <input type="checkbox" id="check">
+        <label for="check" class="btn">☰</label>
+        
+        <nav class="Links_Header" id= "Links_Header">
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="noticias">Anuncios/Noticias</a></li>
+                <li><a href="emprendimientos">Emprendimientos</a></li>
+                <li><a href="Transportes">Transporte</a></li>
+                <li><a href="actividades">Actividades</a></li>
+                <button class="boton_sing_out" id="boton_sing_out"><a href="login">Cerrar Sesion</a></button>
+            </ul>
+        </nav>
     </header>
     <!-- fin de header -->
 
@@ -95,7 +107,9 @@
                                 <p><strong>Categoría:</strong> Anuncios</p>
                             </div>
                             <div class="acciones-tarjeta">
-                                <button class="btn-editar">Editar</button>
+                                <a href="/noticias/123/editar">
+                                    <button class="btn-editar">Editar</button>
+                                </a>
                                 <button class="btn-eliminar">Eliminar</button>
                             </div>
                         </div>
@@ -121,9 +135,17 @@
                                     <p><strong>Categoría:</strong>
                                         <%= noticia.categoria %>
                                     </p>
+                                    <p><strong>Descripción:</strong>
+                                        <%= noticia.descripcionNoticia %>
+                                    </p>
+                                    <p><strong>Teléfono:</strong>
+                                        <%= noticia.telefono %>
+                                    </p>
                                 </div>
                                 <div class="acciones-tarjeta">
-                                    <button class="btn-editar">Editar</button>
+                                    <a href="/noticias/<%= noticia._id %>/editar">
+                                        <button class="btn-editar">Editar</button>
+                                    </a>
                                     <button class="btn-eliminar">Eliminar</button>
                                 </div>
                             </div>
@@ -253,7 +275,9 @@
                                     </p>
                                 </div>
                                 <div class="acciones-tarjeta">
-                                    <button class="btn-editar" data-id="${transporte.id}">Editar</button>
+                                    <a href="/Transportes/<%= transporte._id %>/editar">
+                                        <button class="btn-editar">Editar</button>
+                                    </a>
                                     <button class="btn-eliminar" data-id="${transporte.id}">Eliminar</button>
                                 </div>
                             </div>
@@ -329,7 +353,9 @@
                                     </p>
                                 </div>
                                 <div class="acciones-tarjeta">
-                                    <button class="btn-editar">Editar</button>
+                                    <a href="/Actividades/<%= actividad._id %>/editar">
+                                        <button class="btn-editar">Editar</button>
+                                    </a>
                                     <button class="btn-eliminar">Eliminar</button>
                                 </div>
                             </div>
@@ -353,13 +379,21 @@
 
                             <div class="tarjeta-simple">
                                 <div class="info-tarjeta">
-                                    <p><strong>Nombre:</strong> <%= queja.nombre %></p>
-                                    <p><strong>Reporte:</strong> <%= queja.reporte %></p>
-                                    <p><strong>Fecha:</strong> <%= queja.fecha %></p>
-                                    <p><strong>Archivo:</strong> <%= queja.archivo %></p>
+                                    <p><strong>Nombre:</strong>
+                                        <%= queja.nombre %>
+                                    </p>
+                                    <p><strong>Reporte:</strong>
+                                        <%= queja.reporte %>
+                                    </p>
+                                    <p><strong>Fecha:</strong>
+                                        <%= queja.fecha %>
+                                    </p>
+                                    <p><strong>Archivo:</strong>
+                                        <%= queja.archivo %>
+                                    </p>
                                     <div class="imagen-tarjeta">
-                                    <img src="/img/<%= queja.archivo %>" alt="">
-                                </div>
+                                        <img src="/img/<%= queja.archivo %>" alt="">
+                                    </div>
                                 </div>
                             </div>
                             <% }) %>
@@ -374,15 +408,25 @@
 
                     <div class="cuadricula-contenido">
                         <!-- Las tarjetas de Quejas se generarán dinámicamente -->
-                         <% usuarios.forEach(usuario=>{ %>
+                        <% usuarios.forEach(usuario=>{ %>
 
                             <div class="tarjeta-simple">
                                 <div class="info-tarjeta">
-                                    <p><strong>Nombre:</strong> <%= usuario.nombre %></p>
-                                    <p><strong>Correo:</strong> <%= usuario.correo %></p>
-                                    <p><strong>Contraseña:</strong> <%= usuario.contraseña %></p>
-                                    <p><strong>Telefono:</strong> <%= usuario.telefono %></p>
-                                    <p><strong>Tipo:</strong> <%= usuario.tipoUsuario %></p>
+                                    <p><strong>Nombre:</strong>
+                                        <%= usuario.nombre %>
+                                    </p>
+                                    <p><strong>Correo:</strong>
+                                        <%= usuario.correo %>
+                                    </p>
+                                    <p><strong>Contraseña:</strong>
+                                        <%= usuario.contraseña %>
+                                    </p>
+                                    <p><strong>Telefono:</strong>
+                                        <%= usuario.telefono %>
+                                    </p>
+                                    <p><strong>Tipo:</strong>
+                                        <%= usuario.tipoUsuario %>
+                                    </p>
                                 </div>
                             </div>
                             <% }) %>
