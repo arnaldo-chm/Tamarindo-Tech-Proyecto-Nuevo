@@ -83,16 +83,14 @@
                     <div class="filtros-contenido">
                         <select class="filtro-select">
                             <option value="">Todas las categorías</option>
-                            <option value="Noticias">Noticias</option>
-                            <option value="Anuncios">Anuncios</option>
-                            <option value="Eventos">Eventos</option>
+                            <option value="noticias">Noticias</option>
+                            <option value="anuncios">Anuncios</option>
+                            <option value="eventos">Eventos</option>
                         </select>
                         <input type="text" class="busqueda-input" placeholder="Buscar noticias...">
                     </div>
 
                     <div class="cuadricula-contenido">
-
-
                         <!-- Noticia 2 -->
                         <div class="tarjeta-simple">
                             <div class="encabezado-tarjeta">
@@ -115,8 +113,7 @@
                         </div>
 
                         <% noticias.forEach(noticia=>{ %>
-
-                            <div class="tarjeta-simple">
+                            <div class="tarjeta-simple" data-categoria="<%= noticia.categoria ? noticia.categoria.toLowerCase() : '' %>">
                                 <div class="encabezado-tarjeta">
                                     <h4>
                                         <%= noticia.titulo %>
@@ -146,11 +143,10 @@
                                     <a href="/noticias/<%= noticia._id %>/editar">
                                         <button class="btn-editar">Editar</button>
                                     </a>
-                                    <button class="btn-eliminar">Eliminar</button>
+                                    <button class="btn-eliminar" data-id="<%= noticia._id %>">Eliminar</button>
                                 </div>
                             </div>
                             <% }) %>
-
                     </div>
                 </div>
 
@@ -189,8 +185,7 @@
 
                         <% emprendimientos.forEach(emprendimiento=>{ %>
 
-                            <div class="tarjeta-emprendimiento"
-                                data-estado="<%= emprendimiento.estadoEmprendimiento %>">
+                            <div class="tarjeta-emprendimiento" data-estado="<%= emprendimiento.estadoEmprendimiento ? emprendimiento.estadoEmprendimiento.trim().toLowerCase() : '' %>" data-categoria="<%= emprendimiento.categoria ? emprendimiento.categoria.toLowerCase() : '' %>">
                                 <div class="encabezado-tarjeta">
                                     <h4>
                                         <%= emprendimiento.nombreEmprendimiento %>
@@ -228,12 +223,12 @@
                         <button class="btn-agregar-contenido">+ Agregar Transporte</button>
                     </div>
                     <div class="filtros-contenido">
-                        <select class="filtro-select">
+                        <!-- <select class="filtro-select">
                             <option value="">Todos los tipos</option>
                             <option value="Bus">Bus</option>
                             <option value="Taxi">Taxi</option>
                             <option value="Colectivo">Colectivo</option>
-                        </select>
+                        </select> -->
                         <input type="text" class="busqueda-input" placeholder="Buscar transportes...">
                     </div>
 
@@ -258,7 +253,7 @@
 
                         <% transportes.forEach(transporte=>{ %>
 
-                            <div class="tarjeta-simple">
+                            <div class="tarjeta-simple" data-tipo="<%= transporte.tipo ? transporte.tipo.toLowerCase() : '' %>">
                                 <div class="encabezado-tarjeta">
                                     <h4>
                                         <%= transporte.ruta %>
@@ -278,7 +273,7 @@
                                     <a href="/Transportes/<%= transporte._id %>/editar">
                                         <button class="btn-editar">Editar</button>
                                     </a>
-                                    <button class="btn-eliminar" data-id="${transporte.id}">Eliminar</button>
+                                    <button class="btn-eliminar" data-id="<%= transporte._id %>">Eliminar</button>
                                 </div>
                             </div>
 
@@ -292,12 +287,12 @@
                         <button class="btn-agregar-contenido">+ Agregar Actividad</button>
                     </div>
                     <div class="filtros-contenido">
-                        <select class="filtro-select">
+                        <!-- <select class="filtro-select">
                             <option value="">Todas las categorías</option>
                             <option value="Cultural">Cultural</option>
                             <option value="Deportiva">Deportiva</option>
                             <option value="Educativa">Educativa</option>
-                        </select>
+                        </select> -->
                         <input type="text" class="busqueda-input" placeholder="Buscar actividades...">
                     </div>
 
@@ -326,7 +321,7 @@
                         <% actividades.forEach(actividad=>{ %>
 
 
-                            <div class="tarjeta-simple">
+                            <div class="tarjeta-simple" data-categoria="<%= actividad.categoria ? actividad.categoria.toLowerCase() : '' %>">
                                 <div class="encabezado-tarjeta">
                                     <h4>
                                         <%= actividad.titulo %>
@@ -356,7 +351,7 @@
                                     <a href="/Actividades/<%= actividad._id %>/editar">
                                         <button class="btn-editar">Editar</button>
                                     </a>
-                                    <button class="btn-eliminar">Eliminar</button>
+                                    <button class="btn-eliminar" data-id="<%= actividad._id %>">Eliminar</button>
                                 </div>
                             </div>
 
@@ -395,6 +390,9 @@
                                         <img src="/img/<%= queja.archivo %>" alt="">
                                     </div>
                                 </div>
+                                <div class="acciones-tarjeta">
+                                    <button class="btn-eliminar" data-id="<%= queja._id %>">Eliminar</button>
+                                </div>
                             </div>
                             <% }) %>
                     </div>
@@ -427,6 +425,9 @@
                                     <p><strong>Tipo:</strong>
                                         <%= usuario.tipoUsuario %>
                                     </p>
+                                </div>
+                                <div class="acciones-tarjeta">
+                                    <button class="btn-eliminar" data-id="<%= usuario._id %>">Eliminar</button>
                                 </div>
                             </div>
                             <% }) %>
