@@ -1,8 +1,9 @@
 /* TARJETAS */
 
-.main-content{
+.main-content {
   margin-bottom: 40px;
 }
+
 .contenedor-tarjetas {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -50,10 +51,13 @@
   background-color: #5A7D32;
   color: white;
   padding: 8px 12px;
-  border-radius: 4px;
+  border: none;
+  border-radius: 5px;
   text-decoration: none;
+  cursor: pointer;
   transition: background-color 0.2s ease;
 }
+
 
 .boton-informacion:hover {
   background-color: #446324;
@@ -79,8 +83,15 @@
 
 /* ANIMACIÓN MODAL */
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .modal-contenido {
@@ -98,6 +109,7 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   /* font-family: 'ro', sans-serif; */
 }
+
 
 .modal-contenido h3 {
   margin-top: 0;
@@ -157,14 +169,16 @@
   margin-bottom: 10px;
 }
 
-.dias-semana, .dias {
+.dias-semana,
+.dias {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 5px;
   text-align: center;
 }
 
-.dias span, .dias-semana span {
+.dias span,
+.dias-semana span {
   padding: 8px;
   background-color: white;
   border-radius: 6px;
@@ -174,6 +188,12 @@
   background-color: #dfeecd;
   cursor: pointer;
 }
+
+.dias span.activo {
+  background-color: #5A7D32 !important;
+  color: #fff;
+}
+
 
 /* CONTENEDOR GENERAL */
 .contenedor {
@@ -194,13 +214,120 @@
   font-size: 1.1em;
   line-height: 1.5em;
   margin-bottom: 30px;
-  /* text-align: justify; */
+
 }
 
 .titulo {
   color: #547A20;
   font-size: 2em;
   margin-bottom: 20px;
+}
+
+/* Contenedor general del slider */
+#slider-actividades {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 0;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Contenedor de todas las diapositivas en línea */
+#slider-actividades .diapositiva-actividades {
+  min-width: 100%;
+  box-sizing: border-box;
+  padding: 40px 20px;
+  background: #f1f1f1;
+  border-radius: 8px;
+  text-align: center;
+  transition: opacity 0.4s ease;
+  flex-shrink: 0;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Diapositiva activa */
+#slider-actividades .diapositiva-actividades.activo {
+  opacity: 1;
+  display: block;
+}
+
+#slider-actividades .diapositiva-actividades:not(.activo) {
+  display: none;
+}
+
+/* Flechas de navegación */
+.flecha-actividades {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  z-index: 10;
+  transition: background-color 0.2s;
+}
+
+.flecha-actividades:hover {
+  background-color: #555;
+}
+
+.flecha-actividades.izquierda {
+  left: 10px;
+}
+
+.flecha-actividades.derecha {
+  right: 10px;
+}
+
+/* Puntos de navegación */
+.contenedor-puntos-actividades {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.punto-actividades {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin: 0 6px;
+  background-color: #bbb;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.punto-actividades.activo {
+  background-color: #333333;
+}
+
+
+.seccion-actividades h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  #slider-actividades .diapositiva-actividades {
+    padding: 30px 15px;
+  }
+
+  .flecha-actividades {
+    padding: 8px;
+    font-size: 16px;
+  }
+
+  .seccion-actividades h2 {
+    font-size: 1.5rem;
+  }
 }
 
 /* Tablets grandes (hasta 1024px) */
@@ -242,6 +369,42 @@
   }
 }
 
+#modalActividad {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+#modalActividad.mostrar {
+  display: flex;
+}
+
+.modal-contenido {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 400px;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Teléfonos móviles (hasta 600px) */
 @media (max-width: 600px) {
   .contenedor {
@@ -254,7 +417,6 @@
   .texto_bienvenido p {
     font-size: 1em;
     line-height: 1.6em;
-    /* text-align: justify; */
     padding: 0 10px;
     margin-bottom: 18px;
   }
@@ -285,4 +447,103 @@
     max-width: 360px;
     margin: 0 auto;
   }
+
+  #contenido-modal .tarjeta-actividad {
+    width: 100% !important;
+    margin-bottom: 1rem;
+  }
+
+
+
+}
+
+.modal {
+  position: fixed;
+  text-align: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-contenido2 {
+  background-color: #fff;
+  padding: 2rem;
+  max-width: 900px;
+  text-align: center;
+  width: 90%;
+  border-radius: 10px;
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+#contenido-modal {
+  display: flex;
+  text-align: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+#contenido-modal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+/* Tarjetas de actividad */
+.tarjeta-actividad {
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  padding: 1rem;
+  width: calc(50% - 1rem);
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tarjeta-actividad img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.btn-cerrar {
+  margin-top: 1rem;
+  background-color: #d9534f;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+@keyframes destacarTarjeta {
+  0% {
+    box-shadow: 0 0 0px #547A20;
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow: 0 0 20px #547A20;
+    transform: scale(1.03);
+  }
+
+  100% {
+    box-shadow: 0 0 0px #547A20;
+    transform: scale(1);
+  }
+}
+
+.tarjeta-destacada {
+  animation: destacarTarjeta 1.5s ease-in-out;
+  border: 2px solid #547A20;
+  z-index: 10;
 }

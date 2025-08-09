@@ -375,13 +375,42 @@ app.get('/Transportes/:id/editar', async (req, res) => {
 
 //#region ACTIVIDADES
 
+
 const Actividad = require('../models/actividades.js');
 
+// Renderiza la vista con todas las actividades
 app.get('/actividades', async (req, res) => {
-
+  try {
     const actividades = await Actividad.find();
+    // res.render('actividades.ejs', { actividades: actividades });
+    const meses = [
+    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    ];
+    const hoy = new Date();
+    res.render('actividades', {
+    actividades,
+    mesActual: hoy.getMonth() + 1,
+    anioActual: hoy.getFullYear(),
+    nombreMesActual: meses[hoy.getMonth()]
+    });
 
-    res.render('actividades.ejs', { actividades: actividades });
+    } catch (err) {
+        console.error("Error al cargar actividades:", err);
+        res.status(500).send("Error al cargar actividades");
+    }
+});
+
+// Devuelve actividades por fecha (usado por el frontend)
+app.get('/api/actividades/:fecha', async (req, res) => {
+  try {
+    const fecha = req.params.fecha;
+    const actividades = await Actividad.find({ fecha: fecha });
+    res.json(actividades);
+  } catch (err) {
+    console.error("Error al buscar actividades:", err);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
 });
 
 app.post('/api/registrarActividad', (req, res) => {
