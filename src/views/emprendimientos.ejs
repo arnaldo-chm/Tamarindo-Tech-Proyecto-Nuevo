@@ -133,6 +133,16 @@
                             <p class="estado_emprendimiento" id="estado_emprendimiento">
                                 <%= emprendimientoPersonal.estadoEmprendimiento %>
                             </p>
+                           
+                            <div class="acciones-tarjeta">
+                                <a href="/emprendimiento/<%= emprendimientoPersonal._id %>/editar">
+                                    <button class="btn-editar">Editar</button>
+                                </a>
+
+                                <a href="/emprendimiento/<%= emprendimientoPersonal._id %>/eliminar">
+                                    <button class="btn-eliminar" data-id="<%= emprendimientoPersonal._id %>">Eliminar</button>
+                                </a>
+                            </div>
                         </div>
                         
 

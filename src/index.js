@@ -222,7 +222,13 @@ app.get('/emprendimientos', isAuthenticated, async (req, res) => {
 
     const emprendimientos = await Emprendimiento.find({ estadoEmprendimiento: "Aprobado" });
 
-    const emprendimientosUsuario = await Emprendimiento.find({ correoUsuario: req.session.user.correo });
+    let emprendimientosUsuario = null;
+
+    // Se muestran emprendimientos unicamente si el usuario es tipo emprendedor o administrador.
+    // Para contar con el caso en que el administrador decide degradar un emprendedor a usuario corriente.
+    if (req.session.user && req.session.user.tipoUsuario > 0) {
+        emprendimientosUsuario = await Emprendimiento.find({ correoUsuario: req.session.user.correo });
+    }
 
     res.render('emprendimientos.ejs', { emprendimientos: emprendimientos, emprendimientosUsuario: emprendimientosUsuario });
 });

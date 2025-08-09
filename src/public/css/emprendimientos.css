@@ -133,11 +133,8 @@
     height: 200px; 
     object-fit: cover; 
     transition: transform 0.3s ease;
+    border-radius: 12px 12px 0 0;
 }
-
-/* .card:hover img {
-    transform: scale(1.05); 
-} */
 
 .card h3 {
     font-size: 1.2em; 
@@ -163,7 +160,7 @@
     color:white; 
     padding: 5px 5px 5px 5px;
     margin-bottom: 0;
-    margin-top: auto; /* Esto empuja el precio hacia abajo */
+    margin-top: auto; 
     position: absolute;
     top: 15px;
     right: -15px;
@@ -177,8 +174,50 @@
     color:#668c31; 
     padding: 0px 15px 15px 15px;
     margin-bottom: 0;
-    margin-top: auto; /* Esto empuja el precio hacia abajo */
+    margin-top: auto; 
 }
+
+.acciones-tarjeta {
+    padding: 15px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.acciones-tarjeta a {
+    text-decoration: none;
+    width: auto; 
+    display: inline-block;
+}
+
+.acciones-tarjeta button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.3s;
+}
+
+.btn-editar {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-editar:hover {
+    background-color: #2980b9;
+}
+
+.btn-eliminar {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-eliminar:hover {
+    background-color: #c0392b;
+}
+
 
 /* RESPONSIVE DESIGN */
 
