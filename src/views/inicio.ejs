@@ -31,7 +31,10 @@
                 <li><a href="emprendimientos">Emprendimientos</a></li>
                 <li><a href="Transportes">Transporte</a></li>
                 <li><a href="actividades">Actividades</a></li>
-                <button class="boton_sing_out" id="boton_sing_out"><a href="login">Cerrar Sesion</a></button>
+                <% if (usuarioAdministrador) { %>
+                    <li><a href="/Admin_panel">Administración</a></li>
+                <% } %>
+                <button class="boton_sing_out" id="boton_sing_out"><a href="/logout">Cerrar Sesion</a></button>
             </ul>
         </nav>
     </header>

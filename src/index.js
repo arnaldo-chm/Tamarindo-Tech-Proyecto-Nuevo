@@ -3,7 +3,39 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-//Configuración de vsitas
+// Se Agrega la validacion de usuarios
+const session = require('express-session')
+//Configuracion de Session
+app.use(session({
+    secret: 'ASHSDYUDUDUSDISDSQWDWSDDW',
+    resave: false,
+    saveUninitialized: false
+}))
+
+function isAuthenticated(req, res, next) {
+
+    // Se verifica que la sesion del usuario existe 
+    if (req.session && req.session.user) {
+        return next();
+    } else {
+        console.log('El usuario no está autenticado');
+        return res.redirect('/login');
+    }
+}
+
+function isAdmin(req, res, next) {
+
+    // Se verifica que la sesion del usuario existe y es admin
+    if (req.session && req.session.user && req.session.user.tipoUsuario === 2) {
+        return next();
+    } else {
+        console.log('El usuario no está autenticado o no es admin');
+        return res.redirect('/');
+    }
+}
+
+
+//Configuración de vistas
 app.set('views', path.join(__dirname, 'views')); //donde se encuentran las vistas
 app.engine('html', require('ejs').renderFile);//Utilizamos la plantilla para los archivos html
 app.set('view engine', 'ejs');//Motor de plantillas predeterminado
@@ -17,8 +49,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //#region Rutas principales
 //nombre ruta, accion
-app.get('/', (req, res) => {
-    res.render("inicio.html");//Renderiza la vista con el motor de plantillas
+app.get('/', isAuthenticated, (req, res) => {
+    // Verifica si el usuario es administrador
+    const usuarioAdministrador = req.session.user && req.session.user.tipoUsuario === 2;
+    res.render("inicio.ejs", { usuarioAdministrador });//Renderiza la vista con el motor de plantillas
 });
 
 app.get('/Logon', (req, res) => {
@@ -29,11 +63,11 @@ app.get('/login', (req, res) => {
     res.render("login.html");
 });
 
-app.get('/crear_emprendimiento', (req, res) => {
+app.get('/crear_emprendimiento', isAuthenticated, (req, res) => {
     res.render('crear_emprendimiento.html');
 });
 
-app.get('/noticias', async (req, res) => {
+app.get('/noticias', isAuthenticated, async (req, res) => {
     try {
         const noticias = await Noticia.find().lean();
 
@@ -61,7 +95,7 @@ app.get('/noticias', async (req, res) => {
 });
 
 
-app.get('/reportes', (req, res) => {
+app.get('/reportes', isAuthenticated, (req, res) => {
     res.render('reportes.html');
 });
 
@@ -73,6 +107,7 @@ app.get('/Landing_page', (req, res) => {
 
 //#region Login
 //Login
+
 const User = require('../models/users.js');
 
 app.post('/api/registrarse', (req, res) => {
@@ -121,6 +156,16 @@ app.post('/api/iniciarsesion', (req, res) => {
 
         if (usuario != null) {
             if (data.password == usuario.password) {
+
+                // Se Guarda la información del usuario en la sesión
+                // para validar al usuario validado
+                req.session.user = {
+                    id: usuario._id,
+                    nombre: usuario.nombre,
+                    correo: usuario.correo,
+                    tipoUsuario: usuario.tipoUsuario
+                };
+
                 console.log("Usuario autenticado");
                 const resultado = {
                     resultado: true,
@@ -146,54 +191,80 @@ app.post('/api/iniciarsesion', (req, res) => {
     }
 
     existeUser();
-    console.log("llamada desde post iniciarsesion")
 
 })
 //#endregion
 
+//#region Logout
+// Middleware utilizado para verificar si el usuario está autenticado
+
+
+app.get('/logout', (req, res) => {
+
+    console.log("Cerrando sesión...");
+    // Se destruye la sesion para evitar que el usuario pueda
+    // acceder al dashboard despues de cerrar la sesion.
+    req.session.destroy(err => {
+        if (err) {
+            return res.redirect('/login');
+        }
+        res.clearCookie('connect.sid');
+        res.redirect('/login');
+    });
+});
+//#endregion
 
 //#region Emprendimientos
 //Emprendimientos
 const Emprendimiento = require('../models/emprendimientos.js');
 
-app.get('/emprendimientos', async (req, res) => {
+app.get('/emprendimientos', isAuthenticated, async (req, res) => {
 
     const emprendimientos = await Emprendimiento.find();
 
     res.render('emprendimientos.ejs', { emprendimientos: emprendimientos });
 });
 
-app.post('/api/registrarEmprendimiento', (req, res) => {
+app.post('/api/registrarEmprendimiento', isAuthenticated, (req, res) => {
 
-    let data = new Emprendimiento({
-        correoUsuario: req.body.correoUsuario,
-        nombreEmprendimiento: req.body.nombreEmprendimiento,
-        descripcionEmprendimiento: req.body.descripcionEmprendimiento,
-        categoria: req.body.categoria,
-        telefono: req.body.telefono,
-        precio: req.body.precio,
-        nombreImagen: path.basename(req.body.archivo)
-    })
-
-    data.save()
-        .then(() => {
-            console.log("Emprendimiento registrado");
-            const resultado = {
-                resultado: true,
-                mensaje: `Emprendimiento registrado con exito`
-            }
-            res.json(resultado);
+    if (req.session && req.session.user && (req.session.user.tipoUsuario === 1 || req.session.user.tipoUsuario === 2)) {
+        let data = new Emprendimiento({
+            correoUsuario: req.body.correoUsuario,
+            nombreEmprendimiento: req.body.nombreEmprendimiento,
+            descripcionEmprendimiento: req.body.descripcionEmprendimiento,
+            categoria: req.body.categoria,
+            telefono: req.body.telefono,
+            precio: req.body.precio,
+            nombreImagen: path.basename(req.body.archivo)
         })
 
-        .catch(err => {
-            console.log("Error al guardar Emprendimiento:", err);
-            const resultado = {
-                resultado: false,
-                mensaje: `Error al guardar Emprendimiento ${err}`
-            }
-            res.json(resultado);
-        });
+        data.save()
+            .then(() => {
+                console.log("Emprendimiento registrado");
+                const resultado = {
+                    resultado: true,
+                    mensaje: `Emprendimiento registrado con exito`
+                }
+                res.json(resultado);
+            })
 
+            .catch(err => {
+                console.log("Error al guardar Emprendimiento:", err);
+                const resultado = {
+                    resultado: false,
+                    mensaje: `Error al guardar Emprendimiento ${err}`
+                }
+                res.json(resultado);
+            });
+    }
+    else {
+
+        const resultado = {
+            resultado: false,
+            mensaje: `Por favor solicite al administrador que le otorgue permisos para registrar emprendimientos.\n Utilice el enlace Crear Un Reporte al pie de página.`
+        }
+        res.json(resultado);
+    }
 })
 
 //#endregion
@@ -203,7 +274,7 @@ app.post('/api/registrarEmprendimiento', (req, res) => {
 
 const Noticia = require('../models/noticias.js');
 
-app.post('/api/registrarNoticia', (req, res) => {
+app.post('/api/registrarNoticia', isAdmin, (req, res) => {
 
     console.log(req.body);
     let fecha = new Date()
@@ -242,7 +313,7 @@ app.post('/api/registrarNoticia', (req, res) => {
 
 })
 
-app.post('/api/editarNoticia', async (req, res) => {
+app.post('/api/editarNoticia', isAdmin, async (req, res) => {
 
     console.log(req.body);
     let fecha = new Date()
@@ -280,7 +351,7 @@ app.post('/api/editarNoticia', async (req, res) => {
 })
 
 // Mostrar formulario de edición
-app.get('/noticias/:id/editar', async (req, res) => {
+app.get('/noticias/:id/editar', isAdmin, async (req, res) => {
 
     const noticia = await Noticia.findById(req.params.id);
     // console.log(noticia);
@@ -292,7 +363,7 @@ app.get('/noticias/:id/editar', async (req, res) => {
 });
 
 // Eliminar Noticia
-app.post('/api/eliminarNoticia', async (req, res) => {
+app.post('/api/eliminarNoticia', isAdmin, async (req, res) => {
     try {
         await Noticia.findByIdAndDelete(req.body.id);
         res.json({ resultado: true, mensaje: "Noticia eliminada con éxito" });
@@ -302,7 +373,7 @@ app.post('/api/eliminarNoticia', async (req, res) => {
 });
 
 // Eliminar Queja
-app.post('/api/eliminarQueja', async (req, res) => {
+app.post('/api/eliminarQueja', isAdmin, async (req, res) => {
     try {
         await Queja.findByIdAndDelete(req.body.id);
         res.json({ resultado: true, mensaje: "Queja eliminada con éxito" });
@@ -312,7 +383,7 @@ app.post('/api/eliminarQueja', async (req, res) => {
 });
 
 // Eliminar Miembro (Usuario)
-app.post('/api/eliminarUsuario', async (req, res) => {
+app.post('/api/eliminarUsuario', isAdmin, async (req, res) => {
     try {
         await User.findByIdAndDelete(req.body.id);
         res.json({ resultado: true, mensaje: "Usuario eliminado con éxito" });
@@ -327,7 +398,7 @@ app.post('/api/eliminarUsuario', async (req, res) => {
 //#region TRANSPORTE
 const Transporte = require('../models/transportes.js');
 
-app.get('/Transportes', async (req, res) => {
+app.get('/Transportes', isAuthenticated, async (req, res) => {
 
     const transportes = await Transporte.find();
 
@@ -335,7 +406,7 @@ app.get('/Transportes', async (req, res) => {
 });
 
 
-app.post('/api/registrarTransporte', (req, res) => {
+app.post('/api/registrarTransporte', isAdmin, (req, res) => {
 
     console.log(req.body);
 
@@ -369,7 +440,7 @@ app.post('/api/registrarTransporte', (req, res) => {
 
 })
 
-app.post('/api/editarTransporte', async (req, res) => {
+app.post('/api/editarTransporte', isAdmin, async (req, res) => {
     try {
         let fecha = new Date();
         const formatoFecha = `${fecha.getDate()}/${fecha.getMonth() + 1}/${fecha.getFullYear()}`;
@@ -391,7 +462,7 @@ app.post('/api/editarTransporte', async (req, res) => {
 });
 
 // Mostrar formulario de edición
-app.get('/Transportes/:id/editar', async (req, res) => {
+app.get('/Transportes/:id/editar', isAdmin, async (req, res) => {
 
     const transporte = await Transporte.findById(req.params.id);
     // console.log(transporte);
@@ -403,7 +474,7 @@ app.get('/Transportes/:id/editar', async (req, res) => {
 });
 
 // Eliminar Transporte
-app.post('/api/eliminarTransporte', async (req, res) => {
+app.post('/api/eliminarTransporte', isAdmin, async (req, res) => {
     try {
         await Transporte.findByIdAndDelete(req.body.id);
         res.json({ resultado: true, mensaje: "Transporte eliminado con éxito" });
@@ -420,21 +491,21 @@ app.post('/api/eliminarTransporte', async (req, res) => {
 const Actividad = require('../models/actividades.js');
 
 // Renderiza la vista con todas las actividades
-app.get('/actividades', async (req, res) => {
-  try {
-    const actividades = await Actividad.find();
-    // res.render('actividades.ejs', { actividades: actividades });
-    const meses = [
-    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-    ];
-    const hoy = new Date();
-    res.render('actividades', {
-    actividades,
-    mesActual: hoy.getMonth() + 1,
-    anioActual: hoy.getFullYear(),
-    nombreMesActual: meses[hoy.getMonth()]
-    });
+app.get('/actividades', isAuthenticated, async (req, res) => {
+    try {
+        const actividades = await Actividad.find();
+        // res.render('actividades.ejs', { actividades: actividades });
+        const meses = [
+            "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+        ];
+        const hoy = new Date();
+        res.render('actividades', {
+            actividades,
+            mesActual: hoy.getMonth() + 1,
+            anioActual: hoy.getFullYear(),
+            nombreMesActual: meses[hoy.getMonth()]
+        });
 
     } catch (err) {
         console.error("Error al cargar actividades:", err);
@@ -443,18 +514,18 @@ app.get('/actividades', async (req, res) => {
 });
 
 // Devuelve actividades por fecha (usado por el frontend)
-app.get('/api/actividades/:fecha', async (req, res) => {
-  try {
-    const fecha = req.params.fecha;
-    const actividades = await Actividad.find({ fecha: fecha });
-    res.json(actividades);
-  } catch (err) {
-    console.error("Error al buscar actividades:", err);
-    res.status(500).json({ error: 'Error interno del servidor' });
-  }
+app.get('/api/actividades/:fecha', isAuthenticated, async (req, res) => {
+    try {
+        const fecha = req.params.fecha;
+        const actividades = await Actividad.find({ fecha: fecha });
+        res.json(actividades);
+    } catch (err) {
+        console.error("Error al buscar actividades:", err);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
 });
 
-app.post('/api/registrarActividad', (req, res) => {
+app.post('/api/registrarActividad', isAuthenticated, (req, res) => {
 
     let data = new Actividad({
         titulo: req.body.titulo,
@@ -490,7 +561,7 @@ app.post('/api/registrarActividad', (req, res) => {
 })
 
 // Mostrar formulario de edición
-app.post('/api/editarActividad', async (req, res) => {
+app.post('/api/editarActividad', isAuthenticated, async (req, res) => {
     try {
         let fecha = new Date();
         const formatoFecha = `${fecha.getDate()}/${fecha.getMonth() + 1}/${fecha.getFullYear()}`;
@@ -512,7 +583,7 @@ app.post('/api/editarActividad', async (req, res) => {
 });
 
 // Mostrar formulario de edición
-app.get('/Actividades/:id/editar', async (req, res) => {
+app.get('/Actividades/:id/editar', isAuthenticated, async (req, res) => {
 
     const actividad = await Actividad.findById(req.params.id);
     // console.log(actividad);
@@ -524,7 +595,7 @@ app.get('/Actividades/:id/editar', async (req, res) => {
 });
 
 // Eliminar Actividad
-app.post('/api/eliminarActividad', async (req, res) => {
+app.post('/api/eliminarActividad', isAuthenticated, async (req, res) => {
     try {
         await Actividad.findByIdAndDelete(req.body.id);
         res.json({ resultado: true, mensaje: "Actividad eliminada con éxito" });
@@ -537,7 +608,7 @@ app.post('/api/eliminarActividad', async (req, res) => {
 const Queja = require('../models/quejas.js');
 
 // Guardar una queja
-app.post('/api/registrarQueja', async (req, res) => {
+app.post('/api/registrarQueja', isAuthenticated, async (req, res) => {
     try {
         const { nombre, reporte, archivo } = req.body;
         const fecha = new Date().toLocaleDateString('es-CR');
@@ -553,7 +624,11 @@ app.post('/api/registrarQueja', async (req, res) => {
 //#endregion
 
 //#region Admin Panel
-app.get('/Admin_panel', async (req, res) => {
+app.get('/Admin_panel', isAdmin, async (req, res) => {
+
+    if (!req.session.user || req.session.user.tipoUsuario !== 2) {
+        return res.redirect('/');
+    }
 
     const noticias = await Noticia.find();
     const emprendimientos = await Emprendimiento.find();
@@ -564,34 +639,48 @@ app.get('/Admin_panel', async (req, res) => {
     res.render('contenido-admin', { noticias: noticias, emprendimientos: emprendimientos, transportes: transportes, actividades: actividades, quejas: quejas, usuarios: usuarios });
 });
 
-app.get('/Admin_panel/crear_noticia', (req, res) => {
+app.get('/Admin_panel/crear_noticia', isAdmin, (req, res) => {
     res.render('crear_noticia.html');
 });
 
-// app.get('/Admin_panel/editar_noticia',async(req,res)=>{
 
-//     const noticaTitulo = req.query.titulo; 
-
-//     if (noticaTitulo) {
-//         const noticia = await user.findOne({titulo:noticaTitulo});
-//         //paso 2: enviar por parametros
-//         console.log(noticia);
-//         res.render("/Admin_panel/editar_noticia",{noticia:noticia});
-//     } else {
-//         console.log("Usario no pasa el valor de noticia");
-//         // res.send('No user ID provided in query.');
-//     }
-
-// })
-
-app.get('/Admin_panel/crear_transporte', (req, res) => {
+app.get('/Admin_panel/crear_transporte', isAdmin, (req, res) => {
     res.render('crear_transporte.html');
 });
 
-app.get('/Admin_panel/crear_actividad', (req, res) => {
+app.get('/Admin_panel/crear_actividad', isAdmin, (req, res) => {
     res.render('crear_actividad.html');
 });
 
+// Mostrar formulario de edición
+app.get('/usuario/:id/editar', isAdmin, async (req, res) => {
+
+    const usuario = await User.findById(req.params.id);
+    // console.log(usuario);
+
+    if (!usuario) {
+        return res.status(404).send('Usuario no encontrado');
+    }
+    res.render('editar_usuario.ejs', { usuario: usuario });
+});
+
+app.post('/api/editarUsuario', isAdmin, async (req, res) => {
+    
+     try {
+        // Busca el transporte por ID y actualiza los campos
+        await User.findByIdAndUpdate(req.body.id, {
+            nombre: req.body.nombre,
+            correo: req.body.correo,
+            password: req.body.password,
+            telefono: req.body.telefono,
+            tipoUsuario: req.body.tipoUsuario
+        });
+        res.json({ resultado: true, mensaje: 'Usuario editado con exito' });
+    } catch (err) {
+        res.json({ resultado: false, mensaje: `Error al editar Usuario: ${err}` });
+    }
+
+});
 
 //#endregion
 
