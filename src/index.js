@@ -265,11 +265,23 @@ const Actividad = require('../models/actividades.js');
 app.get('/actividades', async (req, res) => {
   try {
     const actividades = await Actividad.find();
-    res.render('actividades.ejs', { actividades: actividades });
-  } catch (err) {
-    console.error("Error al cargar actividades:", err);
-    res.status(500).send("Error al cargar actividades");
-  }
+    // res.render('actividades.ejs', { actividades: actividades });
+    const meses = [
+    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    ];
+    const hoy = new Date();
+    res.render('actividades', {
+    actividades,
+    mesActual: hoy.getMonth() + 1,
+    anioActual: hoy.getFullYear(),
+    nombreMesActual: meses[hoy.getMonth()]
+    });
+
+    } catch (err) {
+        console.error("Error al cargar actividades:", err);
+        res.status(500).send("Error al cargar actividades");
+    }
 });
 
 // Registra una nueva actividad desde el formulario

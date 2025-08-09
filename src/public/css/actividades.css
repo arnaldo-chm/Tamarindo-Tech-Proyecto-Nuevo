@@ -189,6 +189,12 @@
   cursor: pointer;
 }
 
+.dias span.activo {
+  background-color: #5A7D32 !important;
+  color: #fff;
+}
+
+
 /* CONTENEDOR GENERAL */
 .contenedor {
   display: flex;
