@@ -13,7 +13,7 @@ const actividadesSchema = new mongoose.Schema({
     titulo:{type:String, required:true, unique:true},    
     descripcion_actividad:{type:String, required:true},
     recomendaciones_actividad:{type:String, required:true},
-    costo:{type:Number, required:true},  
+    duracion:{type:Number, required:true},  
     nombreImagen:{type:String, required:true},
     fecha:{type:String, required:true},
     hora:{type:String, required:true},
