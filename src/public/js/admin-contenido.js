@@ -420,7 +420,7 @@ document.addEventListener('DOMContentLoaded', function() {
         tabActive.querySelectorAll('.tarjeta-simple, .tarjeta-emprendimiento').forEach(card => {
             const cardTitulo = card.querySelector('h4').textContent.toLowerCase();
             const cardInfo = card.querySelector('.info-tarjeta').textContent.toLowerCase();
-            const cardCategoria = card.dataset.categoria.toLowerCase();
+            const cardCategoria = (card.dataset.categoria || '').toLowerCase();
             const cardEstado = card.dataset.estado?.toLowerCase() || '';
             const cardTipo = card.dataset.tipo?.toLowerCase() || '';
             
