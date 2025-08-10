@@ -64,7 +64,10 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/crear_emprendimiento', isAuthenticated, (req, res) => {
-    res.render('crear_emprendimiento.html');
+
+    const correoUsuario = req.session.user ? req.session.user.correo : '';
+
+    res.render('crear_emprendimiento.ejs', { correoUsuario });
 });
 
 app.get('/noticias', isAuthenticated, async (req, res) => {
@@ -309,6 +312,16 @@ app.post('/api/editarEmprendimiento', isAuthenticated, async (req, res) => {
     } catch (error) {
         console.error("Error al editar Emprendimiento:", error);
         res.json({ resultado: false, mensaje: `Error al editar Emprendimiento ${error}` });
+    }
+});
+
+app.post('/emprendimiento/:id/eliminar', isAuthenticated, async (req, res) => {
+    try {
+        await Emprendimiento.findByIdAndDelete(req.params.id);
+        res.redirect('/emprendimientos');
+    } catch (error) {
+        console.error("Error al eliminar Emprendimiento:", error);
+        res.redirect('/emprendimientos');
     }
 });
 

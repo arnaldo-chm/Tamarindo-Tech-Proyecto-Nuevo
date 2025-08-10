@@ -108,12 +108,11 @@
     width: 100%; 
     max-width: 350px; 
     border-radius: 12px; 
-    /* overflow: hidden; */
     box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
     background-color: white;
     transition: all 0.3s ease;
     border: 1px solid rgba(0,0,0,0.05);
-    height: 100%;
+    height: auto;
     
     /* Agregamos flexbox para controlar la posición del precio */
     display: flex;
@@ -352,60 +351,4 @@
     }
 }
 
-@media (max-width: 320px) {
-    .contenedor_encabezado {
-        padding: 0 15px;
-        margin: 10px auto;
-    }
-    
-    .Emprendimientos {
-        padding: 0 15px;
-        margin: 20px auto;
-    }
-    
-    .img_encabezado_emprendimientos img {
-        max-width: 280px;
-        height: 220px;
-    }
-    
-    .texto_encabezado_emprendimientos h1 {
-        font-size: 1.3em;
-    }
-    
-    .texto_encabezado_emprendimientos .info_general {
-        font-size: 0.85em;
-    }
-    
-    .texto_encabezado_emprendimientos p {
-        font-size: 0.8em;
-    }
-    
-    .boton_crear_emprendimiento {
-        height: 42px;
-        font-size: 0.9em;
-    }
-    
-    .Emprendimientos h2 {
-        font-size: 1.4em;
-    }
-    
-    .card img {
-        height: 160px;
-    }
-    
-    .card h3 {
-        font-size: 1em;
-        margin: 10px;
-    }
-    
-    .card p {
-        font-size: 0.8em;
-        padding: 0 10px;
-    }
-    
-    .card .precio_emprendimiento {
-        font-size: 0.95em;
-        padding: 0 10px 10px 10px;
-    }
-}
 

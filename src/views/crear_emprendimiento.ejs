@@ -40,24 +40,12 @@
         <div class="contenedor-formulario">
             <form class="formulario" id="formulario" name="registrar_emprendimiento">
                 <h1>Publica tu Emprendimiento</h1>
-                <!-- GRUPO NOMBRE-->
-                <!-- <div class="formulario__grupo" id="grupo__nombre">
-                    <label class="formulario__label">Nombre completo*</label>
-                    <div class="formulario__grupo-input">
-                        <input type="text" class="formulario__input" name="nombre" id="nombre" placeholder="Introduce tu nombre">
-                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
-                    </div>
-                    <p class="formulario__input-error">
-                        Debe ingresar su nombre (requerido), primer apellido (requerido) y segundo apellido (opcional).
-                        Separados por un espacio. Nombre puede tener de 3 a 10 letras, Apellidos de 2 a 10 letras, todos puede incluir maýusculas, minúsculas y acentos.
-                    </p>
-                </div> -->
 
                 <!-- GRUPO CORREO-->
                 <div class="formulario__grupo" id="grupo__correo">
                     <label class="formulario__label">Correo electronico</label>
                     <div class="formulario__grupo-input">
-                        <input type="email" class="formulario__input" name="correo" id="correo" placeholder="correo@correo.com">
+                        <input type="email" class="formulario__input" name="correo" id="correo" placeholder="correo@correo.com" value="<%= correoUsuario %>" readonly>
                         <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
                     <p class="formulario__input-error">

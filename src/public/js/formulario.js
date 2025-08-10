@@ -89,7 +89,7 @@ if (formulario.name === "registrarse") {
 } else if (formulario.name === "registrar_emprendimiento") {
     campos = {
         // nombre: false,
-        correo: false,
+        correo: true,
         nombre_emprendimiento: false,
         descripcion_emprendimiento: false,
         telefono: false,
@@ -467,7 +467,7 @@ async function registrarEmprendimiento() {
             document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
 
             setTimeout(() => {
-                window.location.href = "crear_emprendimiento";
+                window.location.href = "emprendimientos";
             }, 4000)
 
         } else {
