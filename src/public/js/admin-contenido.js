@@ -349,27 +349,22 @@ document.addEventListener('DOMContentLoaded', function() {
         const grid = tab.querySelector('.cuadricula-contenido');
         if (!grid) return;
         const tarjetas = Array.from(grid.children).filter(card => card.classList.contains('tarjeta-simple') || card.classList.contains('tarjeta-emprendimiento'));
-        let filtro = select ? select.value : '';
+        let filtro = select ? select.value.trim().toLowerCase() : '';
         let busqueda = input ? input.value.trim().toLowerCase() : '';
         tarjetas.forEach(card => {
             let mostrar = true;
             // Filtro por categoría/estado/tipo
             if (select && filtro) {
                 if (tabId === 'noticias') {
-                    mostrar = (card.dataset.categoria === filtro.toLowerCase());
+                    mostrar = (card.dataset.categoria === filtro);
                 } else if (tabId === 'emprendimientos') {
-                    // Mapear filtro textual a valor numérico
-                    let estadoFiltro = filtro.trim().toLowerCase();
-                    let valorFiltro = '';
-                    if (estadoFiltro === 'pendiente') valorFiltro = '0';
-                    else if (estadoFiltro === 'aprobado') valorFiltro = '1';
-                    else if (estadoFiltro === 'rechazado') valorFiltro = '2';
-                    const estadoCard = card.dataset.estado ? card.dataset.estado.trim() : '';
-                    mostrar = (valorFiltro !== '') ? (estadoCard === valorFiltro) : true;
+                    // Filtra por estado textual
+                    const estadoCard = (card.dataset.estado || '').toLowerCase();
+                    mostrar = (filtro === '' || estadoCard === filtro);
                 } else if (tabId === 'transporte') {
-                    mostrar = (card.dataset.tipo === filtro.toLowerCase());
+                    mostrar = (card.dataset.tipo === filtro);
                 } else if (tabId === 'actividades') {
-                    mostrar = (card.dataset.categoria === filtro.toLowerCase());
+                    mostrar = (card.dataset.categoria === filtro);
                 }
             }
             // Filtro por búsqueda
@@ -446,458 +441,105 @@ document.addEventListener('DOMContentLoaded', function() {
     function manejarAccionesTarjetas(e) {
         const card = e.target.closest('.tarjeta-simple, .tarjeta-emprendimiento');
         if (!card) return;
-        
+
         const id = card.dataset.id;
-        const tipo = card.classList.contains('tarjeta-emprendimiento') ? 'emprendimiento' : 
-                    card.classList.contains('tarjeta-transporte') ? 'transporte' :
-                    card.classList.contains('tarjeta-actividad') ? 'actividad' : 'noticia';
+        const tipo = card.classList.contains('tarjeta-emprendimiento') ? 'emprendimiento' :
+            card.classList.contains('tarjeta-transporte') ? 'transporte' :
+            card.classList.contains('tarjeta-actividad') ? 'actividad' : 'noticia';
 
         if (e.target.classList.contains('btn-aprobar')) {
-            aprobarEmprendimiento(id);
+            aprobarEmprendimientoPendiente(id, card);
         } else if (e.target.classList.contains('btn-rechazar')) {
-            rechazarEmprendimiento(id);
+            rechazarEmprendimientoPendiente(id, card);
         } else if (e.target.classList.contains('btn-editar')) {
             editarContenido(id, tipo);
         } else if (e.target.classList.contains('btn-eliminar')) {
             eliminarContenido(id, tipo);
         } else if (e.target.classList.contains('btn-detalles')) {
-            verDetalles(id, tipo);
+            verDetallesEmprendimientoPendiente(card);
         }
     }
 
-    function aprobarEmprendimiento(id) {
-        const card = document.querySelector(`.tarjeta-emprendimiento[data-id="${id}"]`);
-        if (!card) return;
-        
-        card.dataset.estado = 'aprobado';
-        card.querySelector('.estado').textContent = 'Aprobado';
-        card.querySelector('.estado').className = 'estado aprobado';
-        
-        const hoy = new Date().toLocaleDateString('es-ES');
-        const fechaInfo = card.querySelector('.info-tarjeta p:nth-child(3)');
-        if (fechaInfo) fechaInfo.innerHTML = `<strong>Aprobado:</strong> ${hoy}`;
-        
-        card.querySelector('.acciones-tarjeta').innerHTML = '<button class="btn-detalles" data-id="${id}">Detalles</button>';
+    async function aprobarEmprendimientoPendiente(id, card) {
+        if (!confirm('¿Aprobar este emprendimiento?')) return;
+        try {
+            const res = await fetch('/api/aprobarEmprendimiento', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id })
+            });
+            const data = await res.json();
+            if (data.resultado) {
+                card.remove();
+                mostrarNotificacion('¡Emprendimiento aprobado y publicado!', 'exito');
+            } else {
+                mostrarNotificacion('Error: ' + data.mensaje, 'error');
+            }
+        } catch (err) {
+            mostrarNotificacion('Error de conexión', 'error');
+        }
     }
 
-    function rechazarEmprendimiento(id) {
-        const motivo = prompt('Ingrese el motivo del rechazo:');
+    async function rechazarEmprendimientoPendiente(id, card) {
+        const motivo = prompt('Ingrese el motivo de rechazo:');
         if (!motivo) return;
-        
-        const card = document.querySelector(`.tarjeta-emprendimiento[data-id="${id}"]`);
-        if (!card) return;
-        
-        card.dataset.estado = 'rechazado';
-        card.querySelector('.estado').textContent = 'Rechazado';
-        card.querySelector('.estado').className = 'estado rechazado';
-        
-        const hoy = new Date().toLocaleDateString('es-ES');
-        const fechaInfo = card.querySelector('.info-tarjeta p:nth-child(3)');
-        if (fechaInfo) fechaInfo.innerHTML = `<strong>Rechazado:</strong> ${hoy}`;
-        
-        let motivoDiv = card.querySelector('.motivo-rechazo');
-        if (!motivoDiv) {
-            motivoDiv = document.createElement('div');
-            motivoDiv.className = 'motivo-rechazo';
-            card.querySelector('.info-tarjeta').appendChild(motivoDiv);
+        try {
+            const res = await fetch('/api/rechazarEmprendimiento', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, motivo })
+            });
+            const data = await res.json();
+            if (data.resultado) {
+                // Actualiza la tarjeta a estado rechazado sin eliminarla
+                card.querySelector('.estado').textContent = 'Rechazado';
+                card.querySelector('.estado').className = 'estado Rechazado';
+                // Elimina botones de aprobar/rechazar, muestra motivo
+                card.querySelector('.acciones-tarjeta').innerHTML =
+                    `<span class="estado Rechazado">Rechazado</span>
+                    <button class="btn-detalles" data-id="${id}">Detalles</button>`;
+                // Agrega motivo en info-tarjeta
+                let info = card.querySelector('.info-tarjeta');
+                let motivoDiv = document.createElement('div');
+                motivoDiv.className = 'motivo-rechazo';
+                motivoDiv.innerHTML = `<strong>Motivo:</strong> ${motivo}`;
+                info.appendChild(motivoDiv);
+                mostrarNotificacion('¡Emprendimiento rechazado!', 'error');
+            } else {
+                mostrarNotificacion('Error: ' + data.mensaje, 'error');
+            }
+        } catch (err) {
+            mostrarNotificacion('Error de conexión', 'error');
         }
-        motivoDiv.innerHTML = `<strong>Motivo:</strong> ${motivo}`;
-        
-        card.querySelector('.acciones-tarjeta').innerHTML = '<button class="btn-detalles" data-id="${id}">Detalles</button>';
     }
 
-    function editarContenido(id, tipo) {
-        const card = document.querySelector(`.tarjeta-${tipo === 'noticia' || tipo === 'transporte' || tipo === 'actividad' ? 'simple' : 'emprendimiento'}[data-id="${id}"]`);
-        if (!card) return;
-
-        if (tipo === 'transporte') {
-            editarTransporte(id);
-            return;
-        }
-
-        if (tipo === 'actividad') {
-            editarActividad(id);
-            return;
-        }
-
-        if (tipo === 'noticia') {
-            // editarActividad(id); 
-            window.location.href = "/Admin_panel/editar_noticia/";
-            return;
-        }
-
-        // const descripcionActual = card.querySelector('.descripcion-tarjeta')?.textContent || '';
-
-        // const formulario = document.createElement('div');
-        // formulario.className = 'modal-edicion';
-        // formulario.innerHTML = `
-        //     <div class="modal-contenido">
-        //         <h3>Editar ${tipo}</h3>
-        //         <form id="form-editar-${tipo}">
-        //             <div class="form-group">
-        //                 <label for="titulo">Título:</label>
-        //                 <input type="text" id="titulo" value="${card.querySelector('h4').textContent}" required>
-        //             </div>
-        //             ${tipo === 'noticia' ? `
-        //             <div class="form-group">
-        //                 <label for="autor">Autor:</label>
-        //                 <input type="text" id="autor" value="${card.querySelector('.info-tarjeta p:first-child').textContent.replace('Autor: ', '')}" required>
-        //             </div>
-        //             ` : tipo === 'emprendimiento' ? `
-        //             <div class="form-group">
-        //                 <label for="emprendedor">Emprendedor:</label>
-        //                 <input type="text" id="emprendedor" value="${card.querySelector('.info-tarjeta p:first-child').textContent.replace('Emprendedor: ', '')}" required>
-        //             </div>
-        //             ` : ''}
-        //             <div class="form-group">
-        //                 <label for="categoria">Categoría:</label>
-        //                 <select id="categoria" required>
-        //                     ${tipo === 'noticia' ? `
-        //                     <option value="Noticias" ${card.dataset.categoria === 'noticias' ? 'selected' : ''}>Noticias</option>
-        //                     <option value="Anuncios" ${card.dataset.categoria === 'anuncios' ? 'selected' : ''}>Anuncios</option>
-        //                     <option value="Eventos" ${card.dataset.categoria === 'eventos' ? 'selected' : ''}>Eventos</option>
-        //                     ` : tipo === 'emprendimiento' ? `
-        //                     <option value="Artesanias" ${card.dataset.categoria === 'artesanias' ? 'selected' : ''}>Artesanías</option>
-        //                     <option value="Alimentos" ${card.dataset.categoria === 'alimentos' ? 'selected' : ''}>Alimentos</option>
-        //                     <option value="Servicios" ${card.dataset.categoria === 'servicios' ? 'selected' : ''}>Servicios</option>
-        //                     ` : ''}
-        //                 </select>
-        //             </div>
-        //             ${tipo === 'actividad' ? `
-        //             <div class="form-group">
-        //                 <label for="fecha">Fecha:</label>
-        //                 <input type="date" id="fecha" value="${formatDateForInput(card.querySelector('.fecha').textContent)}" required>
-        //             </div>
-        //             ` : ''}
-        //             <div class="form-group">
-        //                 <label for="descripcion">Descripción:</label>
-        //                 <textarea id="descripcion" rows="4">${descripcionActual}</textarea>
-        //             </div>
-        //             <div class="form-group">
-        //                 <label for="imagen">Cambiar imagen:</label>
-        //                 <input type="file" id="imagen" accept="image/*">
-        //                 <div class="vista-previa-imagen" id="vista-previa-imagen">
-        //                     <img src="${card.querySelector('.imagen-tarjeta img').src}" alt="Imagen actual" style="max-width: 100%; max-height: 150px;">
-        //                 </div>
-        //             </div>
-        //             <div class="form-acciones">
-        //                 <button type="button" class="btn-cancelar">Cancelar</button>
-        //                 <button type="submit" class="btn-guardar">Guardar Cambios</button>
-        //             </div>
-        //         </form>
-        //     </div>
-        // `;
-
-        // document.body.appendChild(formulario);
-        // formulario.style.display = 'flex';
-
-        // const inputImagen = formulario.querySelector('#imagen');
-        // const vistaPrevia = formulario.querySelector('#vista-previa-imagen');
-
-        // inputImagen.addEventListener('change', function() {
-        //     const archivo = this.files[0];
-        //     if (archivo) {
-        //         const lector = new FileReader();
-        //         lector.onload = function(e) {
-        //             vistaPrevia.innerHTML = `<img src="${e.target.result}" alt="Nueva imagen" style="max-width: 100%; max-height: 150px;">`;
-        //         }
-        //         lector.readAsDataURL(archivo);
-        //     }
-        // });
-
-        // formulario.querySelector('form').addEventListener('submit', function(e) {
-        //     e.preventDefault();
-            
-        //     const nuevoTitulo = formulario.querySelector('#titulo').value;
-        //     const nuevaDescripcion = formulario.querySelector('#descripcion').value;
-        //     const nuevaCategoria = formulario.querySelector('#categoria').value;
-            
-        //     let nuevaImagen = card.querySelector('.imagen-tarjeta img').src;
-        //     if (inputImagen.files && inputImagen.files[0]) {
-        //         nuevaImagen = URL.createObjectURL(inputImagen.files[0]);
-        //     }
-
-        //     // Actualizar tarjeta
-        //     card.querySelector('h4').textContent = nuevoTitulo;
-        //     card.querySelector('.imagen-tarjeta img').src = nuevaImagen;
-        //     card.querySelector('.imagen-tarjeta img').alt = nuevoTitulo;
-        //     card.dataset.categoria = nuevaCategoria.toLowerCase();
-            
-        //     if (tipo === 'noticia') {
-        //         card.querySelector('.info-tarjeta p:first-child').textContent = 
-        //             `Autor: ${formulario.querySelector('#autor').value}`;
-        //     } else if (tipo === 'emprendimiento') {
-        //         card.querySelector('.info-tarjeta p:first-child').textContent = 
-        //             `Emprendedor: ${formulario.querySelector('#emprendedor').value}`;
-        //     }
-            
-        //     if (tipo === 'actividad') {
-        //         const fechaInput = formulario.querySelector('#fecha').value;
-        //         const fechaFormateada = formatDateFromInput(fechaInput);
-        //         card.querySelector('.fecha').textContent = fechaFormateada;
-        //     }
-            
-        //     let descripcionElement = card.querySelector('.descripcion-tarjeta');
-        //     if (descripcionElement) {
-        //         descripcionElement.textContent = nuevaDescripcion;
-        //     } else if (nuevaDescripcion) {
-        //         descripcionElement = document.createElement('p');
-        //         descripcionElement.className = 'descripcion-tarjeta';
-        //         descripcionElement.textContent = nuevaDescripcion;
-        //         card.querySelector('.info-tarjeta').appendChild(descripcionElement);
-        //     }
-            
-        //     document.body.removeChild(formulario);
-        //     mostrarNotificacion(`${tipo} actualizada correctamente`, 'exito');
-        // });
-
-        // formulario.querySelector('.btn-cancelar').addEventListener('click', function() {
-        //     document.body.removeChild(formulario);
-        // });
-    }
-
-    function editarTransporte(id) {
-        const card = document.querySelector(`.tarjeta-simple[data-id="${id}"]`);
-        if (!card) return;
-
-        const formulario = document.createElement('div');
-        formulario.className = 'modal-edicion';
-        formulario.innerHTML = `
-            <div class="modal-contenido">
-                <h3>Editar Transporte</h3>
-                <form id="form-editar-transporte">
-                    <div class="form-group">
-                        <label for="nombre">Nombre:</label>
-                        <input type="text" id="nombre" value="${card.querySelector('h4').textContent}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="tipo">Tipo:</label>
-                        <select id="tipo" required>
-                            <option value="Bus" ${card.dataset.tipo === 'bus' ? 'selected' : ''}>Bus</option>
-                            <option value="Taxi" ${card.dataset.tipo === 'taxi' ? 'selected' : ''}>Taxi</option>
-                            <option value="Colectivo" ${card.dataset.tipo === 'colectivo' ? 'selected' : ''}>Colectivo</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="horarios">Horarios:</label>
-                        <input type="text" id="horarios" value="${card.querySelector('.info-tarjeta p:first-child').textContent.replace('Horarios: ', '')}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="tarifa">Tarifa:</label>
-                        <input type="text" id="tarifa" value="${card.querySelector('.info-tarjeta p:nth-child(2)').textContent.replace('Tarifa: ', '')}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="contacto">Contacto:</label>
-                        <input type="text" id="contacto" value="${card.querySelector('.info-tarjeta p:nth-child(3)').textContent.replace('Contacto: ', '')}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="imagen">Cambiar imagen:</label>
-                        <input type="file" id="imagen" accept="image/*">
-                        <div class="vista-previa-imagen" id="vista-previa-imagen">
-                            <img src="${card.querySelector('.imagen-tarjeta img').src}" alt="Imagen actual" style="max-width: 100%; max-height: 150px;">
-                        </div>
-                    </div>
-                    <div class="form-acciones">
-                        <button type="button" class="btn-cancelar">Cancelar</button>
-                        <button type="submit" class="btn-guardar">Guardar Cambios</button>
-                    </div>
-                </form>
-            </div>
-        `;
-
-        document.body.appendChild(formulario);
-        formulario.style.display = 'flex';
-
-        const inputImagen = formulario.querySelector('#imagen');
-        const vistaPrevia = formulario.querySelector('#vista-previa-imagen');
-
-        inputImagen.addEventListener('change', function() {
-            const archivo = this.files[0];
-            if (archivo) {
-                const lector = new FileReader();
-                lector.onload = function(e) {
-                    vistaPrevia.innerHTML = `<img src="${e.target.result}" alt="Nueva imagen" style="max-width: 100%; max-height: 150px;">`;
-                }
-                lector.readAsDataURL(archivo);
-            }
-        });
-
-        formulario.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Obtener valores del formulario
-            const nombre = formulario.querySelector('#nombre').value;
-            const tipo = formulario.querySelector('#tipo').value;
-            const horarios = formulario.querySelector('#horarios').value;
-            const tarifa = formulario.querySelector('#tarifa').value;
-            const contacto = formulario.querySelector('#contacto').value;
-            
-            let imagenSrc = card.querySelector('.imagen-tarjeta img').src;
-            if (inputImagen.files && inputImagen.files[0]) {
-                imagenSrc = URL.createObjectURL(inputImagen.files[0]);
-            }
-
-            // Actualizar tarjeta
-            card.querySelector('h4').textContent = nombre;
-            card.querySelector('.fecha').textContent = tipo;
-            card.dataset.tipo = tipo.toLowerCase();
-            
-            const infoTarjeta = card.querySelector('.info-tarjeta');
-            infoTarjeta.innerHTML = `
-                <p><strong>Horarios:</strong> ${horarios}</p>
-                <p><strong>Tarifa:</strong> ${tarifa}</p>
-                <p><strong>Contacto:</strong> ${contacto}</p>
-            `;
-            
-            card.querySelector('.imagen-tarjeta img').src = imagenSrc;
-            card.querySelector('.imagen-tarjeta img').alt = nombre;
-            
-            document.body.removeChild(formulario);
-            mostrarNotificacion('Transporte actualizado correctamente', 'exito');
-        });
-
-        formulario.querySelector('.btn-cancelar').addEventListener('click', function() {
-            document.body.removeChild(formulario);
-        });
-    }
-
-    function editarActividad(id) {
-        const card = document.querySelector(`.tarjeta-simple[data-id="${id}"]`);
-        if (!card) return;
-
-        const formulario = document.createElement('div');
-        formulario.className = 'modal-edicion';
-        formulario.innerHTML = `
-            <div class="modal-contenido">
-                <h3>Editar Actividad</h3>
-                <form id="form-editar-actividad">
-                    <div class="form-group">
-                        <label for="titulo">Título:</label>
-                        <input type="text" id="titulo" value="${card.querySelector('h4').textContent}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="categoria">Categoría:</label>
-                        <select id="categoria" required>
-                            <option value="Cultural" ${card.dataset.categoria === 'cultural' ? 'selected' : ''}>Cultural</option>
-                            <option value="Deportiva" ${card.dataset.categoria === 'deportiva' ? 'selected' : ''}>Deportiva</option>
-                            <option value="Educativa" ${card.dataset.categoria === 'educativa' ? 'selected' : ''}>Educativa</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="fecha">Fecha:</label>
-                        <input type="date" id="fecha" value="${formatDateForInput(card.querySelector('.fecha').textContent)}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="descripcion">Descripción:</label>
-                        <textarea id="descripcion" rows="4">${card.querySelector('.descripcion-tarjeta').textContent}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="imagen">Cambiar imagen:</label>
-                        <input type="file" id="imagen" accept="image/*">
-                        <div class="vista-previa-imagen" id="vista-previa-imagen">
-                            <img src="${card.querySelector('.imagen-tarjeta img').src}" alt="Imagen actual" style="max-width: 100%; max-height: 150px;">
-                        </div>
-                    </div>
-                    <div class="form-acciones">
-                        <button type="button" class="btn-cancelar">Cancelar</button>
-                        <button type="submit" class="btn-guardar">Guardar Cambios</button>
-                    </div>
-                </form>
-            </div>
-        `;
-
-        document.body.appendChild(formulario);
-        formulario.style.display = 'flex';
-
-        const inputImagen = formulario.querySelector('#imagen');
-        const vistaPrevia = formulario.querySelector('#vista-previa-imagen');
-
-        inputImagen.addEventListener('change', function() {
-            const archivo = this.files[0];
-            if (archivo) {
-                const lector = new FileReader();
-                lector.onload = function(e) {
-                    vistaPrevia.innerHTML = `<img src="${e.target.result}" alt="Nueva imagen" style="max-width: 100%; max-height: 150px;">`;
-                }
-                lector.readAsDataURL(archivo);
-            }
-        });
-
-        formulario.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Obtener valores del formulario
-            const titulo = formulario.querySelector('#titulo').value;
-            const categoria = formulario.querySelector('#categoria').value;
-            const fechaInput = formulario.querySelector('#fecha').value;
-            const descripcion = formulario.querySelector('#descripcion').value;
-            
-            let imagenSrc = card.querySelector('.imagen-tarjeta img').src;
-            if (inputImagen.files && inputImagen.files[0]) {
-                imagenSrc = URL.createObjectURL(inputImagen.files[0]);
-            }
-
-            // Formatear fecha
-            const fechaFormateada = formatDateFromInput(fechaInput);
-
-            // Actualizar tarjeta
-            card.querySelector('h4').textContent = titulo;
-            card.querySelector('.fecha').textContent = fechaFormateada;
-            card.dataset.categoria = categoria.toLowerCase();
-            card.querySelector('.info-tarjeta p:first-child').textContent = `Categoría: ${categoria}`;
-            card.querySelector('.descripcion-tarjeta').textContent = descripcion;
-            card.querySelector('.imagen-tarjeta img').src = imagenSrc;
-            card.querySelector('.imagen-tarjeta img').alt = titulo;
-            
-            document.body.removeChild(formulario);
-            mostrarNotificacion('Actividad actualizada correctamente', 'exito');
-        });
-
-        formulario.querySelector('.btn-cancelar').addEventListener('click', function() {
-            document.body.removeChild(formulario);
-        });
-    }
-
-    function verDetalles(id, tipo) {
-        const card = document.querySelector(`.tarjeta-${tipo === 'noticia' || tipo === 'transporte' || tipo === 'actividad' ? 'simple' : 'emprendimiento'}[data-id="${id}"]`);
-        if (!card) return;
-
+    function verDetallesEmprendimientoPendiente(card) {
+        // Elimina cualquier modal existente
+        document.querySelectorAll('.modal-detalles').forEach(m => m.remove());
+        // Modal mejorado
         const modal = document.createElement('div');
         modal.className = 'modal-detalles';
         modal.innerHTML = `
-            <div class="modal-contenido">
-                <h3>Detalles de ${tipo}</h3>
-                <div class="detalles-imagen">
-                    <img src="${card.querySelector('.imagen-tarjeta img').src}" alt="${card.querySelector('h4').textContent}">
-                </div>
-                <div class="detalles-info">
-                    <h4>${card.querySelector('h4').textContent}</h4>
-                    ${Array.from(card.querySelectorAll('.info-tarjeta p')).map(p => `<p>${p.textContent}</p>`).join('')}
-                    ${card.querySelector('.motivo-rechazo') ? `<p class="motivo-rechazo">${card.querySelector('.motivo-rechazo').textContent}</p>` : ''}
-                </div>
-                <div class="detalles-acciones">
-                    <button class="btn-cerrar">Cerrar</button>
-                    ${tipo === 'emprendimiento' && card.dataset.estado === 'pendiente' ? `
-                    <button class="btn-editar-modal" data-id="${id}">Editar</button>
-                    ` : ''}
+            <div class="modal-contenido-detalles">
+                <button class="btn-cerrar-detalles">&times;</button>
+                <h3 class="modal-titulo">Detalles de Emprendimiento</h3>
+                <div class="modal-detalles-body">
+                    <div class="modal-detalles-imagen">
+                        <img src="${card.querySelector('.imagen-tarjeta img').src}" alt="${card.querySelector('h4').textContent}">
+                    </div>
+                    <div class="modal-detalles-info">
+                        <h4>${card.querySelector('h4').textContent}</h4>
+                        ${Array.from(card.querySelectorAll('.info-tarjeta p')).map(p => `<p>${p.outerHTML}</p>`).join('')}
+                        ${card.querySelector('.motivo-rechazo') ? card.querySelector('.motivo-rechazo').outerHTML : ''}
+                    </div>
                 </div>
             </div>
         `;
-
         document.body.appendChild(modal);
         modal.style.display = 'flex';
-
-        modal.querySelector('.btn-cerrar').addEventListener('click', function() {
+        modal.querySelector('.btn-cerrar-detalles').addEventListener('click', function () {
             document.body.removeChild(modal);
         });
-
-        const btnEditar = modal.querySelector('.btn-editar-modal');
-        if (btnEditar) {
-            btnEditar.addEventListener('click', function() {
-                document.body.removeChild(modal);
-                editarContenido(id, tipo);
-            });
-        }
     }
 
     function mostrarFormularioNoticia() {
@@ -1001,4 +643,37 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    function eliminarContenido(id, tipo) {
+        let url = '';
+        if (tipo === 'emprendimiento') url = '/api/eliminarEmprendimiento';
+        else if (tipo === 'noticia') url = '/api/eliminarNoticia';
+        else if (tipo === 'transporte') url = '/api/eliminarTransporte';
+        else if (tipo === 'actividad') url = '/api/eliminarActividad';
+        else if (tipo === 'queja') url = '/api/eliminarQueja';
+        else if (tipo === 'usuario') url = '/api/eliminarUsuario';
+
+        if (!url) return;
+
+        if (confirm('¿Estás seguro de que quieres eliminar este registro? Esta acción no se puede deshacer.')) {
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.resultado) {
+                    const card = document.querySelector(`[data-id="${id}"]`);
+                    if (card) card.remove();
+                    mostrarNotificacion('¡El registro fue eliminado exitosamente!', 'exito');
+                } else {
+                    mostrarNotificacion('Error al eliminar: ' + data.mensaje, 'error');
+                }
+            })
+            .catch(() => {
+                mostrarNotificacion('Error de conexión', 'error');
+            });
+        }
+    }
 });

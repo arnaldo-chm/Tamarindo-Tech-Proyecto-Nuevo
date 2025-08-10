@@ -102,54 +102,93 @@
             </div>
         </section>
 
-        <% if (emprendimientosUsuario && emprendimientosUsuario.length>0) { %>
-            <section class="Emprendimientos" id="Emprendimientos"> <!-- Emprendimientos -->
-
+        <% if ((emprendimientosUsuario && emprendimientosUsuario.length>0) || (emprendimientosPendientesUsuario && emprendimientosPendientesUsuario.length>0)) { %>
+            <section class="Emprendimientos" id="Emprendimientos">
                 <h2 class="titulo_emprendimientos" id="titulo_emprendimientos">Mis Emprendimientos</h2>
                 <div class="contenedor-emprendimientos" id="contenedor-emprendimientos">
 
-                    <% emprendimientosUsuario.forEach(emprendimientoPersonal=>{ %>
-
-                       
-                        <div class="card" id="emprendimiento">
-                            <img src="/img/<%= emprendimientoPersonal.nombreImagen %>" class="img_emprendimiento"
-                                id="emprendimiento" alt="" />
-                            <h3 class="producto" id="producto">
-                                <%= emprendimientoPersonal.nombreEmprendimiento %>
-                            </h3>
-                            <p class="descripcion_emprendimiento" id="descripcion_emprendimiento">
-                                <%= emprendimientoPersonal.descripcionEmprendimiento %>
-                            </p>
-                            <p class="precio_emprendimiento" id="precio_emprendimiento">$<%=
-                                    emprendimientoPersonal.precio %>
-                            </p>
-                            <p class="numero_emprendimiento" id="numero_emprendimiento">
-                                <%= emprendimientoPersonal.telefono %>
-                            </p>
-                            <p class="categoria_emprendimiento" id="categoria_emprendimiento">
-                                <%= emprendimientoPersonal.categoria %>
-                            </p>
-                            <p class="estado_emprendimiento" id="estado_emprendimiento">
-                                <%= emprendimientoPersonal.estadoEmprendimiento %>
-                            </p>
-                           
-                            <div class="acciones-tarjeta">
-                                <a href="/emprendimiento/<%= emprendimientoPersonal._id %>/editar">
-                                    <button class="btn-editar">Editar</button>
-                                </a>
-
-                                <form action="/emprendimiento/<%= emprendimientoPersonal._id %>/eliminar" method="POST" style="display:inline;">
-                                    <button class="btn-eliminar" data-id="<%= emprendimientoPersonal._id %>">Eliminar</button>
-                                </form>
+                    <% if (emprendimientosPendientesUsuario && emprendimientosPendientesUsuario.length > 0) { %>
+                        <% emprendimientosPendientesUsuario.forEach(emprendimientoPersonalPendiente=>{ %>
+                            <div class="card" id="emprendimiento">
+                                <img src="/img/<%= emprendimientoPersonalPendiente.nombreImagen %>" class="img_emprendimiento"
+                                    id="emprendimiento" alt="" />
+                                <h3 class="producto" id="producto">
+                                    <%= emprendimientoPersonalPendiente.nombreEmprendimiento %>
+                                </h3>
+                                <p class="descripcion_emprendimiento" id="descripcion_emprendimiento">
+                                    <%= emprendimientoPersonalPendiente.descripcionEmprendimiento %>
+                                </p>
+                                <p class="precio_emprendimiento" id="precio_emprendimiento">$<%= emprendimientoPersonalPendiente.precio %>
+                                </p>
+                                <p class="numero_emprendimiento" id="numero_emprendimiento">
+                                    <%= emprendimientoPersonalPendiente.telefono %>
+                                </p>
+                                <p class="categoria_emprendimiento" id="categoria_emprendimiento">
+                                    <%= emprendimientoPersonalPendiente.categoria %>
+                                </p>
+                                <p class="estado_emprendimiento" id="estado_emprendimiento">
+                                    <%= emprendimientoPersonalPendiente.estadoEmprendimiento %>
+                                </p>
+                                <% if (emprendimientoPersonalPendiente.estadoEmprendimiento === 'Rechazado' && emprendimientoPersonalPendiente.motivoRechazo) { %>
+                                    <div class="motivo-rechazo">
+                                        <strong>Motivo:</strong> <%= emprendimientoPersonalPendiente.motivoRechazo %>
+                                    </div>
+                                <% } %>
+                                <div class="acciones-tarjeta">
+                                    <% if (emprendimientoPersonalPendiente.estadoEmprendimiento === 'Pendiente' || !emprendimientoPersonalPendiente.estadoEmprendimiento) { %>
+                                        <span style="color:#f39c12;font-weight:bold;">Pendiente de aprobación</span>
+                                    <% } else if (emprendimientoPersonalPendiente.estadoEmprendimiento === 'Rechazado') { %>
+                                        <form action="/emprendimientoPendiente/<%= emprendimientoPersonalPendiente._id %>/eliminar" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este emprendimiento?');">
+                                            <button class="btn-eliminar" type="submit">Eliminar</button>
+                                        </form>
+                                    <% } %>
+                                </div>
                             </div>
-                        </div>
-                        
-
                         <% }) %>
+                    <% } %>
+
+                    <% if (emprendimientosUsuario && emprendimientosUsuario.length > 0) { %>
+                        <% emprendimientosUsuario.forEach(emprendimientoPersonal=>{ %>
+                            <div class="card" id="emprendimiento">
+                                <img src="/img/<%= emprendimientoPersonal.nombreImagen %>" class="img_emprendimiento"
+                                    id="emprendimiento" alt="" />
+                                <h3 class="producto" id="producto">
+                                    <%= emprendimientoPersonal.nombreEmprendimiento %>
+                                </h3>
+                                <p class="descripcion_emprendimiento" id="descripcion_emprendimiento">
+                                    <%= emprendimientoPersonal.descripcionEmprendimiento %>
+                                </p>
+                                <p class="precio_emprendimiento" id="precio_emprendimiento">$<%= emprendimientoPersonal.precio %>
+                                </p>
+                                <p class="numero_emprendimiento" id="numero_emprendimiento">
+                                    <%= emprendimientoPersonal.telefono %>
+                                </p>
+                                <p class="categoria_emprendimiento" id="categoria_emprendimiento">
+                                    <%= emprendimientoPersonal.categoria %>
+                                </p>
+                                <p class="estado_emprendimiento" id="estado_emprendimiento">
+                                    <%= emprendimientoPersonal.estadoEmprendimiento %>
+                                </p>
+                                <% if (emprendimientoPersonal.estadoEmprendimiento === 'Rechazado' && emprendimientoPersonal.motivoRechazo) { %>
+                                    <div class="motivo-rechazo">
+                                        <strong>Motivo:</strong> <%= emprendimientoPersonal.motivoRechazo %>
+                                    </div>
+                                <% } %>
+                                <div class="acciones-tarjeta">
+                                    <a href="/emprendimiento/<%= emprendimientoPersonal._id %>/editar">
+                                        <button class="btn-editar" type="button">Editar</button>
+                                    </a>
+                                    <form action="/emprendimiento/<%= emprendimientoPersonal._id %>/eliminar" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este emprendimiento?');">
+                                        <button class="btn-eliminar" type="submit">Eliminar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        <% }) %>
+                    <% } %>
 
                 </div>
             </section>
-            <% } %>
+        <% } %>
 
     </div><!-- fin de Emprendimientos -->
 

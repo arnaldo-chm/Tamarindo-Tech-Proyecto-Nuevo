@@ -1,4 +1,3 @@
-
 .contenedor_encabezado{
     display: flex;
     justify-content: flex-start; 
@@ -217,6 +216,17 @@
     background-color: #c0392b;
 }
 
+.motivo-rechazo {
+    padding: 8px;
+    background-color: #fbeaea;
+    border-left: 4px solid #e74c3c;
+    color: #e74c3c;
+    font-weight: bold;
+    margin: 10px 15px 0 15px;
+    font-size: 0.95em;
+    border-radius: 6px;
+    line-height: 1.5;
+}
 
 /* RESPONSIVE DESIGN */
 

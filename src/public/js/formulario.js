@@ -465,6 +465,7 @@ async function registrarEmprendimiento() {
             // Se muestra el mensaje de aprobación en función de la validación.
             document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
             document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
+            document.getElementById("formulario__mensaje-exito").innerText = datosRespuesta.mensaje;
 
             setTimeout(() => {
                 window.location.href = "emprendimientos";
