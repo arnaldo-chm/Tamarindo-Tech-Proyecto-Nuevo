@@ -63,7 +63,9 @@
             <% noticiasRecientes.forEach(function(noticia, idx) { %>
                 <div class="contenedor-noticia-reciente<%= idx === 0 ? ' activa' : '' %>">
                     <img src="/img/<%= noticia.nombreImagen %>" alt="<%= noticia.titulo %>">
-                    <p><%= noticia.titulo %></p>
+                    <div class="noticias-reciente-contenido">
+                        <h3><%= noticia.titulo %></h3>                                            
+                    </div>                    
                 </div>
             <% }) %>
         </div>
