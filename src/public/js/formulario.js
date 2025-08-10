@@ -26,7 +26,7 @@ if (formulario.name === "registrarse") {
         correo: /^[a-zA-Z0-9\_]+@[a-zA-Z]+\.[a-zA-Z]+$/, // Misma expresion regular usada para el correo en Registrarse.
         password: /^.{4,12}$/, //Misma expresion regular usada en la contraseña para Registrarse.      
     }
-} else if (formulario.name === "registrar_emprendimiento") {
+} else if (formulario.name === "registrar_emprendimiento" || formulario.name === "editar_emprendimiento") {
     expresiones = {
         // nombre : /^[a-zA-ZÀ-ÿ]{3,10}\s[a-zA-ZÀ-ÿ]{2,10}(?:\s[a-zA-ZÀ-ÿ]{2,10})?$/,  // Misma expresion regular usada para el nombre en Registrarse.
         correo: /^[a-zA-Z0-9\_]+@[a-zA-Z]+\.[a-zA-Z]+$/, // Misma expresion regular usada para el correo en Registrarse.
@@ -69,7 +69,6 @@ else if (formulario.name === "registrar_actividad" || formulario.name === "edita
         telefono: /^\+?\d{8,11}$/ //Acepta de 8 a 15 digitos. Permite ingresar un + al inicio para código de pais.      
     }
 }
-
 
 // Se crea un objeto para mapear la validación de cada campo del formulario al momento de validar el formulario completo.
 // Cada propiedad de este objeto será actualizada en las función de validación respectiva a la propiedad.
@@ -162,6 +161,15 @@ else if (formulario.name === "editar_usuario") {
         correo: true,
         telefono: true,
         dropdown: true,
+    }
+}
+else if (formulario.name === "editar_emprendimiento") {
+    campos = {
+        correo: true,
+        nombre_emprendimiento: true,
+        descripcion_emprendimiento: true,
+        telefono: true,
+        precio: true
     }
 }
 
@@ -821,6 +829,52 @@ async function editarUsuario(){
 
 }
 
+async function editarEmprendimiento() {
+
+    let datos = {
+        id: document.querySelector('input[name="id"]').value,
+        nombreEmprendimiento: document.getElementById("nombre_emprendimiento").value,
+        descripcionEmprendimiento: document.getElementById("descripcion_emprendimiento").value,
+        archivo: document.getElementById("archivo").value,
+        categoria: document.getElementById("dropdown").value,
+        telefono: document.getElementById("telefono").value,
+        precio: document.getElementById("precio").value
+    }
+    console.log(datos);
+
+    try {
+        const respuesta = await fetch('http://localhost:3000/api/editarEmprendimiento', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datos)
+        });
+
+        if (!respuesta.ok) {
+            throw new Error(`Error en la solicitud: ${respuesta.status}`);
+        }
+
+        const datosRespuesta = await respuesta.json();
+        if (datosRespuesta.resultado) {
+            // Se muestra el mensaje de aprobación en función de la validación.
+            document.getElementById("formulario__mensaje").classList.remove("formulario__mensaje-activo");
+            document.getElementById("formulario__mensaje-exito").classList.add("formulario__mensaje-exito-activo");
+
+            setTimeout(() => {
+                window.location.href = "/emprendimientos";
+            }, 4000)
+
+        } else {
+            alert(datosRespuesta.mensaje);
+        }
+    } catch (error) {
+        console.error('Error al llamar al backend:', error);
+
+    }
+
+}
+
 
 // Se crea un EventListener para el evento submit del Formulario.
 formulario.addEventListener("submit", (e) => {
@@ -881,8 +935,10 @@ formulario.addEventListener("submit", (e) => {
         }else if (formulario.name === "editar_usuario") {
             console.log("Llamando a Editar Usuario")
             editarUsuario();
+        }else if (formulario.name === "editar_emprendimiento") {
+            console.log("Llamando a Editar Emprendimiento")
+            editarEmprendimiento();
         }
-
 
     } else {
 

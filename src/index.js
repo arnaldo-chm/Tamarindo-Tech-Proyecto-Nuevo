@@ -275,6 +275,43 @@ app.post('/api/registrarEmprendimiento', isAuthenticated, (req, res) => {
     }
 })
 
+// Mostrar formulario de edición
+app.get('/emprendimiento/:id/editar', isAuthenticated, async (req, res) => {
+
+    const emprendimiento = await Emprendimiento.findById(req.params.id);
+    // console.log(emprendimiento);
+
+    if (!emprendimiento) {
+        return res.status(404).send('Emprendimiento no encontrado');
+    }
+    res.render('editar_emprendimiento.ejs', { emprendimiento: emprendimiento });
+});
+
+app.post('/api/editarEmprendimiento', isAuthenticated, async (req, res) => {
+
+    try {
+        // Busca el emprendimiento por ID
+        const emprendimiento = await Emprendimiento.findById(req.body.id);
+
+        console.log("Emprendimiento encontrado:", emprendimiento);
+
+        await Emprendimiento.findByIdAndUpdate(req.body.id, {
+            correoUsuario: req.body.correoUsuario,
+            nombreEmprendimiento: req.body.nombreEmprendimiento,
+            descripcionEmprendimiento: req.body.descripcionEmprendimiento,
+            categoria: req.body.categoria,
+            telefono: req.body.telefono,
+            precio: req.body.precio,
+            nombreImagen: req.body.archivo ? path.basename(req.body.archivo) : emprendimiento.nombreImagen, // Mantener la imagen actual si no se proporciona una nueva
+            estadoEmprendimiento: "Pendiente"
+        });
+        res.json({ resultado: true, mensaje: "Emprendimiento editado con éxito" });
+    } catch (error) {
+        console.error("Error al editar Emprendimiento:", error);
+        res.json({ resultado: false, mensaje: `Error al editar Emprendimiento ${error}` });
+    }
+});
+
 //#endregion
 
 //#region Noticias
