@@ -64,7 +64,10 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/crear_emprendimiento', isAuthenticated, (req, res) => {
-    res.render('crear_emprendimiento.html');
+
+    const correoUsuario = req.session.user ? req.session.user.correo : '';
+
+    res.render('crear_emprendimiento.ejs', { correoUsuario });
 });
 
 app.get('/noticias', isAuthenticated, async (req, res) => {
@@ -220,9 +223,17 @@ const Emprendimiento = require('../models/emprendimientos.js');
 
 app.get('/emprendimientos', isAuthenticated, async (req, res) => {
 
-    const emprendimientos = await Emprendimiento.find();
+    const emprendimientos = await Emprendimiento.find({ estadoEmprendimiento: "Aprobado" });
 
-    res.render('emprendimientos.ejs', { emprendimientos: emprendimientos });
+    let emprendimientosUsuario = null;
+
+    // Se muestran emprendimientos unicamente si el usuario es tipo emprendedor o administrador.
+    // Para contar con el caso en que el administrador decide degradar un emprendedor a usuario corriente.
+    if (req.session.user && req.session.user.tipoUsuario > 0) {
+        emprendimientosUsuario = await Emprendimiento.find({ correoUsuario: req.session.user.correo });
+    }
+
+    res.render('emprendimientos.ejs', { emprendimientos: emprendimientos, emprendimientosUsuario: emprendimientosUsuario });
 });
 
 app.post('/api/registrarEmprendimiento', isAuthenticated, (req, res) => {
@@ -266,6 +277,53 @@ app.post('/api/registrarEmprendimiento', isAuthenticated, (req, res) => {
         res.json(resultado);
     }
 })
+
+// Mostrar formulario de edición
+app.get('/emprendimiento/:id/editar', isAuthenticated, async (req, res) => {
+
+    const emprendimiento = await Emprendimiento.findById(req.params.id);
+    // console.log(emprendimiento);
+
+    if (!emprendimiento) {
+        return res.status(404).send('Emprendimiento no encontrado');
+    }
+    res.render('editar_emprendimiento.ejs', { emprendimiento: emprendimiento });
+});
+
+app.post('/api/editarEmprendimiento', isAuthenticated, async (req, res) => {
+
+    try {
+        // Busca el emprendimiento por ID
+        const emprendimiento = await Emprendimiento.findById(req.body.id);
+
+        console.log("Emprendimiento encontrado:", emprendimiento);
+
+        await Emprendimiento.findByIdAndUpdate(req.body.id, {
+            correoUsuario: req.body.correoUsuario,
+            nombreEmprendimiento: req.body.nombreEmprendimiento,
+            descripcionEmprendimiento: req.body.descripcionEmprendimiento,
+            categoria: req.body.categoria,
+            telefono: req.body.telefono,
+            precio: req.body.precio,
+            nombreImagen: req.body.archivo ? path.basename(req.body.archivo) : emprendimiento.nombreImagen, // Mantener la imagen actual si no se proporciona una nueva
+            estadoEmprendimiento: "Pendiente"
+        });
+        res.json({ resultado: true, mensaje: "Emprendimiento editado con éxito" });
+    } catch (error) {
+        console.error("Error al editar Emprendimiento:", error);
+        res.json({ resultado: false, mensaje: `Error al editar Emprendimiento ${error}` });
+    }
+});
+
+app.post('/emprendimiento/:id/eliminar', isAuthenticated, async (req, res) => {
+    try {
+        await Emprendimiento.findByIdAndDelete(req.params.id);
+        res.redirect('/emprendimientos');
+    } catch (error) {
+        console.error("Error al eliminar Emprendimiento:", error);
+        res.redirect('/emprendimientos');
+    }
+});
 
 //#endregion
 

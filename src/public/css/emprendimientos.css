@@ -92,10 +92,10 @@
 }
 
 .contenedor-emprendimientos{
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    display: flex; 
+    flex-wrap: wrap; 
     gap: 25px; 
-    justify-items: start; 
+    justify-content: start; 
 }
 
 .contenedor-emprendimientos a{
@@ -108,12 +108,11 @@
     width: 100%; 
     max-width: 350px; 
     border-radius: 12px; 
-    /* overflow: hidden; */
     box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
     background-color: white;
     transition: all 0.3s ease;
     border: 1px solid rgba(0,0,0,0.05);
-    height: 100%;
+    height: auto;
     
     /* Agregamos flexbox para controlar la posición del precio */
     display: flex;
@@ -133,11 +132,8 @@
     height: 200px; 
     object-fit: cover; 
     transition: transform 0.3s ease;
+    border-radius: 12px 12px 0 0;
 }
-
-/* .card:hover img {
-    transform: scale(1.05); 
-} */
 
 .card h3 {
     font-size: 1.2em; 
@@ -163,7 +159,7 @@
     color:white; 
     padding: 5px 5px 5px 5px;
     margin-bottom: 0;
-    margin-top: auto; /* Esto empuja el precio hacia abajo */
+    margin-top: auto; 
     position: absolute;
     top: 15px;
     right: -15px;
@@ -177,63 +173,52 @@
     color:#668c31; 
     padding: 0px 15px 15px 15px;
     margin-bottom: 0;
-    margin-top: auto; /* Esto empuja el precio hacia abajo */
+    margin-top: auto; 
 }
+
+.acciones-tarjeta {
+    padding: 15px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.acciones-tarjeta a {
+    text-decoration: none;
+    width: auto; 
+    display: inline-block;
+}
+
+.acciones-tarjeta button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.3s;
+}
+
+.btn-editar {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-editar:hover {
+    background-color: #2980b9;
+}
+
+.btn-eliminar {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-eliminar:hover {
+    background-color: #c0392b;
+}
+
 
 /* RESPONSIVE DESIGN */
-@media (max-width: 1200px) {
-    .contenedor_encabezado {
-        margin: 30px auto;
-        padding: 0 60px;
-        gap: 30px;
-    }
-    
-    .Emprendimientos {
-        padding: 0 60px;
-    }
-    
-    .img_encabezado_emprendimientos img {
-        height: 480px;
-    }
-}
-
-@media (max-width: 1024px) {
-    .contenedor_encabezado {
-        padding: 0 40px;
-        gap: 25px;
-        flex-wrap: wrap;
-        justify-content: center;
-        text-align: center;
-    }
-    
-    .Emprendimientos {
-        padding: 0 40px;
-        margin: 40px auto;
-    }
-    
-    .img_encabezado_emprendimientos img {
-        width: 100%;
-        max-width: 400px;
-        height: 350px;
-    }
-    
-    .texto_encabezado_emprendimientos {
-        flex: none;
-        width: 100%;
-        max-width: 500px;
-        min-height: auto;
-    }
-    
-    .texto_encabezado_emprendimientos h1 {
-        font-size: 1.8em;
-    }
-    
-    .contenedor-emprendimientos {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        justify-items: center;
-        gap: 20px;
-    }
-}
 
 @media (max-width: 768px) {
     .contenedor_encabezado {
@@ -285,6 +270,7 @@
     .contenedor-emprendimientos {
         grid-template-columns: 1fr;
         gap: 18px;
+        justify-content: center;
     }
     
     .card {
@@ -365,60 +351,4 @@
     }
 }
 
-@media (max-width: 320px) {
-    .contenedor_encabezado {
-        padding: 0 15px;
-        margin: 10px auto;
-    }
-    
-    .Emprendimientos {
-        padding: 0 15px;
-        margin: 20px auto;
-    }
-    
-    .img_encabezado_emprendimientos img {
-        max-width: 280px;
-        height: 220px;
-    }
-    
-    .texto_encabezado_emprendimientos h1 {
-        font-size: 1.3em;
-    }
-    
-    .texto_encabezado_emprendimientos .info_general {
-        font-size: 0.85em;
-    }
-    
-    .texto_encabezado_emprendimientos p {
-        font-size: 0.8em;
-    }
-    
-    .boton_crear_emprendimiento {
-        height: 42px;
-        font-size: 0.9em;
-    }
-    
-    .Emprendimientos h2 {
-        font-size: 1.4em;
-    }
-    
-    .card img {
-        height: 160px;
-    }
-    
-    .card h3 {
-        font-size: 1em;
-        margin: 10px;
-    }
-    
-    .card p {
-        font-size: 0.8em;
-        padding: 0 10px;
-    }
-    
-    .card .precio_emprendimiento {
-        font-size: 0.95em;
-        padding: 0 10px 10px 10px;
-    }
-}
 

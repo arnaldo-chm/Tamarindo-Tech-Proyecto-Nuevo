@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Emprendimiento</title>
+    <link rel="stylesheet" href="../css/general.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/formularios.css">
+    <!-- Link preconnect para Google fonts con la opción de Roboto como fuente de fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <!-- Header -->
+    <header class = "header" id="header">
+        <div class="logo">
+            <h1>Tamarindo Tech</h1>
+        </div>
+            <input type="checkbox" id="check">
+        <label for="check" class="btn">☰</label>
+        
+        <nav class="Links_Header" id= "Links_Header">
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="noticias">Anuncios/Noticias</a></li>
+                <li><a href="emprendimientos">Emprendimientos</a></li>
+                <li><a href="Transportes">Transporte</a></li>
+                <li><a href="actividades">Actividades</a></li>
+                <button class="boton_sing_out" id="boton_sing_out"><a href="/logout">Cerrar Sesion</a></button>
+            </ul>
+        </nav>
+    </header>
+<!-- fin de header -->
+
+    <main class="Contenido">
+        <div class="contenedor-formulario">
+            <form class="formulario" id="formulario" name="registrar_emprendimiento">
+                <h1>Publica tu Emprendimiento</h1>
+
+                <!-- GRUPO CORREO-->
+                <div class="formulario__grupo" id="grupo__correo">
+                    <label class="formulario__label">Correo electronico</label>
+                    <div class="formulario__grupo-input">
+                        <input type="email" class="formulario__input" name="correo" id="correo" placeholder="correo@correo.com" value="<%= correoUsuario %>" readonly>
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        Debe agregar un correo con la siguiente estructura usuario@dominio.extension,
+                        usuario acepta letras,guión bajo y números,
+                        dominio acepta solo letras,
+                        extension, acepta solo letras
+                    </p>
+                </div>
+
+                <!-- GRUPO NOMBRE EMPRENDIMIENTO-->
+                <div class="formulario__grupo" id="grupo__nombre_emprendimiento">
+                    <label class="formulario__label">Nombre Emprendimiento*</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="nombre_emprendimiento" id="nombre_emprendimiento" placeholder="Introduce el nombre de tu emprendimiento">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        El nombre del emprendimiento debe tener mínimo 5 caracteres y máximo 20 y solo admite
+                        números, letras, guión, guión bajo, espacios y acentos.
+                    </p>
+                </div>
+
+                <!-- GRUPO Descripcion-->
+                <div class="formulario__grupo" id="grupo__descripcion_emprendimiento">
+                    <label class="formulario__label">Ingresa los detalles de tu Emprendimiento*</label>
+                    <div class="formulario__grupo-input">
+                        <textarea class="formulario__input" id="descripcion_emprendimiento" name="descripcion_emprendimiento" rows="3"></textarea>
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        La descripción debe tener al menos 10 caracteres.
+                    </p>
+                </div>
+
+                <!-- GRUPO DROPDOWN-->
+                <div class="formulario__grupo" id="grupo__dropdown">
+                    <label class="formulario__label">Categoría</label>
+                    <div class="formulario__grupo-input">                        
+                        <select class="formulario__input" name="dropdown" id="dropdown" required>
+                            <option value="default">-Selecciona una Opción-</option>
+                            <option value="Salud">Salud</option>
+                            <option value="Alimentos">Alimentos</option>
+                            <option value="Electronica">Electrónica</option>
+                            <option value="Mantenimiento">Mantenimiento</option>
+                        </select>
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        Debe Seleccionar un valor del dropdown.
+                    </p>
+                </div>
+
+                <!-- GRUPO Telefono-->
+                <div class="formulario__grupo " id="grupo__telefono">
+                    <label class="formulario__label">Teléfono*</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="telefono" id="telefono" placeholder="">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        El número debe tener entre 8 y 11 dígitos. Acepta un + para codigo de país
+                    </p>
+                </div>
+
+                <!-- GRUPO Precio-->
+                <div class="formulario__grupo " id="grupo__precio">
+                    <label class="formulario__label">Precio*</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="precio" id="precio" placeholder="">
+                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
+                    </div>
+                    <p class="formulario__input-error">
+                        El Precio debe tener entre 1 y 5 dígitos.
+                    </p>
+                </div>
+
+                <!-- GRUPO Archivo-->
+                <div class="formulario__grupo " id="grupo__archivo">
+                    <label class="formulario__label">Agrega una imagen de tu Emprendimiento</label>
+                    <div class="formulario__grupo-input">
+                        <input type="file"  class="formulario__input" name="archivo" id="archivo" placeholder="" accept="image/*">
+                    </div>                   
+                </div>
+                
+
+                <!-- GRUPO DE CAMPOS REQUERIDOS-->
+                <div class="formulario__mensaje " id="formulario__mensaje">
+                    <p>Error: Debes completar todos los campos</i></p>
+                </div>
+
+                <!-- GRUPO ENVIAR-->
+                <div class="formulario__grupo formulario__grupo-btn-enviar">
+                    <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">
+                        Su Emprendimiento se registró correctamente
+                    </p>
+                    <input type="submit" class="formulario__btn" value="Registrar Emprendimiento">
+                </div>
+
+            </form>
+
+        </div>
+
+        <div class="contenedor-mensaje">
+            <h3>
+                Nos da gusto ayudarte a publicar tu emprendimiento y verte crecer!
+            </h3>
+            <br>
+            <p>
+                Por favor comparte los datos de tu emprendimiento en el formulario de izquierda. 
+                <br><br>
+                Nuestro equipo revisará los datos de tu emprendimiento y te estará notificando si es aprobado o si necesitamos más detalles.
+            </p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-contenedor">
+            <div class="footer-contenido">
+                <!-- Columna 1: Logo y redes sociales -->
+                <div class="footer-section">
+                    <h3>Nunciatura</h3>
+                    <div class="social-icons">
+                        <!-- Twitter/X -->
+                        <a href="#" aria-label="Twitter">
+                            <img src="/img/X.png" alt="Twitter/X">
+                        </a>
+                        <!-- Instagram -->
+                        <a href="#" aria-label="Instagram">
+                            <img src="/img/logotipo-de-instagram.png" alt="Instagram">
+                        </a>
+                        <!-- YouTube -->
+                        <a href="#" aria-label="YouTube">
+                            <img src="/img/youtube.png" alt="YouTube">
+                        </a>
+                        <!-- LinkedIn -->
+                        <a href="#" aria-label="LinkedIn">
+                           <img src="/img/linkedin.png" alt="LinkedIn">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Columna 2: Contactenos -->
+                    <div class="footer-section">
+                        <h3>Contactenos</h3>
+                        <ul>
+                            <li><a href="mailto:nunciaturaAdmin@gmail.com">Contactar al Administrador</a></li>
+                            <!-- <li><a href="#">Preguntas Frecuentes</a></li> -->
+                        </ul>
+                    </div>
+
+                    <!-- Columna 3: Información -->
+                    <div class="footer-section">
+                        <h3>Información</h3>
+                        <ul>
+                            <li><a href="Landing_page">Tamarindo Tech</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Columna 4: Recursos -->
+                    <div class="footer-section">
+                        <h3>Recursos</h3>
+                        <ul>
+                            <!-- <li><a href="#">Tutoriales</a></li>
+                            <li><a href="#">Ayuda</a></li> -->
+                            <li><a href="reportes">Crear un Reporte</a></li>
+                            <li><a href="reportes">Dar una Sugerencia</a></li>
+                        </ul>
+                    </div>
+            </div>
+        </div>
+    </footer>   
+    <script src="../js/formulario.js"></script> 
+</body>
+</html>

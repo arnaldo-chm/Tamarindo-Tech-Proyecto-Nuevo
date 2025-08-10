@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Emprendimiento</title>
-    <link rel="stylesheet" href="../css/general.css">
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/footer.css">
-    <link rel="stylesheet" href="../css/formularios.css">
+    <title>Editar Emprendimiento</title>
+    <link rel="stylesheet" href="../../css/general.css">
+    <link rel="stylesheet" href="../../css/header.css">
+    <link rel="stylesheet" href="../../css/footer.css">
+    <link rel="stylesheet" href="../../css/formularios.css">
     <!-- Link preconnect para Google fonts con la opción de Roboto como fuente de fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,26 +38,16 @@
 
     <main class="Contenido">
         <div class="contenedor-formulario">
-            <form class="formulario" id="formulario" name="registrar_emprendimiento">
-                <h1>Publica tu Emprendimiento</h1>
-                <!-- GRUPO NOMBRE-->
-                <!-- <div class="formulario__grupo" id="grupo__nombre">
-                    <label class="formulario__label">Nombre completo*</label>
-                    <div class="formulario__grupo-input">
-                        <input type="text" class="formulario__input" name="nombre" id="nombre" placeholder="Introduce tu nombre">
-                        <i class='formulario__validacion-estado bx bxs-x-circle'></i>
-                    </div>
-                    <p class="formulario__input-error">
-                        Debe ingresar su nombre (requerido), primer apellido (requerido) y segundo apellido (opcional).
-                        Separados por un espacio. Nombre puede tener de 3 a 10 letras, Apellidos de 2 a 10 letras, todos puede incluir maýusculas, minúsculas y acentos.
-                    </p>
-                </div> -->
+            <form class="formulario" id="formulario" name="editar_emprendimiento">
+                <h1>Edita tu Emprendimiento</h1>                
+
+                <input type="hidden" name="id" value="<%= emprendimiento._id %>">
 
                 <!-- GRUPO CORREO-->
                 <div class="formulario__grupo" id="grupo__correo">
                     <label class="formulario__label">Correo electronico</label>
                     <div class="formulario__grupo-input">
-                        <input type="email" class="formulario__input" name="correo" id="correo" placeholder="correo@correo.com">
+                        <input type="email" class="formulario__input" name="correo" id="correo" placeholder="correo@correo.com" value="<%= emprendimiento.correoUsuario %>" readonly>
                         <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
                     <p class="formulario__input-error">
@@ -72,7 +62,7 @@
                 <div class="formulario__grupo" id="grupo__nombre_emprendimiento">
                     <label class="formulario__label">Nombre Emprendimiento*</label>
                     <div class="formulario__grupo-input">
-                        <input type="text" class="formulario__input" name="nombre_emprendimiento" id="nombre_emprendimiento" placeholder="Introduce el nombre de tu emprendimiento">
+                        <input type="text" class="formulario__input" name="nombre_emprendimiento" id="nombre_emprendimiento" placeholder="Introduce el nombre de tu emprendimiento" value="<%= emprendimiento.nombreEmprendimiento %>" readonly>
                         <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
                     <p class="formulario__input-error">
@@ -85,7 +75,7 @@
                 <div class="formulario__grupo" id="grupo__descripcion_emprendimiento">
                     <label class="formulario__label">Ingresa los detalles de tu Emprendimiento*</label>
                     <div class="formulario__grupo-input">
-                        <textarea class="formulario__input" id="descripcion_emprendimiento" name="descripcion_emprendimiento" rows="3"></textarea>
+                        <textarea class="formulario__input" id="descripcion_emprendimiento" name="descripcion_emprendimiento" rows="3"><%= emprendimiento.descripcionEmprendimiento %></textarea>
                         <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
                     <p class="formulario__input-error">
@@ -99,10 +89,10 @@
                     <div class="formulario__grupo-input">                        
                         <select class="formulario__input" name="dropdown" id="dropdown" required>
                             <option value="default">-Selecciona una Opción-</option>
-                            <option value="Salud">Salud</option>
-                            <option value="Alimentos">Alimentos</option>
-                            <option value="Electronica">Electrónica</option>
-                            <option value="Mantenimiento">Mantenimiento</option>
+                            <option value="Salud" <%= emprendimiento.categoria === 'Salud' ? 'selected' : '' %>>Salud</option>
+                            <option value="Alimentos" <%= emprendimiento.categoria === 'Alimentos' ? 'selected' : '' %>>Alimentos</option>
+                            <option value="Electronica" <%= emprendimiento.categoria === 'Electronica' ? 'selected' : '' %>>Electrónica</option>
+                            <option value="Mantenimiento" <%= emprendimiento.categoria === 'Mantenimiento' ? 'selected' : '' %>>Mantenimiento</option>
                         </select>
                         <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
@@ -115,7 +105,7 @@
                 <div class="formulario__grupo " id="grupo__telefono">
                     <label class="formulario__label">Teléfono*</label>
                     <div class="formulario__grupo-input">
-                        <input type="text" class="formulario__input" name="telefono" id="telefono" placeholder="">
+                        <input type="text" class="formulario__input" name="telefono" id="telefono" placeholder="" value="<%= emprendimiento.telefono %>">
                         <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
                     <p class="formulario__input-error">
@@ -127,7 +117,7 @@
                 <div class="formulario__grupo " id="grupo__precio">
                     <label class="formulario__label">Precio*</label>
                     <div class="formulario__grupo-input">
-                        <input type="text" class="formulario__input" name="precio" id="precio" placeholder="">
+                        <input type="text" class="formulario__input" name="precio" id="precio" placeholder="" value="<%= emprendimiento.precio %>">
                         <i class='formulario__validacion-estado bx bxs-x-circle'></i>
                     </div>
                     <p class="formulario__input-error">
@@ -135,9 +125,17 @@
                     </p>
                 </div>
 
+                <!-- GRUPO Imagen-->
+                <div class="formulario__grupo " id="grupo__imagen">
+                    <label class="formulario__label">Imagen Actual de tu Emprendimiento</label>
+                    <div class="formulario__grupo-input">
+                        <img class="formulario__img" src="/img/<%= emprendimiento.nombreImagen %>" alt="Imagen actual" >
+                    </div>
+                </div>
+
                 <!-- GRUPO Archivo-->
                 <div class="formulario__grupo " id="grupo__archivo">
-                    <label class="formulario__label">Agrega una imagen de tu Emprendimiento</label>
+                    <label class="formulario__label">Actualiza la imagen de tu Emprendimiento</label>
                     <div class="formulario__grupo-input">
                         <input type="file"  class="formulario__input" name="archivo" id="archivo" placeholder="" accept="image/*">
                     </div>                   
@@ -152,9 +150,9 @@
                 <!-- GRUPO ENVIAR-->
                 <div class="formulario__grupo formulario__grupo-btn-enviar">
                     <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">
-                        Su Emprendimiento se registró correctamente
+                        Su Emprendimiento se editó correctamente
                     </p>
-                    <input type="submit" class="formulario__btn" value="Registrar Emprendimiento">
+                    <input type="submit" class="formulario__btn" value="Editar Emprendimiento">
                 </div>
 
             </form>
@@ -163,13 +161,13 @@
 
         <div class="contenedor-mensaje">
             <h3>
-                Nos da gusto ayudarte a publicar tu emprendimiento y verte crecer!
+                Nos da gusto ayudarte a mantener tus Emprendimientos!
             </h3>
             <br>
             <p>
-                Por favor comparte los datos de tu emprendimiento en el formulario de izquierda. 
+                Por favor comparte los nuevos datos de tu emprendimiento en el formulario de izquierda. 
                 <br><br>
-                Nuestro equipo revisará los datos de tu emprendimiento y te estará notificando si es aprobado o si necesitamos más detalles.
+                Nuestro equipo revisará los cambios de tu emprendimiento y te estará notificando si es aprobado o si necesitamos más detalles.
             </p>
         </div>
     </main>
@@ -230,6 +228,6 @@
             </div>
         </div>
     </footer>   
-    <script src="../js/formulario.js"></script> 
+    <script src="../../js/formulario.js"></script> 
 </body>
 </html>
