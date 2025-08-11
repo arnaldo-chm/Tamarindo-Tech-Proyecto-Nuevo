@@ -1,30 +1,33 @@
 <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Inicio</title>
-        <link rel="stylesheet" href="../css/inicio.css">
-        <link rel="stylesheet" href="../css/general.css">
-        <link rel="stylesheet" href="../css/header.css">
-        <link rel="stylesheet" href="../css/footer.css">
+<html lang="en">
 
-        <!-- Link preconnect para Google fonts con la opción de Roboto como fuente de fuentes -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="stylesheet" href="../css/inicio.css">
+    <link rel="stylesheet" href="../css/general.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+
+    <!-- Link preconnect para Google fonts con la opción de Roboto como fuente de fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    </head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
 <body>
 
     <!-- Header -->
-    <header class = "header" id="header">
+    <header class="header" id="header">
         <div class="logo">
             <h1>Tamarindo Tech</h1>
         </div>
-            <input type="checkbox" id="check">
+        <input type="checkbox" id="check">
         <label for="check" class="btn">☰</label>
-        
-        <nav class="Links_Header" id= "Links_Header">
+
+        <nav class="Links_Header" id="Links_Header">
             <ul>
                 <li><a href="/">Inicio</a></li>
                 <li><a href="noticias">Anuncios/Noticias</a></li>
@@ -33,145 +36,120 @@
                 <li><a href="actividades">Actividades</a></li>
                 <% if (usuarioAdministrador) { %>
                     <li><a href="/Admin_panel">Administración</a></li>
-                <% } %>
-                <button class="boton_sing_out" id="boton_sing_out"><a href="/logout">Cerrar Sesion</a></button>
+                    <% } %>
+                        <button class="boton_sing_out" id="boton_sing_out"><a href="/logout">Cerrar Sesion</a></button>
             </ul>
         </nav>
     </header>
-<!-- fin de header -->
+    <!-- fin de header -->
 
-<!-- Inicio -->
- <!-- el estilo de la clase inicio va a ser general ya que al header estar en posicion fixed y el body estara en posicion relative y la clase inicio estara en posicion absolute lo que haria que el header y el body se superpongan y se vea como si el header fuera un contenedor y el body fuera su hijo -->
-<div class="main-content">
-    <div class="Contenido"> 
-        <section class="Bienvenido" id="Bienvenido">
-            <div class="contenedor">
+    <!-- Inicio -->
+    <!-- el estilo de la clase inicio va a ser general ya que al header estar en posicion fixed y el body estara en posicion relative y la clase inicio estara en posicion absolute lo que haria que el header y el body se superpongan y se vea como si el header fuera un contenedor y el body fuera su hijo -->
+    <div class="main-content">
+        <div class="Contenido">
+            <section class="Bienvenido" id="Bienvenido">
+                <div class="contenedor">
 
-                <div class="texto_bienvenido">
-                    <h1 class = "titulo">¡Bienvenidos a Nunciatura!</h1>
-                    <p>Esta página ha sido creada especialmente para vos, vecino o vecina, con el objetivo de mantenernos conectados e informados. 
-                        <br><br>
-                        Aquí encontrarás toda la información esencial sobre nuestra comunidad: noticias actualizadas, actividades y eventos locales,
-                        opciones de transporte, emprendimientos de la zona ¡y mucho más!
-                        
-                    </p>
+                    <div class="texto_bienvenido">
+                        <h1 class="titulo">¡Bienvenidos a Nunciatura!</h1>
+                        <p>Esta página ha sido creada especialmente para vos, vecino o vecina, con el objetivo de
+                            mantenernos conectados e informados.
+                            <br><br>
+                            Aquí encontrarás toda la información esencial sobre nuestra comunidad: noticias
+                            actualizadas, actividades y eventos locales,
+                            opciones de transporte, emprendimientos de la zona ¡y mucho más!
+
+                        </p>
+
+                    </div>
+
+                    <div class="img">
+                        <img src="/img/Inicio_teatro.png" alt="Teatro Nacional">
+                    </div>
+
+                </div>
+
+            </section>
+            <!-- fin de bienvenido -->
+
+            <!-- noticias -->
+            <section class="tarjetas" id="Noticias">
+
+                <h2>Noticias</h2>
+                <div class="contenedor-tarjetas">
+
+                    <a href="">
+                        <div class="card" id="tarjetas">
+                            <img src="/img/camaras_de_seguridad.png" class="img_tarjetas" id="tarjetas"
+                                alt="Imagen de Camara de Seguridad" />
+                            <h3>Se han instalado nuevas cámaras de vigilancia</h3>
+                            <p>Con el apoyo de los mismos residentes, se colocaron cámaras de seguridad en entradas
+                                clave del
+                                vecindario.</p>
+                            <p class="fecha">8/3/2025</p>
+                        </div>
+                    </a>
+
+                    <% noticiasRecientes.forEach(noticia => { %>
+                        <a href="">
+                            <div class="card" id="tarjetas">
+                                <img src="/img/<%= noticia.nombreImagen %>" class="img_tarjetas" id="tarjetas"
+                                    alt="Imagen de Camara de Seguridad" />
+                                <h3><%= noticia.titulo %></h3>
+                                <p><%= noticia.descripcionNoticia %></p>
+                                <p class="fecha"><%= noticia.fecha %></p>
+                            </div>
+                        </a>
+
+                    <% }) %>                    
+
+                    <div class="boton-ver-mas">
+                        <a href="noticias"><button>Ver más</button></a>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Actividades -->
+            <section class="tarjetas" id="tarjetas">
+
+                <h2>Actividades</h2>
+                <div class="contenedor-tarjetas">
+
+                    <a href="">
+                        <div class="card" id="tarjetas">
+                            <img src="/img/Actividades_TrabajoEnBarro.png" class="img_tarjetas" id="tarjetas"
+                                alt="Imagen de una mujer trabajando en alfarería" />
+                            <h3>Tarde de Alfarería al Aire Libre en el Parque</h3>
+                            <p>Únete a una experiencia artística relajante. Todos los domingos por la tarde, artistas
+                                aficionados y profesionales se reúnen para crear arte rodeados de naturaleza.
+                            </p>
+                            <p class="fecha">2025-08-19</p>
+                        </div>
+                    </a>
+
+                    <% actividadesRecientes.forEach(actividad => { %>
+                        <a href="">
+                            <div class="card" id="tarjetas">
+                                <img src="/img/<%= actividad.nombreImagen %>" class="img_tarjetas" id="tarjetas"
+                                    alt="Imagen de Camara de Seguridad" />
+                                <h3><%= actividad.titulo %></h3>
+                                <p><%= actividad.descripcion_actividad %></p>
+                                <p class="fecha"><%= actividad.fecha %></p>
+                            </div>
+                        </a>
+
+                    <% }) %>  
                     
+                    <div class="boton-ver-mas">
+                        <a href="actividades"><button>Ver más</button></a>
+
+                    </div>
                 </div>
-
-                <div class="img">
-                    <img src="/img/Inicio_teatro.png" alt="Teatro Nacional">
-                </div>
-
-            </div>
-
-        </section>
-        <!-- fin de bienvenido -->
-
-        <!-- noticias -->
-        <section class="tarjetas" id="Noticias">
-
-            <h2>Noticias</h2>
-                <div class="contenedor-tarjetas">
-                <a href="">
-                    <div class="card" id="tarjetas">
-                        <img src="/img/camaras_de_seguridad.png" class="img_tarjetas"  id="tarjetas" alt="Imagen de Camara de Seguridad"/>
-                        <h3>Se han instalado nuevas cámaras de vigilancia</h3>
-                        <p>Con el apoyo de los mismos residentes, se colocaron cámaras de seguridad en entradas clave del 
-                        vecindario.</p>
-                        <p class="fecha">Domingo 06 de julio</p>
-                    </div>
-                </a>
-
-                <a href="">
-                    <div class="card" id="tarjetas">
-                        <img src="/img/patrulla.png" class="img_tarjetas"  id="tarjetas" alt="Imagen de una Patrulla y dos policias"/>
-                        <h3>Vecinos Unidos Inician Patrullajes Ciudadanos</h3>
-                        <p>En un esfuerzo conjunto por mejorar la seguridad en el barrio,
-                        los vecinos han dado inicio a patrullajes ciudadanos voluntarios</p>
-                        <p class="fecha">Lunes 07 de julio</p>
-                    </div>
-                </a>
-
-                <a href="">
-                    <div class="card" id="tarjetas">
-                        <img src="/img/huerto.jpeg" class="img_tarjetas"  id="tarjetas" alt="Imagen de un Huerto"/>
-                        <h3>Gran inaguración de Huerta Comunitaria Saludable</h3>
-                        <p>Con herramientas donadas y mucho entusiasmo, los residentes crearon un espacio verde donde ahora 
-                        cultivan frutas y verduras.</p>
-                        <p class="fecha">Martes 08 de julio</p>
-                    </div>
-                </a>
-
-                <a href="">
-                    <div class="card" id="tarjetas" id="tarjetas">
-                        <img src="/img/salud_mental.png" class="img_tarjetas" id="tarjetas" alt=""/>
-                        <h3>Inauguran Clínica de Bienestar Mental Comunitaria</h3>
-                        <p>Gracias al esfuerzo vecinal y el apoyo de una ONG, se ha habilitado un centro 
-                        donde se brinda asesoramiento psicológico</p>
-                        <p class="fecha">Miercoles 09 de julio</p>
-                    </div>
-                </a>
-
-                <div class="boton-ver-mas">
-                   <button><a href="noticias">Ver más</a></button>
-                </div>
-
-                </div>       
-        </section>
-
-        <!-- Actividades -->
-        <section class="tarjetas" id="tarjetas">
-
-            <h2>Actividades</h2>
-                <div class="contenedor-tarjetas">
-                <a href="">
-                    <div class="card" id="tarjetas">
-                        <img src="/img/Actividades_TrabajoEnBarro.png" class="img_tarjetas"  id="tarjetas" alt="Imagen de una mujer trabajando en alfarería"/>
-                        <h3>Tarde de Alfarería al Aire Libre en el Parque</h3>
-                        <p>Únete a una experiencia artística relajante. Todos los domingos por la tarde, artistas aficionados y profesionales se reúnen para crear arte rodeados de naturaleza.
-                        </p>
-                        <p class="fecha">Jueves 10 de julio</p>
-                    </div>
-                </a>
-
-                <a href="">
-                    <div class="card" id="tarjetas">
-                        <img src="/img/Actividades_yoga.png" class="img_tarjetas"  id="tarjetas" alt="Imagen de una mujer haciendo yoga"/>
-                        <h3> Tarde de Yoga </h3>
-                        <p>Participa en una sesión revitalizante de yoga al aire libre bajo la dirección de un instructor experto. 
-                            Este evento semanal es perfecto para reeducir el estres y mejora tu bienestar.
-                        </p>
-                        <p class="fecha">Domingo 13 de julio</p>
-                    </div>
-                </a>
-
-                <a href="">
-                    <div class="card" id="tarjetas">
-                        <img src="/img/Inicio_actividades_improvisacion_teatral.jpg" class="img_tarjetas"  id="tarjetas" alt="Accidente"/>
-                        <h3>Noche de Improvisación Teatral</h3>
-                        <p>Vive una velada llena de risas, creatividad y participación del público. Cada función es única,
-                            creada en el momento con aportes del público y el talento de artistas locales.</p>
-                            <p class="fecha">Martes 14 de julio</p>
-                    </div>
-                </a>
-
-                <a href="">
-                    <div class="card" id="tarjetas" id="tarjetas">
-                        <img src="/img/caminata.png" class="img_tarjetas" id="tarjetas" alt="Imagen de personas realizando estiramientos"/>
-                        <h3>Barrio lanza programa de Caminatas Saludables</h3>
-                        <p>Cada semana, vecinos de todas las edades se reúnen para caminar en grupo por rutas seguras, 
-                        guiados por personal de salud y preparadores físicos.</p>
-                        <p class="fecha">miercoles 15 de julio</p>
-                    </div>
-                </a>
-                <div class="boton-ver-mas">
-                   <button><a href="actividades">Ver más</a></button>
-                </div>
-                </div>
-        </section>
-    </div> 
-</div>
-<!-- fin contenido -->
+            </section>
+        </div>
+    </div>
+    <!-- fin contenido -->
 
     <footer class="footer">
         <div class="footer-contenedor">
@@ -194,43 +172,44 @@
                         </a>
                         <!-- LinkedIn -->
                         <a href="#" aria-label="LinkedIn">
-                           <img src="/img/linkedin.png" alt="LinkedIn">
+                            <img src="/img/linkedin.png" alt="LinkedIn">
                         </a>
                     </div>
                 </div>
 
                 <!-- Columna 2: Contactenos -->
-                    <div class="footer-section">
-                        <h3>Contactenos</h3>
-                        <ul>
-                            <li><a href="mailto:nunciaturaAdmin@gmail.com">Contactar al Administrador</a></li>
-                            <!-- <li><a href="#">Preguntas Frecuentes</a></li> -->
-                        </ul>
-                    </div>
+                <div class="footer-section">
+                    <h3>Contactenos</h3>
+                    <ul>
+                        <li><a href="mailto:nunciaturaAdmin@gmail.com">Contactar al Administrador</a></li>
+                        <!-- <li><a href="#">Preguntas Frecuentes</a></li> -->
+                    </ul>
+                </div>
 
-                    <!-- Columna 3: Información -->
-                    <div class="footer-section">
-                        <h3>Información</h3>
-                        <ul>
-                            <li><a href="Landing_page">Tamarindo Tech</a></li>
-                        </ul>
-                    </div>
+                <!-- Columna 3: Información -->
+                <div class="footer-section">
+                    <h3>Información</h3>
+                    <ul>
+                        <li><a href="Landing_page">Tamarindo Tech</a></li>
+                    </ul>
+                </div>
 
-                    <!-- Columna 4: Recursos -->
-                    <div class="footer-section">
-                        <h3>Recursos</h3>
-                        <ul>
-                            <!-- <li><a href="#">Tutoriales</a></li>
+                <!-- Columna 4: Recursos -->
+                <div class="footer-section">
+                    <h3>Recursos</h3>
+                    <ul>
+                        <!-- <li><a href="#">Tutoriales</a></li>
                             <li><a href="#">Ayuda</a></li> -->
-                            <li><a href="reportes">Crear un Reporte</a></li>
-                            <li><a href="reportes">Dar una Sugerencia</a></li>
-                        </ul>
-                    </div>
+                        <li><a href="reportes">Crear un Reporte</a></li>
+                        <li><a href="reportes">Dar una Sugerencia</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </footer>
 
 
-    
+
 </body>
+
 </html>
