@@ -91,26 +91,6 @@
                     </div>
 
                     <div class="cuadricula-contenido">
-                        <!-- Noticia 2 -->
-                        <div class="tarjeta-simple">
-                            <div class="encabezado-tarjeta">
-                                <h4>Mantenimiento programado del sistema</h4>
-                                <span class="fecha">10/11/2023</span>
-                            </div>
-                            <div class="imagen-tarjeta">
-                                <img src="/img/NoticiaEjm.png" alt="Mantenimiento sistema">
-                            </div>
-                            <div class="info-tarjeta">
-                                <p><strong>Autor:</strong> Equipo de TI</p>
-                                <p><strong>Categoría:</strong> Anuncios</p>
-                            </div>
-                            <div class="acciones-tarjeta">
-                                <a href="/noticias/123/editar">
-                                    <button class="btn-editar">Editar</button>
-                                </a>
-                                <button class="btn-eliminar">Eliminar</button>
-                            </div>
-                        </div>
 
                         <% noticias.forEach(noticia=>{ %>
                             <div class="tarjeta-simple" data-categoria="<%= noticia.categoria ? noticia.categoria.toLowerCase() : '' %>">
@@ -249,24 +229,7 @@
                         <input type="text" class="busqueda-input" placeholder="Buscar transportes...">
                     </div>
 
-                    <div class="cuadricula-contenido">
-
-                        <div class="tarjeta-simple">
-                            <div class="encabezado-tarjeta">
-                                <h4>Ruta Nunciatura - San Pedro</h4>
-                            </div>
-                            <div class="imagen-tarjeta">
-                                <img src="/img/ruta1.png" alt="">
-                            </div>
-                            <div class="info-tarjeta">
-                                <p><strong>Tarifa:</strong> $2.50</p>
-                                <p><strong>Contacto:</strong> 2222-2222</p>
-                            </div>
-                            <div class="acciones-tarjeta">
-                                <button class="btn-editar" data-id="${transporte.id}">Editar</button>
-                                <button class="btn-eliminar" data-id="${transporte.id}">Eliminar</button>
-                            </div>
-                        </div>
+                    <div class="cuadricula-contenido">                    
 
                         <% transportes.forEach(transporte=>{ %>
 
@@ -313,27 +276,7 @@
                         <input type="text" class="busqueda-input" placeholder="Buscar actividades...">
                     </div>
 
-                    <div class="cuadricula-contenido">
-                        <div class="tarjeta-simple">
-                            <div class="encabezado-tarjeta">
-                                <h4>Taller de Pintura</h4>
-                                <span class="fecha">20/11/2023</span>
-                            </div>
-                            <div class="imagen-tarjeta">
-                                <img src="/img/Actividades_TrabajoEnBarro.png" alt="">
-                            </div>
-                            <div class="info-tarjeta">
-                                <p><strong>Descripcion Actividad:</strong> Taller de pintura al óleo para principiantes
-                                </p>
-                                <p><strong>Recomendaciones Actividad:</strong> Llevar Brochas y Pintura </p>
-                                <p><strong>Duracion:</strong> 1.5 h</p>
-                                <p><strong>Hora:</strong> 10:30</p>
-                            </div>
-                            <div class="acciones-tarjeta">
-                                <button class="btn-editar">Editar</button>
-                                <button class="btn-eliminar">Eliminar</button>
-                            </div>
-                        </div>
+                    <div class="cuadricula-contenido">                        
 
                         <% actividades.forEach(actividad=>{ %>
 

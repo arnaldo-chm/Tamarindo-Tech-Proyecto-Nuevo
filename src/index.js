@@ -832,6 +832,8 @@ app.post('/api/eliminarActividad', isAuthenticated, async (req, res) => {
     }
 });
 
+//#endregion ACTIVIDADES
+
 //#region QUEJAS
 const Queja = require('../models/quejas.js');
 
@@ -926,5 +928,129 @@ app.listen(3000, () => {
     console.log("El server se conecto");
 })
 
+//#region CARGAR DATOS INICIALES
+
+// Cargar datos iniciales en la base de datos
+async function cargarDatosIniciales() {
+    try {
+        // Crear un usuario administrador por default
+        const adminExistente = await User.findOne({ correo: 'admin@tamarindo.com' });
+        if (!adminExistente) {
+            const admin = new User({
+                nombre: 'Admin',
+                correo: 'admin@tamarindo.com',
+                password: 'admin123',
+                telefono: '+50612345678',
+                tipoUsuario: 2 // 2 = Admin
+            });
+            await admin.save();
+            console.log('Usuario administrador creado');
+        }
+
+        // Crear Noticias
+        
+        const fecha = new Date();
+        const formatoFecha = `${fecha.getDate()}/${fecha.getMonth() + 1}/${fecha.getFullYear()}`
+        let noticiaExistente = await Noticia.findOne({ titulo: 'Feria de Vacunación' });
+        if (!noticiaExistente) {
+            const noticia = new Noticia({
+                titulo: 'Feria de Vacunación',
+                autor: 'Equipo Tamarindo',
+                descripcionNoticia: 'Feria de Vacunación en el Parque Metropolitano la Sabana',
+                categoria: 'Eventos',
+                telefono: '+50612345679',
+                fecha: formatoFecha,
+                nombreImagen: 'noticias_7.jpg'
+            });
+            await noticia.save();
+            console.log('Noticia de bienvenida creada');
+        }
+
+        noticiaExistente = await Noticia.findOne({ titulo: 'Fuerte Terremoto' });
+        if (!noticiaExistente) {
+            const noticia = new Noticia({
+                titulo: 'Fuerte Terremoto',
+                autor: 'Equipo Tamarindo',
+                descripcionNoticia: 'Fuerte Terremoto sacude la región',
+                categoria: 'General',
+                telefono: '+50612345678',
+                fecha: formatoFecha,
+                nombreImagen: 'noticias_3.jpg'
+            });
+            await noticia.save();
+            console.log('Noticia de bienvenida creada');
+        }
+
+        noticiaExistente = await Noticia.findOne({ titulo: 'Camaras de Seguridad Instaladas' });
+        if (!noticiaExistente) {
+            const noticia = new Noticia({
+                titulo: 'Camaras de Seguridad Instaladas',
+                autor: 'Equipo Tamarindo',
+                descripcionNoticia: 'Se han instalado nuevas cámaras de seguridad en la zona',
+                categoria: 'General',
+                telefono: '89808070',
+                fecha: formatoFecha,
+                nombreImagen: 'camaras_de_seguridad.png'
+            });
+            await noticia.save();
+            console.log('Noticia de bienvenida creada');
+        }
+
+        // Cargar Actividades
+        const actividadExistente = await Actividad.findOne({ titulo: 'Taller de Alfatería' });
+        if (!actividadExistente) {
+            const actividad = new Actividad({
+                titulo: "Taller de Alfatería",
+                descripcion_actividad: "Únete a nuestro Taller de Alfarería",
+                recomendaciones_actividad: "Todos los materiales están incluidos en la actividad",
+                duracion: 1.5,
+                nombreImagen: "Actividades_TrabajoEnBarro.png",
+                fecha: "2025-08-22",
+                hora: "09:30"
+            });
+            await actividad.save();
+            console.log('Actividad inicial creada');
+            
+        }
+
+        // Cargar Transportes
+        const transporteExistente = await Transporte.findOne({ ruta: 'Nunciatura - San Pedro' });
+        if (!transporteExistente) {
+            const transporte = new Transporte({
+                ruta: "Nunciatura - San Pedro",
+                tarifa: 700,
+                telefono: "601456797",
+                nombreImagen: "ruta1.png"
+            });
+            await transporte.save();
+            console.log('Transporte inicial creado');
+        }
+
+        // Cargar Emprendimiento
+        const emprendimientoExistente = await Emprendimiento.findOne({ nombreEmprendimiento: 'Taller Tamarindo' });
+        if (!emprendimientoExistente) {
+            const emprendimiento = new Emprendimiento({
+                "correoUsuario": "admin@tamarindo.com",
+                "nombreEmprendimiento": "Taller Tamarindo",
+                "descripcionEmprendimiento": "Taller de Electrónicos Tamarindo. Nos especializamos en Dispositivos móviles y Electrodomésticos",
+                "categoria": "Electronica",
+                "telefono": "84345267",
+                "nombreImagen": "empredimientos9.jpg",
+                "precio": 500,
+                "estadoEmprendimiento": "Aprobado"
+            });
+            await emprendimiento.save();
+            console.log('Emprendimiento inicial creado');
+        }
+
+    } catch (error) {
+        console.error('Error al cargar datos iniciales:', error);
+    }
+}
+
+// Llamar a la función para cargar datos iniciales
+cargarDatosIniciales();
+
+//#endregion
 
 console.log(__dirname);
