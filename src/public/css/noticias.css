@@ -1,19 +1,6 @@
 body {
     background-color: #f4f4f4;
 }
-.barra-busqueda{
-    margin: 2% 10% 2% 10%;
-    position: relative;
-    
-}
-
-.barra-busqueda input {
-    width: 100%;
-    padding: 12px 20px;
-    border-radius: 25px;
-    font-size: 16px;
-    border: 1px solid #ccc;    
-}
 
 .seccion-noticias-nuevas{
     border-top: 2px solid #d3e8c0;

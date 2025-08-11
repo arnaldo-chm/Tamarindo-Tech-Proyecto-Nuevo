@@ -1,4 +1,3 @@
-// slider_Noticias.js
 
 document.addEventListener('DOMContentLoaded', () => {
     // =========================
@@ -43,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
             slider.innerHTML = '';
             slides = [];
 
-            // Agrupamos por itemsPerSlide
             for (let i = 0; i < cards.length; i += itemsPerSlide) {
                 const slideDiv = document.createElement('div');
                 slideDiv.className = 'diapositiva-noticias';
@@ -52,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 slides.push(slideDiv);
             }
 
-            // Ajustes visuales del carrusel
             slider.style.display = 'flex';
             slider.style.transition = 'transform 0.3s ease';
 
@@ -91,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Reaccionar a cambios de tamaño (cambia 4↔1 por slide)
+        // Para el responsive, reaccionar a cambios de tamaño (cambia 4  1 por slide)
         const onResize = debounce(() => {
             const nextItemsPerSlide = getItemsPerSlide();
             if (nextItemsPerSlide !== itemsPerSlide) {

@@ -33,10 +33,6 @@
 </header>
 
 <div class="Contenido">
-    <div class="barra-busqueda">
-        <input type="text" placeholder="🔍 Buscar una Noticia"/>
-    </div>
-
     <!-- Noticias nuevas (estáticas o modificables luego) -->
     <div class="seccion-noticias-nuevas">
         <div class="noticia-header">
@@ -64,7 +60,8 @@
                 <div class="contenedor-noticia-reciente<%= idx === 0 ? ' activa' : '' %>">
                     <img src="/img/<%= noticia.nombreImagen %>" alt="<%= noticia.titulo %>">
                     <div class="noticias-reciente-contenido">
-                        <h3><%= noticia.titulo %></h3>                                            
+                        <h3><%= noticia.titulo %></h3> 
+                        <p><%= noticia.descripcionNoticia %></p>                                           
                     </div>                    
                 </div>
             <% }) %>
@@ -73,7 +70,7 @@
 
 <!-- Sliders dinámicos por categoría desde MongoDB -->
 <% if (Object.keys(noticiasPorCategoria).length === 0) { %>
-    <p class="mensaje-error">⚠️ No se pudieron cargar las noticias dinámicas.</p>
+    <p class="mensaje-error">No se pudieron cargar las noticias dinámicas.</p>
 <% } else { %>
     <% for (let categoria in noticiasPorCategoria) { %>
         <div class="seccion-noticias">
@@ -82,8 +79,6 @@
             <div id="contenedor-slider-noticias">
                 <div class="envoltorio-slider-noticias">
                     <div id="slider-noticias">
-                        <!-- 👇 Una sola diapositiva con TODAS las tarjetas.
-                             El JS re-agrupa a 4 por slide en desktop y 1 en móvil -->
                         <div class="diapositiva-noticias">
                             <% noticiasPorCategoria[categoria].forEach(noticia => { %>
                                 <div class="card">
