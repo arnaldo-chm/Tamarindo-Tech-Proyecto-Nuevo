@@ -1,19 +1,6 @@
 body {
     background-color: #f4f4f4;
 }
-.barra-busqueda{
-    margin: 2% 10% 2% 10%;
-    position: relative;
-    
-}
-
-.barra-busqueda input {
-    width: 100%;
-    padding: 12px 20px;
-    border-radius: 25px;
-    font-size: 16px;
-    border: 1px solid #ccc;    
-}
 
 .seccion-noticias-nuevas{
     border-top: 2px solid #d3e8c0;
@@ -53,6 +40,7 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
 .contenedor-noticia-reciente{
     display: flex;
     column-gap: 5px;
+    height: 100%;
     background-color: white;
     border-radius: 10px;
     padding: 10px;
@@ -60,15 +48,17 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
     transition: 0.5s ease;
 }
 .contenedor-noticia-reciente img{
-    width: 150px;
-    height:100px;
+    width: 30%;
+    height: 100px;
     border-radius: 10px;
 }
-.contenedor-noticia-reciente p{
-    font-size: 1.1em;
-}
+
 .contenedor-noticia-reciente:hover{
     scale: 0.99;
+}
+.noticias-reciente-contenido{
+    height:100px;
+    width: 60%;
 }
 .slider-ultimas-noticias {
     display: flex;
@@ -284,8 +274,6 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
     transform: scale(1.2);
 }
 
-
-
 @media (max-width: 1113px) {
     .seccion-noticias-nuevas {
         grid-template-columns: 1fr;
@@ -304,7 +292,7 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
     .card{
         width: 100%;
     }
-  
+
     .boton-navegacion{
         opacity: 0.5;
     }
@@ -317,13 +305,13 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
     .seccion-noticias h2{
         text-align: center;
     }
-    
+
     /* Slider - 3 columnas para tablets */
     .diapositiva-noticias {
         grid-template-columns: repeat(3, 1fr);
         gap: 20px;
     }
-    
+
     .card {
         max-width: 350px;
         margin: 0 auto;
@@ -351,16 +339,17 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
         gap: 20px;
         padding: 15px;
     }
-    
+
     .seccion-noticias {
         margin: 0% 5% 0% 5%;
     }
-    
+
     .card {
         max-width: 400px;
         margin: 0 auto;
     }
 }
+
 
 /* Mobile - 1 columna */
 @media (max-width: 600px) {

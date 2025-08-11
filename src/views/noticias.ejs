@@ -33,10 +33,6 @@
 </header>
 
 <div class="Contenido">
-    <div class="barra-busqueda">
-        <input type="text" placeholder="🔍 Buscar una Noticia"/>
-    </div>
-
     <!-- Noticias nuevas (estáticas o modificables luego) -->
     <div class="seccion-noticias-nuevas">
         <div class="noticia-header">
@@ -63,15 +59,18 @@
             <% noticiasRecientes.forEach(function(noticia, idx) { %>
                 <div class="contenedor-noticia-reciente<%= idx === 0 ? ' activa' : '' %>">
                     <img src="/img/<%= noticia.nombreImagen %>" alt="<%= noticia.titulo %>">
-                    <p><%= noticia.titulo %></p>
+                    <div class="noticias-reciente-contenido">
+                        <h3><%= noticia.titulo %></h3> 
+                        <p><%= noticia.descripcionNoticia %></p>                                           
+                    </div>                    
                 </div>
             <% }) %>
         </div>
     </div>
 
-    <!-- Sliders dinámicos por categoría desde MongoDB -->
+<!-- Sliders dinámicos por categoría desde MongoDB -->
 <% if (Object.keys(noticiasPorCategoria).length === 0) { %>
-    <p class="mensaje-error">⚠️ No se pudieron cargar las noticias dinámicas.</p>
+    <p class="mensaje-error">No se pudieron cargar las noticias dinámicas.</p>
 <% } else { %>
     <% for (let categoria in noticiasPorCategoria) { %>
         <div class="seccion-noticias">
@@ -80,22 +79,18 @@
             <div id="contenedor-slider-noticias">
                 <div class="envoltorio-slider-noticias">
                     <div id="slider-noticias">
-                        <% for (let i = 0; i < noticiasPorCategoria[categoria].length; i += 4) { %>
-                            <div class="diapositiva-noticias">
-                                <% noticiasPorCategoria[categoria]
-                                    .slice(i, i + 4)
-                                    .forEach(noticia => { %>
-                                    <div class="card">
-                                        <img src="/img/<%= noticia.nombreImagen %>" alt="<%= noticia.titulo %>"/>
-                                        <h3><%= noticia.titulo %></h3>
-                                        <p><%= noticia.descripcionNoticia %></p>
-                                        <p class="contacto-noticia">
-                                            Más Información al Teléfono <br> <%= noticia.telefono %>
-                                        </p>
-                                    </div>
-                                <% }) %>
-                            </div>
-                        <% } %>
+                        <div class="diapositiva-noticias">
+                            <% noticiasPorCategoria[categoria].forEach(noticia => { %>
+                                <div class="card">
+                                    <img src="/img/<%= noticia.nombreImagen %>" alt="<%= noticia.titulo %>"/>
+                                    <h3><%= noticia.titulo %></h3>
+                                    <p><%= noticia.descripcionNoticia %></p>
+                                    <p class="contacto-noticia">
+                                        Más Información al Teléfono <br> <%= noticia.telefono %>
+                                    </p>
+                                </div>
+                            <% }) %>
+                        </div>
                     </div>
                 </div>
                 <!-- Controles del slider -->
