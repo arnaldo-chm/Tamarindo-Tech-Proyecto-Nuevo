@@ -1,153 +1,149 @@
-
 document.addEventListener('DOMContentLoaded', () => {
-    // =========================
-    // Utilidades
-    // =========================
-    const MOBILE_BREAKPOINT = 600;
 
-    function getItemsPerSlide() {
-        return window.innerWidth <= MOBILE_BREAKPOINT ? 1 : 4;
+    // Como los datos se cargan desde la base de datos con EJS al renderizar el HTML. Se agrega lógica
+    // para manejar de forma dinámica el slider. Y mostrar únicamente 1 elemento en celulares.
+    // En Desktop se muestran 4 tarjetas.
+     const ANCHO_MAXIMO_CELULAR = 600;
+
+    // Función para saber cuantos elementos mostrar según el tamaño de pantalla
+    // Además de implementar la lógica de responsive en el CSS, se debe implementar esta lógica
+    // Para mostrar sólo una tarjeta
+    function obtenerElementosPorDiapositiva() {
+        return window.innerWidth <= ANCHO_MAXIMO_CELULAR ? 1 : 4;
     }
 
-    function debounce(fn, wait) {
-        let t;
-        return function (...args) {
-            clearTimeout(t);
-            t = setTimeout(() => fn.apply(this, args), wait);
-        };
-    }
+    // Selecciona todos los sliders que tengan el id "contenedor-slider-noticias"
+    const contenedoresSliders = document.querySelectorAll('#contenedor-slider-noticias');
 
-    // =========================
-    // Slider por categoría (dinámico)
-    // =========================
-    const sliders = document.querySelectorAll('#contenedor-slider-noticias');
+    contenedoresSliders.forEach((contenedor) => {
+        const slider = contenedor.querySelector('#slider-noticias'); // Contenedor de las diapositivas
+        const botonAnterior = contenedor.querySelector('.flecha-anterior'); // Flecha izquierda
+        const botonSiguiente = contenedor.querySelector('.flecha-siguiente'); // Flecha derecha
 
-    sliders.forEach((wrapper) => {
-        const slider = wrapper.querySelector('#slider-noticias');
-        const btnPrev = wrapper.querySelector('.flecha-anterior');
-        const btnNext = wrapper.querySelector('.flecha-siguiente');
+        // Si falta alguno de estos elementos, no hacemos nada
+        if (!slider || !botonAnterior || !botonSiguiente) return;
 
-        // Si no hay slider o botones, salimos
-        if (!slider || !btnPrev || !btnNext) return;
+        let indiceActual = 0; // Punto actual en el slider
+        let elementosPorDiapositiva = obtenerElementosPorDiapositiva(); // Cantidad de elementos por pantalla
+        let listaDiapositivas = []; // Almacena las diapositivas generadas
 
-        let index = 0;
-        let itemsPerSlide = getItemsPerSlide();
-        let slides = [];
+        // Actualizar las diapositivas en el slider
+        function crearDiapositivas({ mantenerIndice = false } = {}) {
+            // Obtiene todas las tarjetas
+            const tarjetas = Array.from(slider.querySelectorAll('.card'));
 
-        function buildSlides({ preserveIndex = false } = {}) {
-            // Tomamos todas las cards existentes (aunque ya estén dentro de otras diapositivas)
-            const cards = Array.from(slider.querySelectorAll('.card'));
-
-            // Limpiamos el contenedor (las cards se vuelven a insertar)
+            // Limpia el contenedor
             slider.innerHTML = '';
-            slides = [];
+            listaDiapositivas = [];
 
-            for (let i = 0; i < cards.length; i += itemsPerSlide) {
-                const slideDiv = document.createElement('div');
-                slideDiv.className = 'diapositiva-noticias';
-                cards.slice(i, i + itemsPerSlide).forEach((card) => slideDiv.appendChild(card));
-                slider.appendChild(slideDiv);
-                slides.push(slideDiv);
+            // Agrupa las tarjetas en bloques
+            for (let i = 0; i < tarjetas.length; i += elementosPorDiapositiva) {
+                const divDiapositiva = document.createElement('div');
+                divDiapositiva.className = 'diapositiva-noticias';
+                tarjetas.slice(i, i + elementosPorDiapositiva).forEach((tarjeta) => divDiapositiva.appendChild(tarjeta));
+                slider.appendChild(divDiapositiva);
+                listaDiapositivas.push(divDiapositiva);
             }
 
             slider.style.display = 'flex';
             slider.style.transition = 'transform 0.3s ease';
 
-            // Mantener posición si se pidió, de lo contrario reiniciar
-            if (!preserveIndex) index = 0;
-            index = Math.min(index, Math.max(0, slides.length - 1));
+            // Si no mantenemos el índice, volvemos al inicio
+            if (!mantenerIndice) indiceActual = 0;
+            indiceActual = Math.min(indiceActual, Math.max(0, listaDiapositivas.length - 1));
 
-            updateSlider();
+            actualizarSlider();
         }
 
-        function updateSlider() {
-            // Cada .diapositiva-noticias ocupa 100% del ancho visible
-            // Usamos el ancho del contenedor que encierra el carrusel
-            const viewport = wrapper.querySelector('.envoltorio-slider-noticias') || wrapper;
-            const viewportWidth = viewport.clientWidth;
+        // Mueve el slider a la posición correcta
+        function actualizarSlider() {
+            const vista = contenedor.querySelector('.envoltorio-slider-noticias') || contenedor;
+            const anchoVista = vista.clientWidth;
 
-            slider.style.transform = `translateX(-${index * viewportWidth}px)`;
+            // Mueve el slider usando transform
+            slider.style.transform = `translateX(-${indiceActual * anchoVista}px)`;
 
-            // Mostrar/Ocultar flechas sin cambiar layout
-            btnPrev.style.visibility = index === 0 ? 'hidden' : 'visible';
-            btnNext.style.visibility = index >= slides.length - 1 ? 'hidden' : 'visible';
+            // Oculta las flechas cuando no hay más de 4 diapositivas.
+            botonAnterior.style.visibility = indiceActual === 0 ? 'hidden' : 'visible';
+            botonSiguiente.style.visibility = indiceActual >= listaDiapositivas.length - 1 ? 'hidden' : 'visible';
         }
 
-        // Controles
-        btnNext.addEventListener('click', () => {
-            if (index < slides.length - 1) {
-                index++;
-                updateSlider();
+        // Avanzar a la siguiente diapositiva
+        botonSiguiente.addEventListener('click', () => {
+            if (indiceActual < listaDiapositivas.length - 1) {
+                indiceActual++;
+                actualizarSlider();
             }
         });
 
-        btnPrev.addEventListener('click', () => {
-            if (index > 0) {
-                index--;
-                updateSlider();
+        // Retroceder a la diapositiva anterior
+        botonAnterior.addEventListener('click', () => {
+            if (indiceActual > 0) {
+                indiceActual--;
+                actualizarSlider();
             }
         });
 
-        // Para el responsive, reaccionar a cambios de tamaño (cambia 4  1 por slide)
-        const onResize = debounce(() => {
-            const nextItemsPerSlide = getItemsPerSlide();
-            if (nextItemsPerSlide !== itemsPerSlide) {
-                itemsPerSlide = nextItemsPerSlide;
-                buildSlides({ preserveIndex: true });
+        // Ajustar el slider cuando cambia el tamaño de la ventana
+        window.addEventListener('resize', () => {
+            const siguienteCantidad = obtenerElementosPorDiapositiva();
+            if (siguienteCantidad !== elementosPorDiapositiva) {
+                elementosPorDiapositiva = siguienteCantidad;
+                crearDiapositivas({ mantenerIndice: true }); // Se mantiene visible la noticia actual.
             } else {
-                updateSlider();
+                actualizarSlider();
             }
-        }, 150);
+        });
 
-        window.addEventListener('resize', onResize);
-
-        // Inicializar
-        buildSlides({ preserveIndex: false });
+        // Construir el slider por primera vez
+        crearDiapositivas({ mantenerIndice: false });
     });
 
-    // =========================
-    // Slider "Lo más nuevo"
-    // =========================
-    (function initUltimasNoticias() {
-        const slides = document.querySelectorAll('.slide-item');
-        if (!slides.length) return;
+    // Slider de Ultimas noticias
+    (function iniciarUltimasNoticias() {
+        const diapositivas = document.querySelectorAll('.slide-item'); // Noticia pricipal en grande a la izquierda
+        if (!diapositivas.length) return;
 
-        const miniaturas = document.querySelectorAll('.contenedor-noticia-reciente');
-        const btnPrev = document.getElementById('slider-prev');
-        const btnNext = document.getElementById('slider-next');
+        const miniaturas = document.querySelectorAll('.contenedor-noticia-reciente'); // Noticias en pequeño a la derecha.
+        const botonAnterior = document.getElementById('slider-prev');
+        const botonSiguiente = document.getElementById('slider-next');
 
-        let actual = 0;
+        let indiceActual = 0; // Indice de la noticia mostrada
 
-        function mostrarSlide(idx) {
-            slides.forEach((slide, i) => {
-                slide.style.display = i === idx ? 'block' : 'none';
+        // Muestra una tarjeta al darle clic
+        function mostrarDiapositiva(indice) {
+            diapositivas.forEach((diapositiva, i) => {
+                diapositiva.style.display = i === indice ? 'block' : 'none';
                 if (miniaturas[i]) {
-                    miniaturas[i].classList.toggle('activa', i === idx);
+                    miniaturas[i].classList.toggle('activa', i === indice);
                 }
             });
         }
 
-        if (btnPrev) {
-            btnPrev.onclick = function () {
-                actual = (actual - 1 + slides.length) % slides.length;
-                mostrarSlide(actual);
+        // Boton anterior
+        if (botonAnterior) {
+            botonAnterior.onclick = function () {
+                indiceActual = (indiceActual - 1 + diapositivas.length) % diapositivas.length;
+                mostrarDiapositiva(indiceActual);
             };
         }
 
-        if (btnNext) {
-            btnNext.onclick = function () {
-                actual = (actual + 1) % slides.length;
-                mostrarSlide(actual);
+        // Boton siguiente
+        if (botonSiguiente) {
+            botonSiguiente.onclick = function () {
+                indiceActual = (indiceActual + 1) % diapositivas.length;
+                mostrarDiapositiva(indiceActual);
             };
         }
 
         miniaturas.forEach((miniatura, i) => {
             miniatura.onclick = function () {
-                actual = i;
-                mostrarSlide(actual);
+                indiceActual = i;
+                mostrarDiapositiva(indiceActual);
             };
         });
 
-        mostrarSlide(actual);
+        // Mostrar la primera noticia
+        mostrarDiapositiva(indiceActual);
     })();
 });
