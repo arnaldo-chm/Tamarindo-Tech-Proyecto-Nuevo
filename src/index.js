@@ -49,10 +49,30 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //#region Rutas principales
 //nombre ruta, accion
-app.get('/', isAuthenticated, (req, res) => {
+app.get('/', isAuthenticated, async (req, res) => {
+
     // Verifica si el usuario es administrador
     const usuarioAdministrador = req.session.user && req.session.user.tipoUsuario === 2;
-    res.render("inicio.ejs", { usuarioAdministrador });//Renderiza la vista con el motor de plantillas
+    try {
+        
+        const noticias = await Noticia.find();
+
+        const noticiasRecientes = noticias
+            .sort((a, b) => b.fecha.localeCompare(a.fecha))
+            .slice(0, 3);
+
+        const actividades = await Actividad.find();
+
+        const actividadesRecientes = actividades
+            .sort((a, b) => b.fecha.localeCompare(a.fecha))
+            .slice(0, 3);
+
+        res.render("inicio.ejs", { usuarioAdministrador, noticiasRecientes, actividadesRecientes });//Renderiza la vista con el motor de plantillas
+    }catch{
+        console.log("Error al cargar la página de inicio");
+        res.render("inicio.ejs", { usuarioAdministrador, noticiasRecientes: [], actividadesRecientes: [] });//Renderiza la vista con el motor de plantillas
+    }
+    
 });
 
 app.get('/Logon', (req, res) => {
