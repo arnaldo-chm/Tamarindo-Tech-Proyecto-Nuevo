@@ -220,108 +220,260 @@ app.get('/logout', (req, res) => {
 //#region Emprendimientos
 //Emprendimientos
 const Emprendimiento = require('../models/emprendimientos.js');
+const EmprendimientoPendiente = require('../models/emprendimientosPendientes.js');
 
 app.get('/emprendimientos', isAuthenticated, async (req, res) => {
-
     const emprendimientos = await Emprendimiento.find({ estadoEmprendimiento: "Aprobado" });
 
-    let emprendimientosUsuario = null;
+    let emprendimientosUsuario = [];
+    let emprendimientosPendientesUsuario = [];
 
-    // Se muestran emprendimientos unicamente si el usuario es tipo emprendedor o administrador.
-    // Para contar con el caso en que el administrador decide degradar un emprendedor a usuario corriente.
-    if (req.session.user && req.session.user.tipoUsuario > 0) {
-        emprendimientosUsuario = await Emprendimiento.find({ correoUsuario: req.session.user.correo });
+    if (req.session.user) {
+        // Emprendimientos aprobados del usuario
+        if (req.session.user.tipoUsuario > 0) {
+            emprendimientosUsuario = await Emprendimiento.find({ correoUsuario: req.session.user.correo });
+        }
+        // Emprendimientos pendientes del usuario
+        emprendimientosPendientesUsuario = await EmprendimientoPendiente.find({ correoUsuario: req.session.user.correo });
     }
 
-    res.render('emprendimientos.ejs', { emprendimientos: emprendimientos, emprendimientosUsuario: emprendimientosUsuario });
+    res.render('emprendimientos.ejs', {
+        emprendimientos: emprendimientos,
+        emprendimientosUsuario: emprendimientosUsuario,
+        emprendimientosPendientesUsuario: emprendimientosPendientesUsuario
+    });
 });
 
-app.post('/api/registrarEmprendimiento', isAuthenticated, (req, res) => {
-
-    if (req.session && req.session.user && (req.session.user.tipoUsuario === 1 || req.session.user.tipoUsuario === 2)) {
-        let data = new Emprendimiento({
-            correoUsuario: req.body.correoUsuario,
-            nombreEmprendimiento: req.body.nombreEmprendimiento,
-            descripcionEmprendimiento: req.body.descripcionEmprendimiento,
-            categoria: req.body.categoria,
-            telefono: req.body.telefono,
-            precio: req.body.precio,
-            nombreImagen: path.basename(req.body.archivo)
-        })
-
-        data.save()
-            .then(() => {
-                console.log("Emprendimiento registrado");
-                const resultado = {
-                    resultado: true,
-                    mensaje: `Emprendimiento registrado con exito`
-                }
-                res.json(resultado);
-            })
-
-            .catch(err => {
-                console.log("Error al guardar Emprendimiento:", err);
-                const resultado = {
-                    resultado: false,
-                    mensaje: `Error al guardar Emprendimiento ${err}`
-                }
-                res.json(resultado);
+// REGISTRO DE EMPRENDIMIENTO
+app.post('/api/registrarEmprendimiento', isAuthenticated, async (req, res) => {
+    if (req.session && req.session.user) {
+        // Ahora tanto tipoUsuario 0 como 1 deben pasar por aprobación
+        if (req.session.user.tipoUsuario === 0 || req.session.user.tipoUsuario === 1) {
+            // Guardar en pendientes
+            let data = new EmprendimientoPendiente({
+                correoUsuario: req.body.correoUsuario,
+                nombreEmprendimiento: req.body.nombreEmprendimiento,
+                descripcionEmprendimiento: req.body.descripcionEmprendimiento,
+                categoria: req.body.categoria,
+                telefono: req.body.telefono,
+                precio: req.body.precio,
+                nombreImagen: path.basename(req.body.archivo)
             });
-    }
-    else {
 
-        const resultado = {
-            resultado: false,
-            mensaje: `Por favor solicite al administrador que le otorgue permisos para registrar emprendimientos.\n Utilice el enlace Crear Un Reporte al pie de página.`
+            try {
+                await data.save();
+                res.json({
+                    resultado: true,
+                    mensaje: "Gracias por subir tu emprendimiento, nuestros administradores revisarán la información. Si tienes dudas no dudes en crear un reporte."
+                });
+            } catch (err) {
+                res.json({
+                    resultado: false,
+                    mensaje: `Error al guardar Emprendimiento Pendiente: ${err}`
+                });
+            }
+        } else if (req.session.user.tipoUsuario === 2) {
+            // Admin: guardar directamente
+            let data = new Emprendimiento({
+                correoUsuario: req.body.correoUsuario,
+                nombreEmprendimiento: req.body.nombreEmprendimiento,
+                descripcionEmprendimiento: req.body.descripcionEmprendimiento,
+                categoria: req.body.categoria,
+                telefono: req.body.telefono,
+                precio: req.body.precio,
+                nombreImagen: path.basename(req.body.archivo),
+                estadoEmprendimiento: "Aprobado"
+            });
+
+            try {
+                await data.save();
+                res.json({
+                    resultado: true,
+                    mensaje: "Emprendimiento registrado con éxito"
+                });
+            } catch (err) {
+                res.json({
+                    resultado: false,
+                    mensaje: `Error al guardar Emprendimiento: ${err}`
+                });
+            }
+        } else {
+            res.json({
+                resultado: false,
+                mensaje: "No tiene permisos para registrar emprendimientos."
+            });
         }
-        res.json(resultado);
+    } else {
+        res.json({
+            resultado: false,
+            mensaje: "Debe iniciar sesión para registrar emprendimientos."
+        });
     }
-})
+});
 
-// Mostrar formulario de edición
+// ADMIN: APROBAR EMPRENDIMIENTO PENDIENTE
+app.post('/api/aprobarEmprendimiento', isAdmin, async (req, res) => {
+    try {
+        const pendiente = await EmprendimientoPendiente.findById(req.body.id);
+        if (!pendiente) return res.json({ resultado: false, mensaje: "Emprendimiento pendiente no encontrado" });
+
+        // Guardar en principal
+        let data = new Emprendimiento({
+            correoUsuario: pendiente.correoUsuario,
+            nombreEmprendimiento: pendiente.nombreEmprendimiento,
+            descripcionEmprendimiento: pendiente.descripcionEmprendimiento,
+            categoria: pendiente.categoria,
+            telefono: pendiente.telefono,
+            precio: pendiente.precio,
+            nombreImagen: pendiente.nombreImagen,
+            estadoEmprendimiento: "Aprobado"
+        });
+        await data.save();
+
+        // Cambiar usuario a tipo 1
+        await User.findOneAndUpdate({ correo: pendiente.correoUsuario }, { tipoUsuario: 1 });
+
+        // Eliminar de pendientes
+        await EmprendimientoPendiente.findByIdAndDelete(req.body.id);
+
+        res.json({ resultado: true, mensaje: "Emprendimiento aprobado y publicado" });
+    } catch (err) {
+        res.json({ resultado: false, mensaje: `Error al aprobar: ${err}` });
+    }
+});
+
+// ADMIN: RECHAZAR EMPRENDIMIENTO PENDIENTE (con motivo)
+app.post('/api/rechazarEmprendimiento', isAdmin, async (req, res) => {
+    try {
+        const { id, motivo } = req.body;
+        // Actualiza el estado y guarda el motivo de rechazo
+        await EmprendimientoPendiente.findByIdAndUpdate(id, {
+            estadoEmprendimiento: "Rechazado",
+            motivoRechazo: motivo
+        });
+        res.json({ resultado: true, mensaje: "Emprendimiento rechazado y motivo guardado" });
+    } catch (err) {
+        res.json({ resultado: false, mensaje: `Error al rechazar: ${err}` });
+    }
+});
+
+// Eliminar Emprendimiento aprobado
+app.post('/api/eliminarEmprendimiento', isAdmin, async (req, res) => {
+    try {
+        await Emprendimiento.findByIdAndDelete(req.body.id);
+        res.json({ resultado: true, mensaje: "Emprendimiento eliminado con éxito" });
+    } catch (err) {
+        res.json({ resultado: false, mensaje: `Error al eliminar Emprendimiento: ${err}` });
+    }
+});
+
+// Mostrar formulario de edición de emprendimiento (usuario)
 app.get('/emprendimiento/:id/editar', isAuthenticated, async (req, res) => {
-
     const emprendimiento = await Emprendimiento.findById(req.params.id);
-    // console.log(emprendimiento);
-
     if (!emprendimiento) {
         return res.status(404).send('Emprendimiento no encontrado');
     }
-    res.render('editar_emprendimiento.ejs', { emprendimiento: emprendimiento });
+    // Solo el dueño puede editar
+    if (req.session.user.correo !== emprendimiento.correoUsuario) {
+        return res.status(403).send('No tienes permisos para editar este emprendimiento');
+    }
+    res.render('editar_emprendimiento.ejs', { emprendimiento });
 });
 
-app.post('/api/editarEmprendimiento', isAuthenticated, async (req, res) => {
+// Mostrar formulario de edición de emprendimiento pendiente (rechazado)
+app.get('/emprendimientoPendiente/:id/editar', isAuthenticated, async (req, res) => {
+    const pendiente = await EmprendimientoPendiente.findById(req.params.id);
+    if (!pendiente) {
+        return res.status(404).send('Emprendimiento pendiente no encontrado');
+    }
+    if (req.session.user.correo !== pendiente.correoUsuario) {
+        return res.status(403).send('No tienes permisos para editar este emprendimiento');
+    }
+    res.render('editar_emprendimiento_pendiente.ejs', { emprendimiento: pendiente });
+});
 
+// Editar y reenviar emprendimiento pendiente (emprendedor)
+app.post('/api/editarEmprendimientoPendiente', isAuthenticated, async (req, res) => {
     try {
-        // Busca el emprendimiento por ID
-        const emprendimiento = await Emprendimiento.findById(req.body.id);
-
-        console.log("Emprendimiento encontrado:", emprendimiento);
-
-        await Emprendimiento.findByIdAndUpdate(req.body.id, {
-            correoUsuario: req.body.correoUsuario,
+        const pendiente = await EmprendimientoPendiente.findById(req.body.id);
+        if (!pendiente) {
+            return res.json({ resultado: false, mensaje: 'Emprendimiento pendiente no encontrado' });
+        }
+        if (req.session.user.correo !== pendiente.correoUsuario) {
+            return res.json({ resultado: false, mensaje: 'No tienes permisos para editar este emprendimiento' });
+        }
+        await EmprendimientoPendiente.findByIdAndUpdate(req.body.id, {
             nombreEmprendimiento: req.body.nombreEmprendimiento,
             descripcionEmprendimiento: req.body.descripcionEmprendimiento,
             categoria: req.body.categoria,
             telefono: req.body.telefono,
             precio: req.body.precio,
-            nombreImagen: req.body.archivo ? path.basename(req.body.archivo) : emprendimiento.nombreImagen, // Mantener la imagen actual si no se proporciona una nueva
-            estadoEmprendimiento: "Pendiente"
+            nombreImagen: req.body.archivo ? path.basename(req.body.archivo) : pendiente.nombreImagen,
+            estadoEmprendimiento: "Pendiente",
+            motivoRechazo: ""
         });
-        res.json({ resultado: true, mensaje: "Emprendimiento editado con éxito" });
-    } catch (error) {
-        console.error("Error al editar Emprendimiento:", error);
-        res.json({ resultado: false, mensaje: `Error al editar Emprendimiento ${error}` });
+        res.json({ resultado: true, mensaje: 'Emprendimiento editado y reenviado para aprobación' });
+    } catch (err) {
+        res.json({ resultado: false, mensaje: `Error al editar y reenviar: ${err}` });
     }
 });
 
+// Eliminar emprendimiento pendiente (emprendedor)
+app.post('/emprendimientoPendiente/:id/eliminar', isAuthenticated, async (req, res) => {
+    const pendiente = await EmprendimientoPendiente.findById(req.params.id);
+    if (!pendiente) {
+        return res.status(404).send('Emprendimiento pendiente no encontrado');
+    }
+    if (req.session.user.correo !== pendiente.correoUsuario) {
+        return res.status(403).send('No tienes permisos para eliminar este emprendimiento');
+    }
+    await EmprendimientoPendiente.findByIdAndDelete(req.params.id);
+    res.redirect('/emprendimientos');
+});
+
+// Eliminar emprendimiento (usuario)
 app.post('/emprendimiento/:id/eliminar', isAuthenticated, async (req, res) => {
     try {
+        const emprendimiento = await Emprendimiento.findById(req.params.id);
+        if (!emprendimiento) {
+            return res.status(404).send('Emprendimiento no encontrado');
+        }
+        if (req.session.user.correo !== emprendimiento.correoUsuario) {
+            return res.status(403).send('No tienes permisos para eliminar este emprendimiento');
+        }
         await Emprendimiento.findByIdAndDelete(req.params.id);
         res.redirect('/emprendimientos');
-    } catch (error) {
-        console.error("Error al eliminar Emprendimiento:", error);
-        res.redirect('/emprendimientos');
+    } catch (err) {
+        res.status(500).send('Error al eliminar el emprendimiento');
+    }
+});
+
+// Editar emprendimiento aprobado (usuario) - ahora también pasa por aprobación
+app.post('/api/editarEmprendimiento', isAuthenticated, async (req, res) => {
+    try {
+        const emprendimiento = await Emprendimiento.findById(req.body.id);
+        if (!emprendimiento) {
+            return res.json({ resultado: false, mensaje: 'Emprendimiento no encontrado' });
+        }
+        if (req.session.user.correo !== emprendimiento.correoUsuario) {
+            return res.json({ resultado: false, mensaje: 'No tienes permisos para editar este emprendimiento' });
+        }
+        // Al editar, se elimina el aprobado y se crea un pendiente para aprobación
+        await Emprendimiento.findByIdAndDelete(req.body.id);
+        let data = new EmprendimientoPendiente({
+            correoUsuario: req.session.user.correo,
+            nombreEmprendimiento: req.body.nombreEmprendimiento,
+            descripcionEmprendimiento: req.body.descripcionEmprendimiento,
+            categoria: req.body.categoria,
+            telefono: req.body.telefono,
+            precio: req.body.precio,
+            nombreImagen: req.body.archivo ? path.basename(req.body.archivo) : emprendimiento.nombreImagen,
+            estadoEmprendimiento: "Pendiente"
+        });
+        await data.save();
+        res.json({ resultado: true, mensaje: 'Emprendimiento editado y enviado para aprobación' });
+    } catch (err) {
+        res.json({ resultado: false, mensaje: `Error al editar y enviar para aprobación: ${err}` });
     }
 });
 
@@ -694,7 +846,16 @@ app.get('/Admin_panel', isAdmin, async (req, res) => {
     const actividades = await Actividad.find();
     const quejas = await Queja.find();
     const usuarios = await User.find();
-    res.render('contenido-admin', { noticias: noticias, emprendimientos: emprendimientos, transportes: transportes, actividades: actividades, quejas: quejas, usuarios: usuarios });
+    const emprendimientosPendientes = await EmprendimientoPendiente.find();
+    res.render('contenido-admin', {
+        noticias: noticias,
+        emprendimientos: emprendimientos,
+        emprendimientosPendientes: emprendimientosPendientes,
+        transportes: transportes,
+        actividades: actividades,
+        quejas: quejas,
+        usuarios: usuarios
+    });
 });
 
 app.get('/Admin_panel/crear_noticia', isAdmin, (req, res) => {

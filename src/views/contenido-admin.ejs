@@ -162,34 +162,13 @@
                     </div>
 
                     <div class="cuadricula-contenido">
-                        <!-- Emprendimiento 1 - Pendiente -->
-                        <div class="tarjeta-emprendimiento" data-estado="pendiente">
-                            <div class="encabezado-tarjeta">
-                                <h4>Artesanías Locales</h4>
-                                <span class="estado pendiente">Pendiente</span>
-                            </div>
-                            <div class="imagen-tarjeta">
-                                <img src="/img/NoticiaEjm.png" alt="Artesanías Locales">
-                            </div>
-                            <div class="info-tarjeta">
-                                <p><strong>Emprendedor:</strong> Ana Rodríguez</p>
-                                <p><strong>Categoría:</strong> Artesanías</p>
-                                <p><strong>Solicitado:</strong> 05/11/2023</p>
-                            </div>
-                            <div class="acciones-tarjeta">
-                                <button class="btn-aprobar">Aprobar</button>
-                                <button class="btn-rechazar">Rechazar</button>
-                                <button class="btn-detalles">Detalles</button>
-                            </div>
-                        </div>
-
-                        <% emprendimientos.forEach(emprendimiento=>{ %>
-
-                            <div class="tarjeta-emprendimiento" data-estado="<%= emprendimiento.estadoEmprendimiento ? emprendimiento.estadoEmprendimiento.trim().toLowerCase() : '' %>" data-categoria="<%= emprendimiento.categoria ? emprendimiento.categoria.toLowerCase() : '' %>">
+                        <% emprendimientosPendientes.forEach(emprendimiento=>{ %>
+                            <div class="tarjeta-emprendimiento"
+                                data-estado="<%= emprendimiento.estadoEmprendimiento ? emprendimiento.estadoEmprendimiento.trim().toLowerCase() : 'pendiente' %>"
+                                data-categoria="<%= emprendimiento.categoria ? emprendimiento.categoria.toLowerCase() : '' %>"
+                                data-id="<%= emprendimiento._id %>">
                                 <div class="encabezado-tarjeta">
-                                    <h4>
-                                        <%= emprendimiento.nombreEmprendimiento %>
-                                    </h4>
+                                    <h4><%= emprendimiento.nombreEmprendimiento %></h4>
                                     <span class="estado <%= emprendimiento.estadoEmprendimiento %>">
                                         <%= emprendimiento.estadoEmprendimiento %>
                                     </span>
@@ -198,18 +177,56 @@
                                     <img src="/img/<%= emprendimiento.nombreImagen %>" alt="">
                                 </div>
                                 <div class="info-tarjeta">
-                                    <p><strong>Correo:</strong>
-                                        <%= emprendimiento.correoUsuario %>
-                                    </p>
-                                    <p><strong>Categoría:</strong>
-                                        <%= emprendimiento.categoria %>
-                                    </p>
-                                    <!-- <p><strong>Solicitado:</strong> 05/11/2023</p> -->
+                                    <p><strong>Correo:</strong> <%= emprendimiento.correoUsuario %></p>
+                                    <p><strong>Categoría:</strong> <%= emprendimiento.categoria %></p>
+                                    <p><strong>Descripción:</strong> <%= emprendimiento.descripcionEmprendimiento %></p>
+                                    <p><strong>Teléfono:</strong> <%= emprendimiento.telefono %></p>
+                                    <p><strong>Precio:</strong> $<%= emprendimiento.precio %></p>
+                                    <% if (emprendimiento.estadoEmprendimiento === 'Rechazado' && emprendimiento.motivoRechazo) { %>
+                                        <div class="motivo-rechazo"><strong>Motivo:</strong> <%= emprendimiento.motivoRechazo %></div>
+                                    <% } %>
                                 </div>
                                 <div class="acciones-tarjeta">
-                                    <button class="btn-aprobar">Aprobar</button>
-                                    <button class="btn-rechazar">Rechazar</button>
-                                    <button class="btn-detalles">Detalles</button>
+                                    <% if (emprendimiento.estadoEmprendimiento === 'Pendiente') { %>
+                                        <button class="btn-aprobar btn-aprobar-amarillo" data-id="<%= emprendimiento._id %>">Aprobar</button>
+                                        <button class="btn-rechazar" data-id="<%= emprendimiento._id %>">Rechazar</button>
+                                        <button class="btn-detalles" data-id="<%= emprendimiento._id %>">Detalles</button>
+                                    <% } else if (emprendimiento.estadoEmprendimiento === 'Rechazado') { %>
+                                        <button class="btn-detalles" data-id="<%= emprendimiento._id %>">Detalles</button>
+                                    <% } %>
+                                </div>
+                            </div>
+                        <% }) %>
+                        <!-- Emprendimientos aprobados/rechazados -->
+                        <% emprendimientos.forEach(emprendimiento=>{ %>
+
+                            <div class="tarjeta-emprendimiento"
+                                data-estado="<%= emprendimiento.estadoEmprendimiento ? emprendimiento.estadoEmprendimiento.trim().toLowerCase() : '' %>"
+                                data-categoria="<%= emprendimiento.categoria ? emprendimiento.categoria.toLowerCase() : '' %>"
+                                data-id="<%= emprendimiento._id %>">
+                                <div class="encabezado-tarjeta">
+                                    <h4><%= emprendimiento.nombreEmprendimiento %></h4>
+                                    <span class="estado <%= emprendimiento.estadoEmprendimiento %>"><%= emprendimiento.estadoEmprendimiento %></span>
+                                </div>
+                                <div class="imagen-tarjeta">
+                                    <img src="/img/<%= emprendimiento.nombreImagen %>" alt="">
+                                </div>
+                                <div class="info-tarjeta">
+                                    <p><strong>Correo:</strong> <%= emprendimiento.correoUsuario %></p>
+                                    <p><strong>Categoría:</strong> <%= emprendimiento.categoria %></p>
+                                    <p><strong>Descripción:</strong> <%= emprendimiento.descripcionEmprendimiento %></p>
+                                    <p><strong>Teléfono:</strong> <%= emprendimiento.telefono %></p>
+                                    <p><strong>Precio:</strong> $<%= emprendimiento.precio %></p>
+                                </div>
+                                <div class="acciones-tarjeta">
+                                    <% if (emprendimiento.estadoEmprendimiento && emprendimiento.estadoEmprendimiento.trim().toLowerCase() === 'aprobado') { %>
+                                        <button class="btn-eliminar" data-id="<%= emprendimiento._id %>">Eliminar</button>
+                                        <button class="btn-detalles" data-id="<%= emprendimiento._id %>">Detalles</button>
+                                    <% } else { %>
+                                        <button class="btn-aprobar" data-id="<%= emprendimiento._id %>">Aprobar</button>
+                                        <button class="btn-rechazar" data-id="<%= emprendimiento._id %>">Rechazar</button>
+                                        <button class="btn-detalles" data-id="<%= emprendimiento._id %>">Detalles</button>
+                                    <% } %>
                                 </div>
                             </div>
                             <% }) %>

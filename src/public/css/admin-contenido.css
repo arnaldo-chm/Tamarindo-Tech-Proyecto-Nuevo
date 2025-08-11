@@ -45,6 +45,21 @@
     border-left-color: #e74c3c; /* Rojo para rechazados */
 }
 
+.tarjeta-emprendimiento[data-estado="pendiente"] {
+    border-left: 4px solid #f7b731; /* amarillo */
+    box-shadow: 0 2px 16px 0 rgba(247,183,49,0.15);
+}
+
+.tarjeta-emprendimiento[data-estado="aprobado"] {
+    border-left: 4px solid #2ecc71; /* verde */
+    box-shadow: 0 2px 16px 0 rgba(46,204,113,0.15);
+}
+
+.tarjeta-emprendimiento[data-estado="rechazado"] {
+    border-left: 4px solid #e74c3c; /* rojo */
+    box-shadow: 0 2px 16px 0 rgba(231,76,60,0.15);
+}
+
 .tarjeta-emprendimiento:hover {
     transform: translateY(-5px);
 }
@@ -174,6 +189,16 @@
     background-color: #2980b9;
 }
 
+/* Nuevo estilo para botón "Aprobar" amarillo */
+.btn-aprobar-amarillo {
+    background-color: #f7b731;
+    color: white;
+}
+
+.btn-aprobar-amarillo:hover {
+    background-color: #f39c12;
+}
+
 /* ----------------------------
    Estados (para Emprendimientos)
    ---------------------------- */
@@ -281,4 +306,98 @@
     .acciones-tarjeta button {
         width: 100%;
     }
+}
+
+/* Modal de detalles mejorado */
+.modal-detalles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-contenido-detalles {
+    background: #fff;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 95vw;
+    padding: 30px 25px 20px 25px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    position: relative;
+    animation: modalFadeIn 0.2s;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: scale(0.95);}
+    to { opacity: 1; transform: scale(1);}
+}
+
+.btn-cerrar-detalles {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    background: none;
+    border: none;
+    font-size: 2em;
+    color: #e74c3c;
+    cursor: pointer;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+.btn-cerrar-detalles:hover {
+    color: #c0392b;
+}
+
+.modal-titulo {
+    text-align: center;
+    font-size: 1.4em;
+    color: #668c31;
+    margin-bottom: 18px;
+}
+
+.modal-detalles-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.modal-detalles-imagen img {
+    width: 220px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 10px;
+}
+
+.modal-detalles-info {
+    width: 100%;
+    font-size: 15px;
+    color: #333;
+}
+
+.modal-detalles-info h4 {
+    font-size: 1.1em;
+    color: #3498db;
+    margin-bottom: 10px;
+}
+
+.modal-detalles-info p {
+    margin: 6px 0;
+    line-height: 1.5;
+}
+
+.modal-detalles-info .motivo-rechazo {
+    background: #fbeaea;
+    border-left: 4px solid #e74c3c;
+    color: #e74c3c;
+    font-weight: bold;
+    padding: 8px 12px;
+    margin-top: 10px;
+    border-radius: 6px;
 }
