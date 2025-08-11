@@ -18,7 +18,7 @@ const emprendimientoSchema = new mongoose.Schema({
     nombreImagen:{type:String, required:true},
     precio:{type:Number, required:true},
     estadoEmprendimiento:{type:String, default:"Pendiente"}, // 0: En Revision, 1: Aprobado, 2: Rechazado/Eliminado
-    motivoRechazo:{type:Number, required:false}
+    motivoRechazo:{type:String, required:false} // <-- Cambia a String para guardar texto
 },{versionKey:false}) 
 
 

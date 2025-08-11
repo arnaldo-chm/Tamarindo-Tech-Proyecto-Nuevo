@@ -431,6 +431,23 @@ app.post('/emprendimientoPendiente/:id/eliminar', isAuthenticated, async (req, r
     res.redirect('/emprendimientos');
 });
 
+// Eliminar emprendimiento (usuario)
+app.post('/emprendimiento/:id/eliminar', isAuthenticated, async (req, res) => {
+    try {
+        const emprendimiento = await Emprendimiento.findById(req.params.id);
+        if (!emprendimiento) {
+            return res.status(404).send('Emprendimiento no encontrado');
+        }
+        if (req.session.user.correo !== emprendimiento.correoUsuario) {
+            return res.status(403).send('No tienes permisos para eliminar este emprendimiento');
+        }
+        await Emprendimiento.findByIdAndDelete(req.params.id);
+        res.redirect('/emprendimientos');
+    } catch (err) {
+        res.status(500).send('Error al eliminar el emprendimiento');
+    }
+});
+
 // Editar emprendimiento aprobado (usuario) - ahora también pasa por aprobación
 app.post('/api/editarEmprendimiento', isAuthenticated, async (req, res) => {
     try {
