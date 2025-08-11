@@ -287,6 +287,82 @@ html para las cuatro columnas definidas 1fr 9fr 1fr 5fr */
     transform: scale(1.2);
 }
 
+@media (max-width: 1113px) {
+    .seccion-noticias-nuevas {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        margin: 5% 5%;
+    }
+
+    .noticia-header{
+        justify-content: center;
+    }
+
+    .contenedor-noticia-reciente{
+        display: none;
+    }
+
+    .card{
+        width: 100%;
+    }
+
+    .boton-navegacion{
+        opacity: 0.5;
+    }
+
+    .seccion-noticias{
+        margin: 0% 5% 0% 5%;
+        border-bottom: none;
+    }
+
+    .seccion-noticias h2{
+        text-align: center;
+    }
+
+    /* Slider - 3 columnas para tablets */
+    .diapositiva-noticias {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .card {
+        max-width: 350px;
+        margin: 0 auto;
+    }
+}
+
+/* Tablets pequeños - 2 columnas */
+@media (max-width: 900px) {
+    .slider-ultimas-noticias {
+        max-width: 400px;
+        min-height: 200px;
+    }
+    .slide-noticia {
+        min-height: 200px;
+    }
+    .slide-item img {
+        height: 180px;
+        min-height: 120px;
+    }
+    .contenedor-noticias-recientes {
+        display: none !important;
+    }
+    .diapositiva-noticias {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 15px;
+    }
+
+    .seccion-noticias {
+        margin: 0% 5% 0% 5%;
+    }
+
+    .card {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+}
+
 
 /* Mobile - 1 columna */
 @media (max-width: 600px) {

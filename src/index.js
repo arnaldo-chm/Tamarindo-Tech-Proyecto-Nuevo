@@ -90,10 +90,8 @@ app.get('/noticias', isAuthenticated, async (req, res) => {
         res.render('noticias.ejs', { noticiasPorCategoria, noticiasRecientes });
 
     } catch (error) {
-        console.error("Error al cargar noticias:", error);
-
-        // Renderiza la vista aunque falle el módulo de noticias
-        res.render('noticias.ejs', { noticiasPorCategoria: {} });
+    console.error("Error al cargar noticias:", error);
+    res.render('noticias.ejs', { noticiasPorCategoria: {}, noticiasRecientes: [] });
     }
 });
 
