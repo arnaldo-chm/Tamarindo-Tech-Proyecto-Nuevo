@@ -1,10 +1,9 @@
-
 /* bienveida */
 
 .contenedor {
     display: flex;
     justify-content: center; 
-    margin: 40px 100px; /* mismo left-margin que usamos en Noticias */
+    margin: 40px 100px;
     gap: 5%;
     flex-wrap: wrap;
     align-items: center;
@@ -171,136 +170,236 @@ img#tarjetas{
         gap: 30px;
         align-items: center;
     }
-    
     .texto_bienvenido {
         text-align: center;
     }
-    
     .texto_bienvenido p {
         width: 100%;
         max-width: 500px;
         font-size: 1em;
     }
-    
     .titulo {
         font-size: 1.8em;
     }
-    
     .img img {
         max-width: 100%;
         height: auto;
     }
-    
     .tarjetas {
         padding: 30px 20px;
     }
-    
     .tarjetas h2 {
-        font-size: 1.8em;
-        margin-bottom: 30px;
+        font-size: 2em;
+        margin-bottom: 20px;
         text-align: center;
         margin-right: 0;
+        color: #547A20;
     }
-    
     .contenedor-tarjetas {
-        gap: 15px;
+        gap: 20px;
+        justify-content: center;
     }
-    
     .card {
-        width: 280px;
+        width: 250px;
         max-width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        transition: 0.5s ease;
+        height: 100%;
     }
-    
     .img_tarjetas {
-        width: 100%;
-        margin: 15px;
+        width: 240px;
+        margin: 20px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
-    
     img#tarjetas {
-        width: 100%;
-        max-width: 248px;
-        height: 180px;
+        width: 208px;
+        height: 168px;
+        border-radius: 10px;
+    }
+    .card h3 {
+        font-size: 1em;
+        margin: 10px;
+        color: #000000;
+    }
+    .card p {
+        font-size: 0.9em;
+        padding: 0 10px 20px;
+        color: #333;
+    }
+    .card .fecha {
+        font-size: 0.8em;
+        color: #999;
+        margin-top: auto;
     }
 }
 
 @media (max-width: 600px) {
     .contenedor {
-        margin: 15px 20px;
+        margin: 15px 10px;
         gap: 25px;
     }
-    
     .texto_bienvenido p {
         font-size: 0.95em;
         line-height: 1.4em;
     }
-    
     .titulo {
         font-size: 1.6em;
         margin-bottom: 15px;
     }
-    
     .tarjetas {
-        padding: 20px 15px;
+        padding: 20px 5px;
     }
-    
     .tarjetas h2 {
-        font-size: 1.6em;
-        margin-bottom: 25px;
+        font-size: 2em;
+        margin-bottom: 20px;
+        text-align: center;
+        margin-right: 0;
+        color: #547A20;
     }
-    
     .contenedor-tarjetas {
-        gap: 12px;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
     }
-    
     .card {
-        width: 100%;
-        max-width: 300px;
+        width: 250px;
+        max-width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        transition: 0.5s ease;
+        height: 100%;
         margin: 0 auto;
     }
-    
     .img_tarjetas {
-        margin: 10px;
+        width: 240px;
+        margin: 20px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
-    
     img#tarjetas {
-        height: 160px;
+        width: 208px;
+        height: 168px;
+        border-radius: 10px;
     }
-    
     .card h3 {
-        font-size: 0.95em;
-        margin: 8px;
+        font-size: 1em;
+        margin: 10px;
+        color: #000000;
     }
-    
     .card p {
-        font-size: 0.85em;
-        padding: 0 8px 15px;
+        font-size: 0.9em;
+        padding: 0 10px 20px;
+        color: #333;
+    }
+    .card .fecha {
+        font-size: 0.8em;
+        color: #999;
+        margin-top: auto;
     }
 }
 
 @media (max-width: 320px) {
     .contenedor {
-        margin: 10px 15px;
+        margin: 10px 5px;
     }
-    
     .titulo {
         font-size: 1.4em;
     }
-    
     .texto_bienvenido p {
         font-size: 0.9em;
     }
-    
     .tarjetas {
-        padding: 15px 10px;
+        padding: 15px 2px;
     }
-    
     .card {
-        width: 100%;
-        max-width: 280px;
+        width: 250px;
+        max-width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        transition: 0.5s ease;
+        height: 100%;
+        margin: 0 auto;
     }
-    
     img#tarjetas {
-        height: 140px;
+        width: 208px;
+        height: 168px;
+        border-radius: 10px;
+    }
+}
+
+/* fin de tarjetas */
+.calendario {
+    box-sizing: border-box;
+    width: 100%;
+    overflow-x: auto;
+    /* Opcional: para evitar que los días se salgan */
+    display: block;
+}
+
+.calendario-fila,
+.calendario-semana {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+.calendario .dia {
+    box-sizing: border-box;
+    flex: 1 1 0;
+    min-width: 36px;
+    max-width: 100px;
+    /* Evita que los días crezcan demasiado */
+    word-break: break-word;
+    text-align: center;
+    /* ...existing code for .dia... */
+}
+
+@media (max-width: 1113px) {
+    .calendario {
+        max-width: 600px;
+    }
+    .calendario .dia {
+        min-width: 60px;
+        max-width: 80px;
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 600px) {
+    .calendario {
+        max-width: 100%;
+    }
+    .calendario .dia {
+        min-width: 48px;
+        max-width: 60px;
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 400px) {
+    .calendario .dia {
+        min-width: 36px;
+        max-width: 48px;
+        font-size: 0.9em;
     }
 }
 /* fin de tarjetas */

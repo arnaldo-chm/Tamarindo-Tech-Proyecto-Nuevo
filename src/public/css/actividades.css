@@ -48,7 +48,7 @@
 .boton-informacion {
   display: inline-block;
   margin-top: 12px;
-  background-color: #5A7D32;
+  background-color: #5a7d32;
   color: white;
   padding: 8px 12px;
   border: none;
@@ -57,7 +57,6 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
-
 
 .boton-informacion:hover {
   background-color: #446324;
@@ -110,11 +109,10 @@
   /* font-family: 'ro', sans-serif; */
 }
 
-
 .modal-contenido h3 {
   margin-top: 0;
   font-size: 1.4em;
-  color: #5A7D32;
+  color: #5a7d32;
   margin-bottom: 12px;
 }
 
@@ -136,7 +134,7 @@
 
 .modal-contenido ul li::before {
   content: "•";
-  color: #5A7D32;
+  color: #5a7d32;
   font-weight: bold;
   display: inline-block;
   width: 1em;
@@ -151,7 +149,6 @@
   text-decoration: none;
 }
 
-
 /* CALENDARIO */
 .calendario-principal {
   max-width: 400px;
@@ -159,13 +156,13 @@
   border-radius: 10px;
   padding: 16px;
   background-color: #f9f9f9;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   margin: auto;
 }
 
 .encabezado-calendario h3 {
   text-align: center;
-  color: #5A7D32;
+  color: #5a7d32;
   margin-bottom: 10px;
 }
 
@@ -190,10 +187,49 @@
 }
 
 .dias span.activo {
-  background-color: #5A7D32 !important;
+  background-color: #5a7d32 !important;
   color: #fff;
 }
 
+/* Calendario principal: días en grid de 7 columnas */
+#calendario-dias {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#calendario-dias .dia,
+#calendario-dias span {
+  text-align: center;
+  padding: 8px 0;
+  min-width: 0;
+  word-break: break-word;
+  font-size: 1rem;
+}
+
+/* Responsive: para pantallas pequeñas */
+@media (max-width: 600px) {
+  .calendario-principal {
+    padding: 0 4px;
+    max-width: 100vw;
+  }
+  #calendario-dias {
+    gap: 2px;
+  }
+  #calendario-dias .dia,
+  #calendario-dias span {
+    font-size: 0.85rem;
+    padding: 6px 0;
+  }
+  .dias-semana span {
+    font-size: 0.85rem;
+    padding: 4px 0;
+    min-width: 0;
+    word-break: break-word;
+  }
+}
 
 /* CONTENEDOR GENERAL */
 .contenedor {
@@ -214,11 +250,10 @@
   font-size: 1.1em;
   line-height: 1.5em;
   margin-bottom: 30px;
-
 }
 
 .titulo {
-  color: #547A20;
+  color: #547a20;
   font-size: 2em;
   margin-bottom: 20px;
 }
@@ -305,7 +340,6 @@
 .punto-actividades.activo {
   background-color: #333333;
 }
-
 
 .seccion-actividades h2 {
   text-align: center;
@@ -452,9 +486,6 @@
     width: 100% !important;
     margin-bottom: 1rem;
   }
-
-
-
 }
 
 .modal {
@@ -527,23 +558,23 @@
 
 @keyframes destacarTarjeta {
   0% {
-    box-shadow: 0 0 0px #547A20;
+    box-shadow: 0 0 0px #547a20;
     transform: scale(1);
   }
 
   50% {
-    box-shadow: 0 0 20px #547A20;
+    box-shadow: 0 0 20px #547a20;
     transform: scale(1.03);
   }
 
   100% {
-    box-shadow: 0 0 0px #547A20;
+    box-shadow: 0 0 0px #547a20;
     transform: scale(1);
   }
 }
 
 .tarjeta-destacada {
   animation: destacarTarjeta 1.5s ease-in-out;
-  border: 2px solid #547A20;
+  border: 2px solid #547a20;
   z-index: 10;
 }
