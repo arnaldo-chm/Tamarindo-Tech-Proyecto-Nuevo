@@ -59,13 +59,13 @@ app.get('/', isAuthenticated, async (req, res) => {
 
         const noticiasRecientes = noticias
             .sort((a, b) => b.fecha.localeCompare(a.fecha))
-            .slice(0, 3);
+            .slice(0, 4);
 
         const actividades = await Actividad.find();
 
         const actividadesRecientes = actividades
             .sort((a, b) => b.fecha.localeCompare(a.fecha))
-            .slice(0, 3);
+            .slice(0, 4);
 
         res.render("inicio.ejs", { usuarioAdministrador, noticiasRecientes, actividadesRecientes });//Renderiza la vista con el motor de plantillas
     }catch{
@@ -991,6 +991,21 @@ async function cargarDatosIniciales() {
                 telefono: '89808070',
                 fecha: formatoFecha,
                 nombreImagen: 'camaras_de_seguridad.png'
+            });
+            await noticia.save();
+            console.log('Noticia de bienvenida creada');
+        }
+
+         noticiaExistente = await Noticia.findOne({ titulo: 'Capturan a Juan Perez' });
+        if (!noticiaExistente) {
+            const noticia = new Noticia({
+                titulo: 'Capturan a Juan Perez',
+                autor: 'Equipo Tamarindo',
+                descripcionNoticia: 'Se ha logrado capturar al Narcotraficante de Nunciatura Juan Perez',
+                categoria: 'Noticias',
+                telefono: '89808071',
+                fecha: formatoFecha,
+                nombreImagen: 'noticias_6.jpg'
             });
             await noticia.save();
             console.log('Noticia de bienvenida creada');
