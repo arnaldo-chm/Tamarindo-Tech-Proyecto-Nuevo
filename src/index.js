@@ -801,7 +801,7 @@ app.post('/api/editarActividad', isAuthenticated, async (req, res) => {
             descripcion_actividad: req.body.descripcion_actividad,
             recomendaciones_actividad: req.body.recomendaciones_actividad,
             duracion: req.body.duracion,
-            fecha: formatoFecha,
+            fecha: req.body.fecha ? req.body.fecha : actividad.fecha,
             nombreImagen: req.body.archivo ? path.basename(req.body.archivo) : actividad.nombreImagen // Mantener la imagen actual si no se proporciona una nueva
         });
         res.json({ resultado: true, mensaje: 'Actividad editada con exito' });
@@ -972,7 +972,7 @@ async function cargarDatosIniciales() {
                 titulo: 'Fuerte Terremoto',
                 autor: 'Equipo Tamarindo',
                 descripcionNoticia: 'Fuerte Terremoto sacude la región',
-                categoria: 'General',
+                categoria: 'Noticias',
                 telefono: '+50612345678',
                 fecha: formatoFecha,
                 nombreImagen: 'noticias_3.jpg'
@@ -987,7 +987,7 @@ async function cargarDatosIniciales() {
                 titulo: 'Camaras de Seguridad Instaladas',
                 autor: 'Equipo Tamarindo',
                 descripcionNoticia: 'Se han instalado nuevas cámaras de seguridad en la zona',
-                categoria: 'General',
+                categoria: 'Noticias',
                 telefono: '89808070',
                 fecha: formatoFecha,
                 nombreImagen: 'camaras_de_seguridad.png'
